@@ -687,13 +687,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function initApp(user) {
   currentUser = user;
-  // Load profile
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
-  currentProfile = profile;
+  // Load profile — create if doesn't exist
+  let { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
   if (!profile) {
-    showToast('Error cargando perfil');
-    return;
+    // Auto-create profile
+    const { data: newProfile } = await sb.from('profiles').insert({
+      id: user.id,
+      full_name: user.email.split('@')[0],
+      email: user.email,
+      role: 'admin'
+    }).select().single();
+    profile = newProfile;
   }
+  if (!profile) {
+    // Still no profile — show app anyway with basic info
+    profile = { id: user.id, full_name: user.email.split('@')[0], email: user.email, role: 'admin', avatar_color: '#A8B6A2' };
+  }
+  currentProfile = profile;
   // Update sidebar
   document.getElementById('sidebar-name').textContent = profile.full_name;
   document.getElementById('sidebar-role').textContent = profile.role === 'admin' ? 'Administrador' : 'Agente';
