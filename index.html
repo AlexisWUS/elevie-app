@@ -7,11 +7,25 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Elevie">
+<meta name="color-scheme" content="light">
 <title>Elevie Travel — Intranet</title>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
+/* FORCE LIGHT MODE */
+:root { color-scheme: light !important; }
+html { color-scheme: light !important; background:#EDEAE2 !important; }
+body { color-scheme: light !important; }
+#auth-screen { background:#222533 !important; }
+.auth-box { background:#FDFCFA !important; }
+.auth-title { color:#222533 !important; }
+.auth-field label { color:#727C6E !important; }
+.auth-field input { background:#EDEAE2 !important; color:#222533 !important; border-color:#D5D0C6 !important; }
+.auth-btn { background:#222533 !important; color:#EDEAE2 !important; }
+.auth-tagline { color:#727C6E !important; }
+:root { color-scheme: light only; }
+* { -webkit-color-scheme: light; color-scheme: light; }
 /* ══ BRAND TOKENS ═══════════════════ */
 :root {
   --sage:       #A8B6A2;
@@ -31,32 +45,32 @@
   --sidebar-w:  240px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Hanken Grotesk',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;font-size:14px}
+body{font-family:'Hanken Grotesk',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;font-size:14px;color-scheme:light only;}
 
 /* ══ AUTH SCREEN ═══════════════════ */
 #auth-screen {
 min-height:100vh;display:flex;align-items:center;justify-content:center;
-background:var(–charcoal);
-background-image: radial-gradient(ellipse at 30% 50%, #2D3147 0%, #222533 60%);
+background:#222533 !important;
+background-image: radial-gradient(ellipse at 30% 50%, #2D3147 0%, #222533 60%) !important;
 }
 .auth-box {
-background:var(–white);border-radius:6px;padding:48px 44px;
+background:#FDFCFA !important;border-radius:6px;padding:48px 44px;
 width:100%;max-width:400px;box-shadow:0 24px 80px rgba(0,0,0,.4);
 }
 .auth-logo { text-align:center; margin-bottom:32px; }
 .auth-logo img { height:28px; filter:none; }
 .auth-tagline { font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(–muted);margin-top:8px; }
-.auth-title { font-family:‘Spectral’,serif;font-size:1.4rem;font-weight:300;color:var(–charcoal);margin-bottom:24px; }
+.auth-title { font-family:‘Spectral’,serif;font-size:1.4rem;font-weight:300;color:#222533 !important;margin-bottom:24px; }
 .auth-field { display:flex;flex-direction:column;gap:5px;margin-bottom:14px; }
 .auth-field label { font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(–muted); }
 .auth-field input {
 font-family:‘Hanken Grotesk’,sans-serif;font-size:.92rem;
-border:1.5px solid var(–border);border-radius:3px;padding:11px 14px;
-background:var(–cream);color:var(–charcoal);outline:none;transition:border-color .15s;
+border:1.5px solid #D5D0C6 !important;border-radius:3px;padding:11px 14px;
+background:#EDEAE2 !important;color:#222533 !important;outline:none;transition:border-color .15s;
 }
 .auth-field input:focus { border-color:var(–sage-dark);background:var(–white); }
 .auth-btn {
-width:100%;background:var(–charcoal);color:var(–cream);
+width:100%;background:#222533 !important;color:#EDEAE2 !important;
 font-family:‘Hanken Grotesk’,sans-serif;font-weight:600;font-size:.7rem;
 letter-spacing:2px;text-transform:uppercase;padding:13px;border:none;
 border-radius:3px;cursor:pointer;transition:background .2s;margin-top:8px;
