@@ -513,12 +513,29 @@ let calDate = new Date();
 
 // ══ INIT ═════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) await initApp(session.user);
+  // Handle magic link / password recovery from URL hash
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    const { data: { session }, error } = await sb.auth.getSession();
+    if (session) {
+      await initApp(session.user);
+      return;
+    }
+  }
+
+  // Handle password recovery event
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) await initApp(session.user);
+    if (event === 'PASSWORD_RECOVERY' && session) {
+      await initApp(session.user);
+      // Open profile modal to change password
+      setTimeout(() => openModal('modal-perfil'), 800);
+    }
     if (event === 'SIGNED_OUT') showAuthScreen();
   });
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) await initApp(session.user);
+
   document.getElementById('auth-password').addEventListener('keydown', e => {
     if (e.key === 'Enter') signIn();
   });
