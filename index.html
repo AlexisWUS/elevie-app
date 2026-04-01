@@ -979,7 +979,7 @@ const pw = document.getElementById(‘perfil-pw-inp’)?.value;
 if (!name) { showToast(‘El nombre es obligatorio’); return; }
 const updates = {full_name:name,phone:phone||null,avatar_color:selectedColor||currentProfile?.avatar_color||’#3D6B4F’};
 await sb.from(‘profiles’).update(updates).eq(‘id’,currentProfile.id);
-currentProfile={…currentProfile,…updates};
+currentProfile={...currentProfile,...updates};
 const initials=name.split(’ ‘).map(n=>n[0]).join(’’).toUpperCase().slice(0,2);
 const av=document.getElementById(‘hdr-avatar’);
 if(av){av.textContent=initials;av.style.background=updates.avatar_color;}
