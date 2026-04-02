@@ -186,7 +186,7 @@ background:var(–bg);background-image:radial-gradient(ellipse at 40% 30%,#2D5A6
     </div>
     <div class="auth-heading">Bienvenida</div>
     <div class="af"><label>Email</label><input type="email" id="auth-email" placeholder="tu@elevietravel.com" autocomplete="email"></div>
-    <div class="af"><label>Contrase&ntilde;a</label><input type="password" id="auth-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password"></div>
+    <div class="af"><label>Contraseña</label><input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="abtn" onclick="signIn()" id="auth-submit-btn">Entrar</button>
     <div class="aerr" id="auth-err"></div>
     <button class="alink" onclick="showRec()">Olvidé mi contraseña</button>
@@ -213,7 +213,7 @@ background:var(–bg);background-image:radial-gradient(ellipse at 40% 30%,#2D5A6
 
 <!-- APP -->
 
-<div id="app" style="display:none;flex-direction:column;height:100vh">
+<div id="app">
   <header class="app-header">
     <div class="header-brand">
       <div class="hname">Elevie Travel</div>
@@ -237,10 +237,10 @@ background:var(–bg);background-image:radial-gradient(ellipse at 40% 30%,#2D5A6
   </div>
   <div class="slabel">Accesos rápidos</div>
   <div class="quick-grid">
-    <div class="qcard" onclick="goTo('cotizador')"><div class="qcard-ico">&#10022;</div><div class="qcard-title">Nueva Cotización</div><div class="qcard-desc">Builder completo</div></div>
+    <div class="qcard" onclick="goTo('cotizador')"><div class="qcard-ico">✦</div><div class="qcard-title">Nueva Cotización</div><div class="qcard-desc">Builder completo</div></div>
     <div class="qcard" onclick="openModal('modal-nuevo-cliente')"><div class="qcard-ico">+</div><div class="qcard-title">Nuevo Cliente</div><div class="qcard-desc">Agregar al CRM</div></div>
-    <div class="qcard" onclick="goTo('reservas')"><div class="qcard-ico">&#9678;</div><div class="qcard-title">Reservas</div><div class="qcard-desc">Ver todas</div></div>
-    <div class="qcard" onclick="goTo('finanzas')"><div class="qcard-ico">&#9672;</div><div class="qcard-title">Finanzas</div><div class="qcard-desc">Comisiones y pagos</div></div>
+    <div class="qcard" onclick="goTo('reservas')"><div class="qcard-ico">◎</div><div class="qcard-title">Reservas</div><div class="qcard-desc">Ver todas</div></div>
+    <div class="qcard" onclick="goTo('finanzas')"><div class="qcard-ico">◈</div><div class="qcard-title">Finanzas</div><div class="qcard-desc">Comisiones y pagos</div></div>
   </div>
   <div class="slabel">Próximos viajes</div>
   <div id="dash-trips"><div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Cargando...</div></div>
@@ -302,7 +302,7 @@ background:var(–bg);background-image:radial-gradient(ellipse at 40% 30%,#2D5A6
       <div class="qt-row"><span>Concierge fee</span><span id="qb-cf-disp">—</span></div>
       <div class="qt-total"><span>Total</span><span class="qt-total-val" id="qb-total-disp">$0</span></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
       <div class="fin-box"><div class="fin-val green" id="qb-comm-disp">$0</div><div class="fin-lbl">Comisión USD</div></div>
       <div class="fin-box"><div class="fin-val" id="qb-comm-mxn-disp">$0</div><div class="fin-lbl">Comisión MXN</div></div>
     </div>
@@ -398,19 +398,19 @@ background:var(–bg);background-image:radial-gradient(ellipse at 40% 30%,#2D5A6
 </div>
 ```
 
-  </div>
+  </div><!-- end app-body -->
 
   <nav class="bottom-nav">
-    <div class="nb active" id="nb-home" onclick="goTo('home')"><div class="nb-ico">&#8962;</div><div class="nb-lbl">Inicio</div></div>
-    <div class="nb" id="nb-clientes" onclick="goTo('clientes')"><div class="nb-ico">&#9672;</div><div class="nb-lbl">Clientes</div></div>
-    <div class="nb" id="nb-cotizador" onclick="goTo('cotizador');qbInit()"><div class="nb-ico">&#10022;</div><div class="nb-lbl">Cotizar</div></div>
+    <div class="nb active" id="nb-home" onclick="goTo('home')"><div class="nb-ico">⌂</div><div class="nb-lbl">Inicio</div></div>
+    <div class="nb" id="nb-clientes" onclick="goTo('clientes')"><div class="nb-ico">◈</div><div class="nb-lbl">Clientes</div></div>
+    <div class="nb" id="nb-cotizador" onclick="goTo('cotizador');qbInit()"><div class="nb-ico">✦</div><div class="nb-lbl">Cotizar</div></div>
     <div class="nb" id="nb-reservas" onclick="goTo('reservas')">
-      <div style="position:relative;display:inline-block"><div class="nb-ico">&#9678;</div><div class="nb-badge" id="nb-badge-res" style="display:none">0</div></div>
+      <div style="position:relative;display:inline-block"><div class="nb-ico">◎</div><div class="nb-badge" id="nb-badge-res" style="display:none">0</div></div>
       <div class="nb-lbl">Reservas</div>
     </div>
-    <div class="nb" id="nb-finanzas" onclick="goTo('finanzas')"><div class="nb-ico">&#9638;</div><div class="nb-lbl">Finanzas</div></div>
+    <div class="nb" id="nb-finanzas" onclick="goTo('finanzas')"><div class="nb-ico">▣</div><div class="nb-lbl">Finanzas</div></div>
   </nav>
-</div>
+</div><!-- end app -->
 
 <!-- MODALS -->
 
@@ -531,6 +531,10 @@ let calDate = new Date();
 
 // INIT
 document.addEventListener('DOMContentLoaded', async () => {
+  // Hide app on load, show auth
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) await initApp(session.user);
     if (event === 'PASSWORD_RECOVERY' && session) {
@@ -539,8 +543,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     if (event === 'SIGNED_OUT') showAuthScreen();
   });
+
   const { data: { session } } = await sb.auth.getSession();
-  if (session) await initApp(session.user);
+  if (session) {
+    await initApp(session.user);
+  }
+
   document.getElementById('auth-password').addEventListener('keydown', e => {
     if (e.key === 'Enter') signIn();
   });
@@ -550,11 +558,24 @@ async function initApp(user) {
   currentUser = user;
   let { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
   if (!profile) {
-    await sb.from('profiles').insert({ id: user.id, full_name: user.email.split('@')[0], email: user.email, role: 'admin', avatar_color: '#3D6B4F' });
+    await sb.from('profiles').insert({
+      id: user.id,
+      full_name: user.email.split('@')[0],
+      email: user.email,
+      role: 'admin',
+      avatar_color: '#3D6B4F'
+    });
     ({ data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single());
   }
-  currentProfile = profile || { id: user.id, full_name: user.email.split('@')[0], email: user.email, role: 'admin', avatar_color: '#3D6B4F' };
-  const ini = currentProfile.full_name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  currentProfile = profile || {
+    id: user.id,
+    full_name: user.email.split('@')[0],
+    email: user.email,
+    role: 'admin',
+    avatar_color: '#3D6B4F'
+  };
+
+  const ini = currentProfile.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   const av = document.getElementById('hdr-avatar');
   if (av) { av.textContent = ini; av.style.background = currentProfile.avatar_color || '#3D6B4F'; }
   document.getElementById('perfil-name').textContent = currentProfile.full_name;
@@ -563,22 +584,27 @@ async function initApp(user) {
   document.getElementById('perfil-av').style.background = currentProfile.avatar_color || '#3D6B4F';
   document.getElementById('perfil-name-inp').value = currentProfile.full_name || '';
   document.getElementById('perfil-phone-inp').value = currentProfile.phone || '';
+
   const qan = document.getElementById('qb-agent-name');
   const qae = document.getElementById('qb-agent-email');
   const qap = document.getElementById('qb-agent-phone');
   if (qan) qan.value = currentProfile.full_name || '';
   if (qae) qae.value = currentProfile.email || '';
   if (qap) qap.value = currentProfile.phone || '';
+
+  // Show app, hide auth
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('rec-screen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
+
   await loadDashboard();
 }
 
 function showAuthScreen() {
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
-  currentUser = null; currentProfile = null;
+  currentUser = null;
+  currentProfile = null;
 }
 
 // AUTH
@@ -651,35 +677,43 @@ async function loadDashboard() {
   const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const now = new Date();
   document.getElementById('dash-sub').textContent = days[now.getDay()] + ' ' + now.getDate() + ' de ' + months[now.getMonth()];
-  let qQ = sb.from('quotes').select('id,status,total,currency,travel_start,client_name,destination',{count:'exact'});
+
+  let qQ = sb.from('quotes').select('id,status,total,currency,travel_start,client_name,destination', { count: 'exact' });
   if (!isAdmin) qQ = qQ.eq('agent_id', currentProfile.id);
-  const { data: qData, count: qCount } = await qQ.order('created_at',{ascending:false});
+  const { data: qData, count: qCount } = await qQ.order('created_at', { ascending: false });
   document.getElementById('st-quotes').textContent = qCount || 0;
-  const thisMonth = now.toISOString().slice(0,7);
-  const rev = (qData||[]).filter(q=>q.status==='confirmed'&&(q.travel_start||'').startsWith(thisMonth)).reduce((s,q)=>s+(parseFloat(q.total)||0),0);
-  document.getElementById('st-revenue').textContent = '$' + rev.toLocaleString('es-MX',{maximumFractionDigits:0});
-  const pending = (qData||[]).filter(q=>q.status==='sent');
+
+  const thisMonth = now.toISOString().slice(0, 7);
+  const rev = (qData || []).filter(q => q.status === 'confirmed' && (q.travel_start || '').startsWith(thisMonth)).reduce((s, q) => s + (parseFloat(q.total) || 0), 0);
+  document.getElementById('st-revenue').textContent = '$' + rev.toLocaleString('es-MX', { maximumFractionDigits: 0 });
+
+  const pending = (qData || []).filter(q => q.status === 'sent');
   document.getElementById('st-pending').textContent = pending.length;
   document.getElementById('nb-badge-res').textContent = pending.length;
   document.getElementById('nb-badge-res').style.display = pending.length > 0 ? 'flex' : 'none';
+
   const today = now.toISOString().split('T')[0];
   let tQ = sb.from('trips').select('*').gte('departure_date', today).order('departure_date').limit(5);
   if (!isAdmin) tQ = tQ.eq('agent_id', currentProfile.id);
   const { data: trips, count: tCount } = await tQ;
   document.getElementById('st-trips').textContent = tCount || 0;
+
   const tripsEl = document.getElementById('dash-trips');
-  tripsEl.innerHTML = (trips||[]).length ? (trips||[]).map(t => {
+  tripsEl.innerHTML = (trips || []).length ? (trips || []).map(t => {
     const du = Math.ceil((new Date(t.departure_date) - now) / 86400000);
-    const dl = du===0?'Hoy':du===1?'Mañana':fmtDate(t.departure_date);
+    const dl = du === 0 ? 'Hoy' : du === 1 ? 'Mañana' : fmtDate(t.departure_date);
     return `<div class="tcard"><div class="tcard-emoji">${emojiDest(t.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${t.client_name}</div><div class="tcard-dest">${t.destination}</div><div class="tcard-date">${dl}</div></div><span class="pill ${t.status==='confirmed'?'pill-g':'pill-w'}">${statusLabel(t.status)}</span></div>`;
   }).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin viajes próximos</div>';
-  document.getElementById('dash-quotes').innerHTML = (qData||[]).slice(0,5).map(q=>`<div class="tcard"><div class="tcard-emoji" style="background:#EAF0F5;font-size:16px">📋</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name||'—'}</div><div class="tcard-dest">${q.destination||'—'}</div></div><div class="tcard-right"><span class="pill pill-${q.status==='confirmed'?'g':q.status==='sent'?'b':q.status==='cancelled'?'d':'go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total)||0).toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`).join('') || '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin cotizaciones aún</div>';
+
+  document.getElementById('dash-quotes').innerHTML = (qData || []).slice(0, 5).map(q =>
+    `<div class="tcard"><div class="tcard-emoji" style="background:#EAF0F5;font-size:16px">📋</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.destination || '—'}</div></div><div class="tcard-right"><span class="pill pill-${q.status==='confirmed'?'g':q.status==='sent'?'b':q.status==='cancelled'?'d':'go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total) || 0).toLocaleString('es-MX', {maximumFractionDigits:0})}</div></div></div>`
+  ).join('') || '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin cotizaciones aún</div>';
 }
 
 function emojiDest(dest) {
-  const d = (dest||'').toLowerCase();
+  const d = (dest || '').toLowerCase();
   const map = {'japón':'🗾','tokyo':'🗾','paris':'🗼','italia':'🇮🇹','maldivas':'🌊','dubai':'🏙️','kenya':'🌿','grecia':'🏛️','tailandia':'🌴','madrid':'💃','barcelona':'🏟️','cancun':'🏖️','miami':'🌴','london':'🎡'};
-  for (const [k,v] of Object.entries(map)) if (d.includes(k)) return v;
+  for (const [k, v] of Object.entries(map)) if (d.includes(k)) return v;
   return '✈️';
 }
 
@@ -689,44 +723,47 @@ async function loadClients() {
   allClients = data || [];
   renderClients(allClients);
   const sel = document.getElementById('qb-client-sel');
-  if (sel) { const cur=sel.value; sel.innerHTML='<option value="">Seleccionar cliente...</option>'+allClients.map(c=>`<option value="${c.id}" ${c.id===cur?'selected':''}>${c.full_name}</option>`).join(''); }
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Seleccionar cliente...</option>' + allClients.map(c => `<option value="${c.id}" ${c.id === cur ? 'selected' : ''}>${c.full_name}</option>`).join('');
+  }
 }
 
 function renderClients(clients) {
   const el = document.getElementById('clients-list');
-  if (!clients.length) { el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin clientes aún</div>'; return; }
+  if (!clients.length) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin clientes aún</div>'; return; }
   el.innerHTML = clients.map(c => {
-    const ini = c.full_name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
-    return `<div class="ccard" onclick="openClientDetail('${c.id}')"><div class="cav" style="background:${c.avatar_color||'#3D6B4F'}">${ini}</div><div style="flex:1;min-width:0"><div class="cname">${c.full_name}</div><div class="cemail">${c.email}</div><div style="font-size:11px;color:var(--text-l)">${c.phone||'Sin teléfono'}</div></div><span class="pill ${c.role==='admin'?'pill-go':'pill-g'}">${c.role==='admin'?'Admin':'Agente'}</span></div>`;
+    const ini = c.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return `<div class="ccard" onclick="openClientDetail('${c.id}')"><div class="cav" style="background:${c.avatar_color || '#3D6B4F'}">${ini}</div><div style="flex:1;min-width:0"><div class="cname">${c.full_name}</div><div class="cemail">${c.email}</div><div style="font-size:11px;color:var(--text-l)">${c.phone || 'Sin teléfono'}</div></div><span class="pill ${c.role==='admin'?'pill-go':'pill-g'}">${c.role==='admin'?'Admin':'Agente'}</span></div>`;
   }).join('');
 }
 
 function filterClients() {
-  const s = (document.getElementById('client-search')?.value||'').toLowerCase();
-  renderClients(allClients.filter(c=>(c.full_name||'').toLowerCase().includes(s)||(c.email||'').toLowerCase().includes(s)));
+  const s = (document.getElementById('client-search')?.value || '').toLowerCase();
+  renderClients(allClients.filter(c => (c.full_name || '').toLowerCase().includes(s) || (c.email || '').toLowerCase().includes(s)));
 }
 
 function openClientDetail(id) {
-  const c = allClients.find(x=>x.id===id); if (!c) return;
-  const ini = c.full_name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('cli-detail-head').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="cav" style="width:34px;height:34px;font-size:13px;background:${c.avatar_color||'#3D6B4F'}">${ini}</div><div><div class="modal-title">${c.full_name}</div><div style="font-size:11.5px;color:var(--text-l)">${c.email}</div></div></div><button class="modal-close" onclick="closeModal('modal-cliente-detalle')">&#215;</button>`;
-  document.getElementById('cli-detail-body').innerHTML=`<div class="fg"><label class="flbl">Teléfono</label><div style="font-size:14px;padding:10px 0;color:var(--text-m)">${c.phone||'—'}</div></div><button class="btn btn-dark" onclick="goTo('cotizador');qbInit();closeModal('modal-cliente-detalle')">Nueva Cotización</button><button class="btn btn-out" onclick="closeModal('modal-cliente-detalle')">Cerrar</button>`;
+  const c = allClients.find(x => x.id === id); if (!c) return;
+  const ini = c.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('cli-detail-head').innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div class="cav" style="width:34px;height:34px;font-size:13px;background:${c.avatar_color || '#3D6B4F'}">${ini}</div><div><div class="modal-title">${c.full_name}</div><div style="font-size:11.5px;color:var(--text-l)">${c.email}</div></div></div><button class="modal-close" onclick="closeModal('modal-cliente-detalle')">&#215;</button>`;
+  document.getElementById('cli-detail-body').innerHTML = `<div class="fg"><label class="flbl">Teléfono</label><div style="font-size:14px;padding:10px 0;color:var(--text-m)">${c.phone || '—'}</div></div><button class="btn btn-dark" onclick="goTo('cotizador');qbInit();closeModal('modal-cliente-detalle')">Nueva Cotización</button><button class="btn btn-out" onclick="closeModal('modal-cliente-detalle')">Cerrar</button>`;
   openModal('modal-cliente-detalle');
 }
 
 async function saveNewClient() {
-  const name=document.getElementById('nc-name')?.value.trim();
-  const email=document.getElementById('nc-email')?.value.trim();
-  if (!name||!email) { showToast('Nombre y email son obligatorios'); return; }
+  const name = document.getElementById('nc-name')?.value.trim();
+  const email = document.getElementById('nc-email')?.value.trim();
+  if (!name || !email) { showToast('Nombre y email son obligatorios'); return; }
   showToast('Cliente guardado');
   closeModal('modal-nuevo-cliente');
-  ['nc-name','nc-email','nc-phone','nc-dob','nc-passport','nc-budget','nc-prefs','nc-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['nc-name','nc-email','nc-phone','nc-dob','nc-passport','nc-budget','nc-prefs','nc-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 }
 
 // RESERVAS
 async function loadReservas(filter) {
   const isAdmin = currentProfile?.role === 'admin';
-  let q = sb.from('quotes').select('*').order('travel_start',{ascending:true});
+  let q = sb.from('quotes').select('*').order('travel_start', { ascending: true });
   if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
   if (filter && filter !== 'all') q = q.eq('status', filter);
   const { data } = await q;
@@ -735,254 +772,281 @@ async function loadReservas(filter) {
 }
 
 function filterReservas(f, btn) {
-  document.querySelectorAll('[id^="res-filter-"]').forEach(b=>{b.style.opacity='.5';});
-  if (btn) btn.style.opacity='1';
+  document.querySelectorAll('[id^="res-filter-"]').forEach(b => { b.style.opacity = '.5'; });
+  if (btn) btn.style.opacity = '1';
   loadReservas(f);
 }
 
 function renderReservas(quotes) {
   const el = document.getElementById('reservas-list');
-  if (!quotes.length) { el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin reservas</div>'; return; }
-  el.innerHTML = quotes.map(q=>`<div class="tcard" onclick="showReservaDetail('${q.id}')"><div class="tcard-emoji">${emojiDest(q.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name||'—'}</div><div class="tcard-dest">${q.quote_num||''} · ${q.destination||'—'}</div><div class="tcard-date">${q.travel_start?fmtDate(q.travel_start):'—'}${q.travel_end?' – '+fmtDate(q.travel_end):''}</div></div><div class="tcard-right"><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':q.status==='cancelled'?'pill-d':'pill-go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total)||0).toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`).join('');
+  if (!quotes.length) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin reservas</div>'; return; }
+  el.innerHTML = quotes.map(q =>
+    `<div class="tcard" onclick="showReservaDetail('${q.id}')"><div class="tcard-emoji">${emojiDest(q.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.quote_num || ''} · ${q.destination || '—'}</div><div class="tcard-date">${q.travel_start ? fmtDate(q.travel_start) : '—'}${q.travel_end ? ' – ' + fmtDate(q.travel_end) : ''}</div></div><div class="tcard-right"><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':q.status==='cancelled'?'pill-d':'pill-go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total)||0).toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`
+  ).join('');
 }
 
 function showReservaDetail(id) {
-  const q = allQuotes.find(x=>x.id===id); if (!q) return;
-  let data={}; try{data=JSON.parse(q.data||'{}');}catch(e){}
-  const nights=q.travel_start&&q.travel_end?Math.round((new Date(q.travel_end)-new Date(q.travel_start))/86400000):'—';
-  const paid=parseFloat(data.paid)||0, total=parseFloat(q.total)||0, saldo=total-paid;
+  const q = allQuotes.find(x => x.id === id); if (!q) return;
+  let data = {}; try { data = JSON.parse(q.data || '{}'); } catch(e) {}
+  const nights = q.travel_start && q.travel_end ? Math.round((new Date(q.travel_end) - new Date(q.travel_start)) / 86400000) : '—';
+  const paid = parseFloat(data.paid) || 0, total = parseFloat(q.total) || 0, saldo = total - paid;
   document.getElementById('res-detail-title').textContent = q.quote_num || 'Reserva';
-  document.getElementById('res-detail-body').innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="font-size:30px">${emojiDest(q.destination)}</div><div style="flex:1"><div style="font-size:15px;font-weight:500">${q.client_name||'—'} · ${q.destination||'—'}</div><div style="font-size:12px;color:var(--text-l)">${q.travel_start?fmtDate(q.travel_start):'—'} – ${q.travel_end?fmtDate(q.travel_end):'—'}</div></div><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':'pill-go'}">${statusLabel(q.status)}</span></div><div class="info-row"><div class="info-box"><div class="info-box-val">${nights}</div><div class="info-box-lbl">Noches</div></div><div class="info-box"><div class="info-box-val" style="color:var(--green);font-size:17px">$${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Total</div></div><div class="info-box"><div class="info-box-val" style="color:${saldo>0?'var(--warn)':'var(--green)'}">$${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Saldo</div></div></div><div style="margin-bottom:12px"><div class="slabel" style="margin-top:0">Actualizar estado</div><div style="display:flex;gap:7px;flex-wrap:wrap">${['draft','sent','confirmed','cancelled'].map(s=>`<button onclick="updateQuoteStatus('${q.id}','${s}')" class="pill ${s==='confirmed'?'pill-g':s==='sent'?'pill-b':s==='cancelled'?'pill-d':'pill-go'}" style="cursor:pointer;padding:6px 12px;font-size:11.5px">${statusLabel(s)}</button>`).join('')}</div></div><button class="btn btn-dark" onclick="registerPago('${q.id}','${(q.client_name||'').replace(/'/g,"\\'")}',${total},${paid})">Registrar pago</button><button class="btn btn-out" onclick="closeModal('modal-reserva')">Cerrar</button>`;
+  document.getElementById('res-detail-body').innerHTML = `<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="font-size:30px">${emojiDest(q.destination)}</div><div style="flex:1"><div style="font-size:15px;font-weight:500">${q.client_name||'—'} · ${q.destination||'—'}</div><div style="font-size:12px;color:var(--text-l)">${q.travel_start?fmtDate(q.travel_start):'—'} – ${q.travel_end?fmtDate(q.travel_end):'—'}</div></div><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':'pill-go'}">${statusLabel(q.status)}</span></div><div class="info-row"><div class="info-box"><div class="info-box-val">${nights}</div><div class="info-box-lbl">Noches</div></div><div class="info-box"><div class="info-box-val" style="color:var(--green);font-size:17px">$${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Total</div></div><div class="info-box"><div class="info-box-val" style="color:${saldo>0?'var(--warn)':'var(--green)'}">$${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Saldo</div></div></div><div style="margin-bottom:12px"><div class="slabel" style="margin-top:0">Actualizar estado</div><div style="display:flex;gap:7px;flex-wrap:wrap">${['draft','sent','confirmed','cancelled'].map(s=>`<button onclick="updateQuoteStatus('${q.id}','${s}')" class="pill ${s==='confirmed'?'pill-g':s==='sent'?'pill-b':s==='cancelled'?'pill-d':'pill-go'}" style="cursor:pointer;padding:6px 12px;font-size:11.5px">${statusLabel(s)}</button>`).join('')}</div></div><button class="btn btn-dark" onclick="registerPago('${q.id}','${(q.client_name||'').replace(/'/g,"\\'")}',${total},${paid})">Registrar pago</button><button class="btn btn-out" onclick="closeModal('modal-reserva')">Cerrar</button>`;
   openModal('modal-reserva');
 }
 
 async function updateQuoteStatus(id, status) {
-  await sb.from('quotes').update({status}).eq('id',id);
+  await sb.from('quotes').update({ status }).eq('id', id);
   showToast('Estado actualizado'); loadReservas(); closeModal('modal-reserva');
 }
 
 async function registerPago(id, clientName, total, paid) {
   const ok = await safeConfirm('Registrar pago — ' + clientName); if (!ok) return;
-  const nuevoStr = window.prompt('Monto total pagado hasta ahora (USD):', paid); if (nuevoStr===null) return;
-  const nuevoPagado = parseFloat(nuevoStr)||0;
-  const { data: q } = await sb.from('quotes').select('data').eq('id',id).single();
-  let dataObj={}; try{dataObj=JSON.parse(q?.data||'{}');}catch(e){}
+  const nuevoStr = window.prompt('Monto total pagado hasta ahora (USD):', paid); if (nuevoStr === null) return;
+  const nuevoPagado = parseFloat(nuevoStr) || 0;
+  const { data: q } = await sb.from('quotes').select('data').eq('id', id).single();
+  let dataObj = {}; try { dataObj = JSON.parse(q?.data || '{}'); } catch(e) {}
   dataObj.paid = nuevoPagado;
-  await sb.from('quotes').update({data:JSON.stringify(dataObj),status:nuevoPagado>=total?'confirmed':'sent'}).eq('id',id);
+  await sb.from('quotes').update({ data: JSON.stringify(dataObj), status: nuevoPagado >= total ? 'confirmed' : 'sent' }).eq('id', id);
   showToast('Pago registrado'); loadReservas(); closeModal('modal-reserva');
 }
 
 // CALENDAR
 async function renderCalendar() {
   const isAdmin = currentProfile?.role === 'admin';
-  const y=calDate.getFullYear(), m=calDate.getMonth();
-  const mn=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('cal-month-lbl').textContent = mn[m]+' '+y;
-  const start=new Date(y,m,1).toISOString().split('T')[0];
-  const end=new Date(y,m+1,0).toISOString().split('T')[0];
-  let q=sb.from('trips').select('*').gte('departure_date',start).lte('departure_date',end).order('departure_date');
-  if (!isAdmin) q=q.eq('agent_id',currentProfile.id);
-  const {data:trips}=await q;
-  document.getElementById('cal-days-hdr').innerHTML=['L','M','X','J','V','S','D'].map(d=>`<div class="cal-dh">${d}</div>`).join('');
-  const firstDay=new Date(y,m,1), lastDay=new Date(y,m+1,0);
-  let startDow=firstDay.getDay(); startDow=startDow===0?6:startDow-1;
-  const today=new Date().toISOString().split('T')[0];
-  let html='';
-  for(let i=0;i<startDow;i++) html+='<div class="cal-cell empty"></div>';
-  for(let d=1;d<=lastDay.getDate();d++){
-    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dt=(trips||[]).filter(t=>t.departure_date===ds);
-    html+=`<div class="cal-cell${ds===today?' today':''}"><div class="cal-n">${d}</div>${dt.map(t=>`<div class="cal-ev">${t.client_name.split(' ')[0]}</div>`).join('')}</div>`;
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  const mn = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  document.getElementById('cal-month-lbl').textContent = mn[m] + ' ' + y;
+  const start = new Date(y, m, 1).toISOString().split('T')[0];
+  const end = new Date(y, m + 1, 0).toISOString().split('T')[0];
+  let q = sb.from('trips').select('*').gte('departure_date', start).lte('departure_date', end).order('departure_date');
+  if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
+  const { data: trips } = await q;
+  document.getElementById('cal-days-hdr').innerHTML = ['L','M','X','J','V','S','D'].map(d => `<div class="cal-dh">${d}</div>`).join('');
+  const firstDay = new Date(y, m, 1);
+  const lastDay = new Date(y, m + 1, 0);
+  let startDow = firstDay.getDay(); startDow = startDow === 0 ? 6 : startDow - 1;
+  const today = new Date().toISOString().split('T')[0];
+  let html = '';
+  for (let i = 0; i < startDow; i++) html += '<div class="cal-cell empty"></div>';
+  for (let d = 1; d <= lastDay.getDate(); d++) {
+    const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dt = (trips || []).filter(t => t.departure_date === ds);
+    html += `<div class="cal-cell${ds === today ? ' today' : ''}"><div class="cal-n">${d}</div>${dt.map(t => `<div class="cal-ev">${t.client_name.split(' ')[0]}</div>`).join('')}</div>`;
   }
-  document.getElementById('cal-days-body').innerHTML=html;
-  document.getElementById('cal-list-month').innerHTML=(trips||[]).length?(trips||[]).map(t=>`<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji">${emojiDest(t.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${t.client_name}</div><div class="tcard-dest">${t.destination}</div><div class="tcard-date">${fmtDate(t.departure_date)}</div></div><span class="pill ${t.status==='confirmed'?'pill-g':'pill-w'}">${statusLabel(t.status)}</span></div>`).join(''):'<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin viajes este mes</div>';
+  document.getElementById('cal-days-body').innerHTML = html;
+  document.getElementById('cal-list-month').innerHTML = (trips || []).length ? (trips || []).map(t =>
+    `<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji">${emojiDest(t.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${t.client_name}</div><div class="tcard-dest">${t.destination}</div><div class="tcard-date">${fmtDate(t.departure_date)}</div></div><span class="pill ${t.status==='confirmed'?'pill-g':'pill-w'}">${statusLabel(t.status)}</span></div>`
+  ).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin viajes este mes</div>';
 }
 
-function calPrev(){calDate.setMonth(calDate.getMonth()-1);renderCalendar();}
-function calNext(){calDate.setMonth(calDate.getMonth()+1);renderCalendar();}
+function calPrev() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(); }
+function calNext() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(); }
 
 // FINANZAS
 async function loadFinanzas() {
-  const isAdmin=currentProfile?.role==='admin';
-  const year=document.getElementById('fin-year')?.value||'2026';
-  const month=document.getElementById('fin-month')?.value;
-  let q=sb.from('quotes').select('*,profiles(full_name)').order('created_at',{ascending:false});
-  if(!isAdmin) q=q.eq('agent_id',currentProfile.id);
-  const {data}=await q;
-  let filtered=(data||[]).filter(q=>{
-    const d=q.travel_start||q.created_at?.split('T')[0]||'';
-    if(year&&!d.startsWith(year))return false;
-    if(month&&d.slice(5,7)!==month)return false;
+  const isAdmin = currentProfile?.role === 'admin';
+  const year = document.getElementById('fin-year')?.value || '2026';
+  const month = document.getElementById('fin-month')?.value;
+  let q = sb.from('quotes').select('*,profiles(full_name)').order('created_at', { ascending: false });
+  if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
+  const { data } = await q;
+  let filtered = (data || []).filter(q => {
+    const d = q.travel_start || q.created_at?.split('T')[0] || '';
+    if (year && !d.startsWith(year)) return false;
+    if (month && d.slice(5, 7) !== month) return false;
     return true;
   });
-  const confirmed=filtered.filter(q=>q.status==='confirmed');
-  const totalUSD=confirmed.reduce((s,q)=>s+(parseFloat(q.total)||0),0);
-  const commUSD=totalUSD*0.12;
-  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  s('fin-total','$'+totalUSD.toLocaleString('es-MX',{maximumFractionDigits:0}));
-  s('fin-comm','$'+commUSD.toLocaleString('es-MX',{maximumFractionDigits:0}));
-  s('fin-comm-mxn','$'+(commUSD*20).toLocaleString('es-MX',{maximumFractionDigits:0})+' MXN');
-  let pendTotal=0;
-  filtered.forEach(q=>{const t=parseFloat(q.total)||0;let p=0;try{p=parseFloat(JSON.parse(q.data||'{}').paid)||0;}catch(e){}if(t-p>0)pendTotal+=t-p;});
-  s('fin-pending','$'+pendTotal.toLocaleString('es-MX',{maximumFractionDigits:0}));
-  const byAgent={};
-  confirmed.forEach(q=>{const name=q.profiles?.full_name||'—';if(!byAgent[name])byAgent[name]=0;byAgent[name]+=parseFloat(q.total)||0;});
-  const tbody=document.getElementById('fin-agent-tbody');
-  if(tbody){const rows=Object.entries(byAgent).sort((a,b)=>b[1]-a[1]);tbody.innerHTML=rows.length?rows.map(([name,tot])=>`<tr><td style="padding:10px 12px;font-size:13px;font-weight:500">${name}</td><td style="padding:10px 12px;font-size:13px;text-align:right">$${tot.toLocaleString('es-MX',{maximumFractionDigits:0})}</td><td style="padding:10px 12px;font-size:13px;text-align:right;color:var(--green)">$${(tot*0.12).toLocaleString('es-MX',{maximumFractionDigits:0})}</td></tr>`).join(''):'<tr><td colspan="3" style="text-align:center;padding:16px;font-size:13px;color:var(--text-l)">Sin ventas confirmadas</td></tr>';}
-  const pendingQ=filtered.filter(q=>q.status==='sent'||q.status==='confirmed');
-  document.getElementById('fin-pagos-list').innerHTML=pendingQ.length?pendingQ.map(q=>{const total=parseFloat(q.total)||0;let paid=0;try{paid=parseFloat(JSON.parse(q.data||'{}').paid)||0;}catch(e){}const saldo=total-paid;return`<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji" style="font-size:16px;background:#EAF0F5">💳</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name||'—'}</div><div class="tcard-dest">${q.destination||'—'}</div></div><div class="tcard-right"><div style="font-size:12px;color:var(--text-l)">Total: $${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div style="font-size:13px;font-weight:500;color:${saldo>0?'var(--warn)':'var(--green)'}">Saldo: $${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`;}).join(''):'<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin pagos pendientes</div>';
+  const confirmed = filtered.filter(q => q.status === 'confirmed');
+  const totalUSD = confirmed.reduce((s, q) => s + (parseFloat(q.total) || 0), 0);
+  const commUSD = totalUSD * 0.12;
+  const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  s('fin-total', '$' + totalUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
+  s('fin-comm', '$' + commUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
+  s('fin-comm-mxn', '$' + (commUSD * 20).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN');
+  let pendTotal = 0;
+  filtered.forEach(q => {
+    const t = parseFloat(q.total) || 0;
+    let p = 0;
+    try { p = parseFloat(JSON.parse(q.data || '{}').paid) || 0; } catch(e) {}
+    if (t - p > 0) pendTotal += t - p;
+  });
+  s('fin-pending', '$' + pendTotal.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
+  const byAgent = {};
+  confirmed.forEach(q => {
+    const name = q.profiles?.full_name || '—';
+    if (!byAgent[name]) byAgent[name] = 0;
+    byAgent[name] += parseFloat(q.total) || 0;
+  });
+  const tbody = document.getElementById('fin-agent-tbody');
+  if (tbody) {
+    const rows = Object.entries(byAgent).sort((a, b) => b[1] - a[1]);
+    tbody.innerHTML = rows.length ? rows.map(([name, tot]) =>
+      `<tr><td style="padding:10px 12px;font-size:13px;font-weight:500">${name}</td><td style="padding:10px 12px;font-size:13px;text-align:right">$${tot.toLocaleString('es-MX',{maximumFractionDigits:0})}</td><td style="padding:10px 12px;font-size:13px;text-align:right;color:var(--green)">$${(tot*0.12).toLocaleString('es-MX',{maximumFractionDigits:0})}</td></tr>`
+    ).join('') : '<tr><td colspan="3" style="text-align:center;padding:16px;font-size:13px;color:var(--text-l)">Sin ventas confirmadas</td></tr>';
+  }
+  const pendingQ = filtered.filter(q => q.status === 'sent' || q.status === 'confirmed');
+  document.getElementById('fin-pagos-list').innerHTML = pendingQ.length ? pendingQ.map(q => {
+    const total = parseFloat(q.total) || 0;
+    let paid = 0;
+    try { paid = parseFloat(JSON.parse(q.data || '{}').paid) || 0; } catch(e) {}
+    const saldo = total - paid;
+    return `<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji" style="font-size:16px;background:#EAF0F5">💳</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.destination || '—'}</div></div><div class="tcard-right"><div style="font-size:12px;color:var(--text-l)">Total: $${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div style="font-size:13px;font-weight:500;color:${saldo>0?'var(--warn)':'var(--green)'}">Saldo: $${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`;
+  }).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin pagos pendientes</div>';
 }
 
 // QUOTE BUILDER
 function qbInit() {
-  qbItemsList=[];
-  document.getElementById('qb-items-list').innerHTML='';
-  if(currentProfile){
-    const n=document.getElementById('qb-agent-name');
-    const e=document.getElementById('qb-agent-email');
-    const p=document.getElementById('qb-agent-phone');
-    if(n)n.value=currentProfile.full_name||'';
-    if(e)e.value=currentProfile.email||'';
-    if(p)p.value=currentProfile.phone||'';
+  qbItemsList = [];
+  document.getElementById('qb-items-list').innerHTML = '';
+  if (currentProfile) {
+    const n = document.getElementById('qb-agent-name');
+    const e = document.getElementById('qb-agent-email');
+    const p = document.getElementById('qb-agent-phone');
+    if (n) n.value = currentProfile.full_name || '';
+    if (e) e.value = currentProfile.email || '';
+    if (p) p.value = currentProfile.phone || '';
   }
-  document.getElementById('qb-client-sel').value='';
+  document.getElementById('qb-client-sel').value = '';
   qbCalc();
-  qbTab('cli',document.querySelectorAll('.qb-tab')[0]);
+  qbTab('cli', document.querySelectorAll('.qb-tab')[0]);
   loadClients();
 }
 
-function qbTab(id,btn){
-  document.querySelectorAll('.qb-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.qb-tab').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById('qbp-'+id); if(el)el.classList.add('active');
-  if(btn)btn.classList.add('active');
-  if(id==='send')qbUpdateSummary();
+function qbTab(id, btn) {
+  document.querySelectorAll('.qb-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.qb-tab').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('qbp-' + id); if (el) el.classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'send') qbUpdateSummary();
 }
 
-function addServiceItem(){
-  const type=document.getElementById('svc-type')?.value||'Hotel';
-  const name=document.getElementById('svc-name')?.value.trim();
-  const desc=document.getElementById('svc-desc')?.value.trim();
-  const price=parseFloat(document.getElementById('svc-price')?.value)||0;
-  if(!name){showToast('Escribe el nombre del servicio');return;}
-  const id=Date.now();
-  qbItemsList.push({id,type,name,desc,price});
-  const el=document.createElement('div');
-  el.className='qb-item';el.id='qbi-'+id;
-  el.innerHTML=`<div class="qb-item-ico" style="font-size:13px;font-weight:500">${type.slice(0,3)}</div><div style="flex:1;min-width:0"><div class="qb-item-name">${name}</div><div class="qb-item-sub">${desc||'—'}</div></div><div class="qb-item-price">$${price.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="qb-item-del" onclick="removeQbItem(${id})">&#215;</div>`;
+function addServiceItem() {
+  const type = document.getElementById('svc-type')?.value || 'Hotel';
+  const name = document.getElementById('svc-name')?.value.trim();
+  const desc = document.getElementById('svc-desc')?.value.trim();
+  const price = parseFloat(document.getElementById('svc-price')?.value) || 0;
+  if (!name) { showToast('Escribe el nombre del servicio'); return; }
+  const id = Date.now();
+  qbItemsList.push({ id, type, name, desc, price });
+  const el = document.createElement('div');
+  el.className = 'qb-item'; el.id = 'qbi-' + id;
+  el.innerHTML = `<div class="qb-item-ico" style="font-size:13px;font-weight:500">${type.slice(0,3)}</div><div style="flex:1;min-width:0"><div class="qb-item-name">${name}</div><div class="qb-item-sub">${desc || '—'}</div></div><div class="qb-item-price">$${price.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="qb-item-del" onclick="removeQbItem(${id})">&#215;</div>`;
   document.getElementById('qb-items-list').appendChild(el);
-  ['svc-name','svc-desc'].forEach(x=>{const el=document.getElementById(x);if(el)el.value='';});
-  document.getElementById('svc-price').value='0';
+  ['svc-name','svc-desc'].forEach(x => { const el = document.getElementById(x); if (el) el.value = ''; });
+  document.getElementById('svc-price').value = '0';
   closeModal('modal-add-svc');
   qbCalc();
   showToast('Servicio agregado');
 }
 
-function removeQbItem(id){qbItemsList=qbItemsList.filter(i=>i.id!==id);document.getElementById('qbi-'+id)?.remove();qbCalc();}
+function removeQbItem(id) { qbItemsList = qbItemsList.filter(i => i.id !== id); document.getElementById('qbi-' + id)?.remove(); qbCalc(); }
 
-function qbCalc(){
-  const cur=document.getElementById('qb-cur')?.value||'USD';
-  const subtotal=qbItemsList.reduce((s,i)=>s+i.price,0);
-  const cf=parseFloat(document.getElementById('qb-cf-sel')?.value)||0;
-  const commPct=parseFloat(document.getElementById('qb-comm-pct')?.value)||12;
-  const fx=parseFloat(document.getElementById('qb-fx')?.value)||20;
-  const discount=parseFloat(document.getElementById('qb-discount')?.value)||0;
-  const total=subtotal+cf-discount;
-  const commUSD=subtotal*(commPct/100);
-  const fmt=n=>'$'+n.toLocaleString('es-MX',{maximumFractionDigits:0})+' '+cur;
-  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  s('qb-subtotal',fmt(subtotal));
-  s('qb-cf-disp',cf?fmt(cf):'—');
-  s('qb-total-disp',fmt(total));
-  s('qb-comm-disp','$'+commUSD.toLocaleString('es-MX',{maximumFractionDigits:0}));
-  s('qb-comm-mxn-disp','$'+(commUSD*fx).toLocaleString('es-MX',{maximumFractionDigits:0})+' MXN');
+function qbCalc() {
+  const cur = document.getElementById('qb-cur')?.value || 'USD';
+  const subtotal = qbItemsList.reduce((s, i) => s + i.price, 0);
+  const cf = parseFloat(document.getElementById('qb-cf-sel')?.value) || 0;
+  const commPct = parseFloat(document.getElementById('qb-comm-pct')?.value) || 12;
+  const fx = parseFloat(document.getElementById('qb-fx')?.value) || 20;
+  const discount = parseFloat(document.getElementById('qb-discount')?.value) || 0;
+  const total = subtotal + cf - discount;
+  const commUSD = subtotal * (commPct / 100);
+  const fmt = n => '$' + n.toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' ' + cur;
+  const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  s('qb-subtotal', fmt(subtotal));
+  s('qb-cf-disp', cf ? fmt(cf) : '—');
+  s('qb-total-disp', fmt(total));
+  s('qb-comm-disp', '$' + commUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
+  s('qb-comm-mxn-disp', '$' + (commUSD * fx).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN');
 }
 
-function qbUpdateSummary(){
-  const name=document.getElementById('qb-trip-name')?.value||'—';
-  const adults=document.getElementById('qb-adults')?.value||'2';
-  const start=document.getElementById('qb-start')?.value;
-  const end=document.getElementById('qb-end')?.value;
-  const total=document.getElementById('qb-total-disp')?.textContent||'$0';
-  const agentName=document.getElementById('qb-agent-name')?.value||'—';
-  const items=qbItemsList.length;
-  document.getElementById('qb-summary-text').innerHTML=`<strong>${name}</strong><br>${adults} personas · ${start?fmtDate(start):'—'} – ${end?fmtDate(end):'—'}<br>${items} servicio${items!==1?'s':''}<br><strong style="color:var(--green)">${total}</strong><br>Agente: ${agentName}`;
+function qbUpdateSummary() {
+  const name = document.getElementById('qb-trip-name')?.value || '—';
+  const adults = document.getElementById('qb-adults')?.value || '2';
+  const start = document.getElementById('qb-start')?.value;
+  const end = document.getElementById('qb-end')?.value;
+  const total = document.getElementById('qb-total-disp')?.textContent || '$0';
+  const agentName = document.getElementById('qb-agent-name')?.value || '—';
+  const items = qbItemsList.length;
+  document.getElementById('qb-summary-text').innerHTML = `<strong>${name}</strong><br>${adults} personas · ${start ? fmtDate(start) : '—'} – ${end ? fmtDate(end) : '—'}<br>${items} servicio${items !== 1 ? 's' : ''}<br><strong style="color:var(--green)">${total}</strong><br>Agente: ${agentName}`;
 }
 
-async function qbSaveToSupabase(){
-  const sv=id=>document.getElementById(id)?.value?.trim()||'';
-  const total=qbItemsList.reduce((s,i)=>s+i.price,0)+(parseFloat(document.getElementById('qb-cf-sel')?.value)||0);
-  const {error}=await sb.from('quotes').insert({
-    agent_id:currentProfile.id,
-    quote_num:'COT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*900)+100).padStart(3,'0'),
-    client_name:sv('qb-trip-name'),destination:sv('qb-trip-name'),
-    travel_start:sv('qb-start')||null,travel_end:sv('qb-end')||null,
-    package_type:sv('qb-type'),currency:sv('qb-cur'),total,status:'draft',
-    data:JSON.stringify({items:qbItemsList,agent:{name:sv('qb-agent-name'),email:sv('qb-agent-email'),phone:sv('qb-agent-phone')},note:sv('qb-client-note')})
+async function qbSaveToSupabase() {
+  const sv = id => document.getElementById(id)?.value?.trim() || '';
+  const total = qbItemsList.reduce((s, i) => s + i.price, 0) + (parseFloat(document.getElementById('qb-cf-sel')?.value) || 0);
+  const { error } = await sb.from('quotes').insert({
+    agent_id: currentProfile.id,
+    quote_num: 'COT-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 900) + 100).padStart(3, '0'),
+    client_name: sv('qb-trip-name'), destination: sv('qb-trip-name'),
+    travel_start: sv('qb-start') || null, travel_end: sv('qb-end') || null,
+    package_type: sv('qb-type'), currency: sv('qb-cur'), total, status: 'draft',
+    data: JSON.stringify({ items: qbItemsList, agent: { name: sv('qb-agent-name'), email: sv('qb-agent-email'), phone: sv('qb-agent-phone') }, note: sv('qb-client-note') })
   });
-  if(error){showToast('Error: '+error.message);return;}
+  if (error) { showToast('Error: ' + error.message); return; }
   showToast('Cotización guardada');
 }
 
-function qbGeneratePDF(){
-  const sv=id=>document.getElementById(id)?.value?.trim()||'';
-  const total=qbItemsList.reduce((s,i)=>s+i.price,0);
-  const cf=parseFloat(document.getElementById('qb-cf-sel')?.value)||0;
-  const discount=parseFloat(document.getElementById('qb-discount')?.value)||0;
-  const grandTotal=total+cf-discount;
-  const cur=sv('qb-cur');
-  const fmt=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:cur,minimumFractionDigits:0}).format(n);
-  const fmtD=d=>{if(!d)return'';const[y,m,dy]=d.split('-');const ms=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return`${parseInt(dy)} ${ms[parseInt(m)]} ${y}`;};
-  const totalPax=parseInt(sv('qb-adults'))+(parseInt(sv('qb-children'))||0);
-  const itemsHTML=qbItemsList.map(i=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EDEAE2"><div style="width:36px;height:36px;border-radius:10px;background:#E8F0EA;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;color:#3D6B4F">${i.type.slice(0,3)}</div><div style="flex:1"><div style="font-size:13px;font-weight:500">${i.name}</div><div style="font-size:11px;color:#8A9E92">${i.desc||'—'}</div></div><div style="font-size:14px;font-weight:500">${fmt(i.price)}</div></div>`).join('');
-  const doc=`<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;color:#1B2A22}</style></head><body><div style="background:#1B3A4B;padding:32px 40px 24px"><div style="font-family:Cormorant Garamond,serif;font-size:20px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:#F5F0E8;margin-bottom:3px">Elevie Travel.</div><div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,.5)">The Key to Elevated Journeys</div><div style="height:1px;background:rgba(245,240,232,.15);margin:14px 0"></div><div style="font-family:Cormorant Garamond,serif;font-size:24px;font-weight:300;color:#F5F0E8">${sv('qb-trip-name')||'Propuesta de viaje'}</div><div style="font-size:11px;color:rgba(245,240,232,.6);margin-top:4px">${fmtD(sv('qb-start'))} – ${fmtD(sv('qb-end'))} · ${totalPax} pasajero${totalPax!==1?'s':''}</div></div><div style="padding:24px 40px"><div style="font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#8A9E92;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #E2D9C8">Servicios incluidos</div>${itemsHTML}<div style="background:#1B3A4B;border-radius:12px;padding:16px 20px;margin-top:16px;color:#F5F0E8;text-align:center"><div style="font-family:Cormorant Garamond,serif;font-size:26px;font-weight:300;margin-bottom:4px">${fmt(grandTotal)} TOTAL</div><div style="font-size:11px;opacity:.6">Los precios pueden variar según el día de reserva</div></div>${sv('qb-client-note')?`<div style="padding:10px 12px;background:#FDF3E7;border-left:3px solid #B8905A;margin-top:10px;font-size:11px;color:#4A5E52;line-height:1.7">${sv('qb-client-note').replace(/\n/g,'<br>')}</div>`:''}<div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid #E2D9C8;font-family:Cormorant Garamond,serif;font-size:13px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#8A9E92">Gracias por elegirnos</div></div><div style="background:#EDE7D9;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #E2D9C8"><div style="font-family:Cormorant Garamond,serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#1B3A4B">Elevie Travel.</div><div style="font-size:9px;color:#8A9E92;text-align:right">${sv('qb-agent-email')||'info@elevietravel.com'}<br>${sv('qb-agent-name')||''}</div></div></body></html>`;
+function qbGeneratePDF() {
+  const sv = id => document.getElementById(id)?.value?.trim() || '';
+  const total = qbItemsList.reduce((s, i) => s + i.price, 0);
+  const cf = parseFloat(document.getElementById('qb-cf-sel')?.value) || 0;
+  const discount = parseFloat(document.getElementById('qb-discount')?.value) || 0;
+  const grandTotal = total + cf - discount;
+  const cur = sv('qb-cur');
+  const fmt = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur, minimumFractionDigits: 0 }).format(n);
+  const fmtD = d => { if (!d) return ''; const [y,m,dy] = d.split('-'); const ms = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']; return `${parseInt(dy)} ${ms[parseInt(m)]} ${y}`; };
+  const totalPax = parseInt(sv('qb-adults')) + (parseInt(sv('qb-children')) || 0);
+  const itemsHTML = qbItemsList.map(i =>
+    `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EDEAE2"><div style="width:36px;height:36px;border-radius:10px;background:#E8F0EA;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;color:#3D6B4F">${i.type.slice(0,3)}</div><div style="flex:1"><div style="font-size:13px;font-weight:500">${i.name}</div><div style="font-size:11px;color:#8A9E92">${i.desc || '—'}</div></div><div style="font-size:14px;font-weight:500">${fmt(i.price)}</div></div>`
+  ).join('');
+  const doc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;color:#1B2A22}</style></head><body><div style="background:#1B3A4B;padding:32px 40px 24px"><div style="font-family:Cormorant Garamond,serif;font-size:20px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:#F5F0E8;margin-bottom:3px">Elevie Travel.</div><div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,.5)">The Key to Elevated Journeys</div><div style="height:1px;background:rgba(245,240,232,.15);margin:14px 0"></div><div style="font-family:Cormorant Garamond,serif;font-size:24px;font-weight:300;color:#F5F0E8">${sv('qb-trip-name') || 'Propuesta de viaje'}</div><div style="font-size:11px;color:rgba(245,240,232,.6);margin-top:4px">${fmtD(sv('qb-start'))} – ${fmtD(sv('qb-end'))} · ${totalPax} pasajero${totalPax!==1?'s':''}</div></div><div style="padding:24px 40px"><div style="font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#8A9E92;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #E2D9C8">Servicios incluidos</div>${itemsHTML}<div style="background:#1B3A4B;border-radius:12px;padding:16px 20px;margin-top:16px;color:#F5F0E8;text-align:center"><div style="font-family:Cormorant Garamond,serif;font-size:26px;font-weight:300;margin-bottom:4px">${fmt(grandTotal)} TOTAL</div><div style="font-size:11px;opacity:.6">Los precios pueden variar según el día de reserva</div></div>${sv('qb-client-note') ? `<div style="padding:10px 12px;background:#FDF3E7;border-left:3px solid #B8905A;margin-top:10px;font-size:11px;color:#4A5E52;line-height:1.7">${sv('qb-client-note').replace(/\n/g,'<br>')}</div>` : ''}<div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid #E2D9C8;font-family:Cormorant Garamond,serif;font-size:13px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#8A9E92">Gracias por elegirnos</div></div><div style="background:#EDE7D9;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #E2D9C8"><div style="font-family:Cormorant Garamond,serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#1B3A4B">Elevie Travel.</div><div style="font-size:9px;color:#8A9E92;text-align:right">${sv('qb-agent-email') || 'info@elevietravel.com'}<br>${sv('qb-agent-name') || ''}</div></div></body></html>`;
 
-const blob=new Blob([doc],{type:‘text/html’});
-const url=URL.createObjectURL(blob);
-try{const win=window.open(url,’_blank’);if(win){win.onload=()=>setTimeout(()=>win.print(),800);return;}}catch(e){}
-const a=document.createElement(‘a’);a.href=url;a.download=‘propuesta-elevie.html’;a.click();
+const blob = new Blob([doc], { type: ‘text/html’ });
+const url = URL.createObjectURL(blob);
+try { const win = window.open(url, ‘_blank’); if (win) { win.onload = () => setTimeout(() => win.print(), 800); return; } } catch(e) {}
+const a = document.createElement(‘a’); a.href = url; a.download = ‘propuesta-elevie.html’; a.click();
 showToast(‘PDF generado’);
 }
 
 // PROFILE
-async function saveProfile(){
-const name=document.getElementById(‘perfil-name-inp’)?.value.trim();
-const phone=document.getElementById(‘perfil-phone-inp’)?.value.trim();
-const pw=document.getElementById(‘perfil-pw-inp’)?.value;
-if(!name){showToast(‘El nombre es obligatorio’);return;}
-const updates={full_name:name,phone:phone||null,avatar_color:selectedColor||currentProfile?.avatar_color||’#3D6B4F’};
-await sb.from(‘profiles’).update(updates).eq(‘id’,currentProfile.id);
-currentProfile={…currentProfile,…updates};
-const ini=name.split(’ ‘).map(n=>n[0]).join(’’).toUpperCase().slice(0,2);
-const av=document.getElementById(‘hdr-avatar’);
-if(av){av.textContent=ini;av.style.background=updates.avatar_color;}
-document.getElementById(‘perfil-av’).textContent=ini;
-document.getElementById(‘perfil-name’).textContent=name;
-if(pw&&pw.length>=6){
-const{error}=await sb.auth.updateUser({password:pw});
-if(error){showToast(‘Error: ‘+error.message);return;}
-document.getElementById(‘perfil-pw-inp’).value=’’;
+async function saveProfile() {
+const name = document.getElementById(‘perfil-name-inp’)?.value.trim();
+const phone = document.getElementById(‘perfil-phone-inp’)?.value.trim();
+const pw = document.getElementById(‘perfil-pw-inp’)?.value;
+if (!name) { showToast(‘El nombre es obligatorio’); return; }
+const updates = { full_name: name, phone: phone || null, avatar_color: selectedColor || currentProfile?.avatar_color || ‘#3D6B4F’ };
+await sb.from(‘profiles’).update(updates).eq(‘id’, currentProfile.id);
+currentProfile = { …currentProfile, …updates };
+const ini = name.split(’ ‘).map(n => n[0]).join(’’).toUpperCase().slice(0, 2);
+const av = document.getElementById(‘hdr-avatar’);
+if (av) { av.textContent = ini; av.style.background = updates.avatar_color; }
+document.getElementById(‘perfil-av’).textContent = ini;
+document.getElementById(‘perfil-name’).textContent = name;
+if (pw && pw.length >= 6) {
+const { error } = await sb.auth.updateUser({ password: pw });
+if (error) { showToast(’Error: ’ + error.message); return; }
+document.getElementById(‘perfil-pw-inp’).value = ‘’;
 }
 showToast(‘Perfil actualizado’);
 closeModal(‘modal-perfil’);
 }
 
-function pickColor(el,color){
-selectedColor=color;
-document.querySelectorAll(’#color-picker-modal div’).forEach(d=>d.style.borderColor=‘transparent’);
-el.style.borderColor=‘white’;
+function pickColor(el, color) {
+selectedColor = color;
+document.querySelectorAll(’#color-picker-modal div’).forEach(d => d.style.borderColor = ‘transparent’);
+el.style.borderColor = ‘white’;
 }
 
 // UTILS
-function fmtDate(d){if(!d)return’—’;const[y,m,dy]=d.split(’-’);const ms=[’’,‘Ene’,‘Feb’,‘Mar’,‘Abr’,‘May’,‘Jun’,‘Jul’,‘Ago’,‘Sep’,‘Oct’,‘Nov’,‘Dic’];return`${parseInt(dy)} ${ms[parseInt(m)]}`;}
-function statusLabel(s){return{draft:‘Borrador’,sent:‘Enviada’,confirmed:‘Confirmado’,cancelled:‘Cancelado’,completed:‘Completado’,pending:‘Pendiente’}[s]||s;}
-function showToast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.classList.add(‘show’);clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove(‘show’),2600);}
-function openModal(id){document.getElementById(id)?.classList.add(‘open’)}
-function closeModal(id){document.getElementById(id)?.classList.remove(‘open’)}
-document.querySelectorAll(’.modal-overlay’).forEach(o=>{o.addEventListener(‘click’,e=>{if(e.target===o)o.classList.remove(‘open’);});});
-let _confirmResolve=null;
-function safeConfirm(msg){return new Promise(resolve=>{_confirmResolve=resolve;document.getElementById(‘confirm-msg-text’).textContent=msg;document.getElementById(‘confirm-modal’).classList.add(‘open’);});}
-function resolveConfirm(val){document.getElementById(‘confirm-modal’).classList.remove(‘open’);if(_confirmResolve){_confirmResolve(val);_confirmResolve=null;}}
+function fmtDate(d) { if (!d) return ‘—’; const [y,m,dy] = d.split(’-’); const ms = [’’,‘Ene’,‘Feb’,‘Mar’,‘Abr’,‘May’,‘Jun’,‘Jul’,‘Ago’,‘Sep’,‘Oct’,‘Nov’,‘Dic’]; return `${parseInt(dy)} ${ms[parseInt(m)]}`; }
+function statusLabel(s) { return { draft:‘Borrador’, sent:‘Enviada’, confirmed:‘Confirmado’, cancelled:‘Cancelado’, completed:‘Completado’, pending:‘Pendiente’ }[s] || s; }
+function showToast(msg) { const t = document.getElementById(‘toast’); t.textContent = msg; t.classList.add(‘show’); clearTimeout(window._tt); window._tt = setTimeout(() => t.classList.remove(‘show’), 2600); }
+function openModal(id) { document.getElementById(id)?.classList.add(‘open’); }
+function closeModal(id) { document.getElementById(id)?.classList.remove(‘open’); }
+document.querySelectorAll(’.modal-overlay’).forEach(o => { o.addEventListener(‘click’, e => { if (e.target === o) o.classList.remove(‘open’); }); });
+let _confirmResolve = null;
+function safeConfirm(msg) { return new Promise(resolve => { _confirmResolve = resolve; document.getElementById(‘confirm-msg-text’).textContent = msg; document.getElementById(‘confirm-modal’).classList.add(‘open’); }); }
+function resolveConfirm(val) { document.getElementById(‘confirm-modal’).classList.remove(‘open’); if (_confirmResolve) { _confirmResolve(val); _confirmResolve = null; } }
 </script>
 
 </body>
