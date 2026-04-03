@@ -3,890 +3,1839 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Elevie">
-<meta name="color-scheme" content="light">
-<title>Elevie Travel — Intranet</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Elevie Travel · Cotizaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{
-  --bg:#1B3A4B;--bg2:#16303E;
-  --surf:#F5F0E8;--surf2:#EDE7D9;--surf3:#E2D9C8;
-  --green:#3D6B4F;--green-l:#5A8F6A;--green-xl:#E8F0EA;
-  --text:#1B2A22;--text-m:#4A5E52;--text-l:#8A9E92;
-  --gold:#B8905A;--warn:#C17B3A;--danger:#C0514A;
-  --border:rgba(27,58,75,.12);
-  --sage:#A8B6A2;
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);height:100%;overflow:hidden}
+  :root {
+    --teal: #1B3A4B;
+    --green: #3D6B4F;
+    --cream: #F5F0E8;
+    --gold: #B8905A;
+    --gold-light: #D4AF7A;
+    --cream-dark: #EDE7D8;
+    --teal-light: #2A5470;
+    --red: #C0392B;
+    --text: #1B3A4B;
+    --text-soft: #5a7080;
+    --white: #FFFFFF;
+    --shadow: 0 2px 16px rgba(27,58,75,0.10);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; }
 
-/* APP */
-#app{display:flex;position:fixed;inset:0;flex-direction:column;background:var(–bg)}
-.app-header{background:var(–bg);padding:16px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;padding-top:calc(16px + env(safe-area-inset-top))}
-.header-brand .hname{font-family:“Cormorant Garamond”,serif;font-size:20px;font-weight:400;color:var(–surf);letter-spacing:.06em}
-.header-brand .htag{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-top:1px}
-.header-avatar{width:36px;height:36px;border-radius:50%;background:var(–green);display:flex;align-items:center;justify-content:center;font-family:“Cormorant Garamond”,serif;font-size:15px;color:var(–surf);border:2px solid rgba(245,240,232,.2);cursor:pointer;flex-shrink:0}
-.app-body{flex:1;overflow-y:auto;background:#F5F0E8;border-radius:20px 20px 0 0;-webkit-overflow-scrolling:touch}
-.app-body::-webkit-scrollbar{display:none}
-.panel{display:none;padding:18px 16px;padding-bottom:calc(80px + env(safe-area-inset-bottom));background:#F5F0E8}
-.panel.active{display:block;animation:fadeUp .2s ease;background:#F5F0E8}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(–bg);border-top:1px solid rgba(245,240,232,.08);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom));z-index:100}
-.nb{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 2px;opacity:.4;transition:opacity .15s;user-select:none}
-.nb.active{opacity:1}
-.nb:active{opacity:.65}
-.nb-ico{font-size:19px;line-height:1;position:relative}
-.nb-badge{position:absolute;top:-3px;right:-6px;background:var(–green-l);color:white;font-size:9px;border-radius:10px;padding:0 4px;min-width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-family:“DM Sans”,sans-serif}
-.nb-lbl{font-size:8.5px;letter-spacing:.06em;color:var(–surf);text-transform:uppercase;font-weight:500}
-.slabel{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A9E92;margin-bottom:10px;margin-top:20px}
-.slabel:first-child{margin-top:0}
-.greeting-main{font-family:“Cormorant Garamond”,serif;font-size:24px;font-weight:300;color:#1B2A22;line-height:1.25;margin-bottom:3px}
-.greeting-sub{font-size:12.5px;color:#8A9E92;margin-bottom:16px}
-.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px}
-.sbox{border-radius:14px;padding:14px;position:relative;overflow:hidden}
-.sbox-dark{background:#1B3A4B;color:#F5F0E8}
-.sbox-green{background:#3D6B4F;color:white}
-.sbox-light{background:white;border:1.5px solid rgba(27,58,75,.12);color:#1B2A22}
-.sbox-num{font-family:“Cormorant Garamond”,serif;font-size:30px;font-weight:300;line-height:1;margin-bottom:3px}
-.sbox-lbl{font-size:10.5px;opacity:.7;letter-spacing:.03em}
-.sbox-num.warn{color:#C17B3A}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px}
-.qcard{background:white;border:1.5px solid rgba(27,58,75,.12);border-radius:14px;padding:14px;cursor:pointer;transition:transform .15s}
-.qcard:active{transform:scale(.97)}
-.qcard-ico{font-size:22px;margin-bottom:7px;color:#1B2A22}
-.qcard-title{font-size:13.5px;font-weight:500;color:#1B2A22;margin-bottom:2px}
-.qcard-desc{font-size:11px;color:#8A9E92}
-.tcard{background:white;border:1.5px solid rgba(27,58,75,.12);border-radius:14px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform .15s}
-.tcard:active{transform:scale(.99)}
-.tcard-emoji{width:42px;height:42px;border-radius:12px;background:#E8F0EA;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.tcard-name{font-size:13.5px;font-weight:500;color:#1B2A22;margin-bottom:2px}
-.tcard-dest{font-size:11.5px;color:#8A9E92;margin-bottom:4px}
-.tcard-date{font-size:11.5px;color:#3D6B4F;font-weight:500}
-.tcard-right{margin-left:auto;text-align:right;flex-shrink:0}
-.tcard-amt{font-size:14px;font-weight:500;color:#1B2A22;margin-top:4px}
-.pill{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10.5px;font-weight:500}
-.pill-g{background:var(–green-xl);color:var(–green)}
-.pill-w{background:#FEF3E2;color:var(–warn)}
-.pill-d{background:#FDECEA;color:var(–danger)}
-.pill-b{background:#EAF0F5;color:var(–bg)}
-.pill-go{background:#FDF3E7;color:var(–gold)}
-.scard{background:white;border:1.5px solid var(–border);border-radius:14px;margin-bottom:14px;overflow:hidden}
-.search-bar{display:flex;align-items:center;gap:8px;background:white;border:1.5px solid var(–border);border-radius:12px;padding:10px 13px;margin-bottom:14px}
-.search-bar input{border:none;outline:none;background:none;font-size:14px;color:var(–text);font-family:“DM Sans”,sans-serif;flex:1;-webkit-appearance:none}
-.search-bar input::placeholder{color:var(–text-l)}
-.ccard{background:white;border:1.5px solid var(–border);border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;transition:transform .15s}
-.ccard:active{transform:scale(.99)}
-.cav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:“Cormorant Garamond”,serif;font-size:16px;color:white;flex-shrink:0;font-weight:400}
-.cname{font-size:14px;font-weight:500;margin-bottom:2px}
-.cemail{font-size:11.5px;color:var(–text-l);margin-bottom:4px}
-.qb-tab-row{display:flex;background:var(–bg);border-radius:12px;overflow:hidden;margin-bottom:1px}
-.qb-tab{flex:1;background:transparent;border:none;color:rgba(245,240,232,.45);font-family:“DM Sans”,sans-serif;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:10px 4px;cursor:pointer;transition:all .2s;text-align:center}
-.qb-tab.active{background:var(–surf);color:var(–text)}
-.qb-panel{display:none;background:var(–surf);border-radius:0 0 14px 14px;padding:16px}
-.qb-panel.active{display:block}
-.qb-item{background:white;border:1.5px solid var(–border);border-radius:12px;padding:12px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.qb-item-ico{width:38px;height:38px;border-radius:10px;background:var(–green-xl);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.qb-item-name{font-size:13.5px;font-weight:500}
-.qb-item-sub{font-size:11px;color:var(–text-l)}
-.qb-item-price{font-size:14px;font-weight:500;margin-left:auto;flex-shrink:0}
-.qb-item-del{color:var(–text-l);font-size:18px;cursor:pointer;padding:4px;line-height:1;margin-left:4px;flex-shrink:0}
-.qb-total-bar{background:var(–bg);border-radius:14px;padding:14px;margin-bottom:10px;color:var(–surf)}
-.qt-row{display:flex;justify-content:space-between;font-size:12.5px;opacity:.7;margin-bottom:5px}
-.qt-total{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;font-weight:500;margin-top:9px;padding-top:9px;border-top:1px solid rgba(245,240,232,.2)}
-.qt-total-val{font-family:“Cormorant Garamond”,serif;font-size:24px;font-weight:300}
-.fg{margin-bottom:12px}
-.flbl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(–text-l);margin-bottom:5px;display:block;font-weight:500}
-.finput,.fselect,.ftextarea{width:100%;background:var(–surf2);border:1.5px solid var(–border);border-radius:11px;padding:11px 13px;font-size:14px;color:var(–text);font-family:“DM Sans”,sans-serif;outline:none;transition:border .18s;-webkit-appearance:none}
-.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(–green);background:white}
-.ftextarea{resize:vertical;min-height:72px}
-.btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 18px;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:“DM Sans”,sans-serif;transition:all .15s;width:100%;margin-bottom:8px}
-.btn:active{transform:scale(.98)}
-.btn-dark{background:var(–bg);color:var(–surf)}
-.btn-green{background:var(–green);color:white}
-.btn-out{background:transparent;color:var(–text);border:1.5px solid var(–border)}
-.btn-sage{background:var(–sage);color:var(–bg)}
-.add-row{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:transparent;border:1.5px dashed var(–border);border-radius:12px;color:var(–text-l);font-size:13.5px;cursor:pointer;margin-bottom:12px;font-family:“DM Sans”,sans-serif;transition:all .18s;width:100%}
-.add-row:active{border-color:var(–green);color:var(–green);background:var(–green-xl)}
-.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.cal-month{font-family:“Cormorant Garamond”,serif;font-size:20px;font-weight:400}
-.cal-nav{width:34px;height:34px;border-radius:50%;background:white;border:1.5px solid var(–border);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(–text)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px}
-.cal-dh{text-align:center;font-size:9.5px;color:var(–text-l);letter-spacing:.08em;padding:5px 0}
-.cal-cell{background:white;border:1.5px solid var(–border);border-radius:8px;min-height:52px;padding:5px 4px;font-size:11px}
-.cal-cell.today{border-color:var(–green)}
-.cal-cell.empty{background:transparent;border-color:transparent}
-.cal-n{font-size:11px;color:var(–text-l);margin-bottom:2px}
-.cal-cell.today .cal-n{color:var(–green);font-weight:600}
-.cal-ev{background:var(–green-xl);border-left:2px solid var(–green);border-radius:2px;padding:1px 3px;font-size:8.5px;color:var(–green);margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.fin-box{background:white;border:1.5px solid var(–border);border-radius:14px;padding:14px;flex:1}
-.fin-val{font-family:“Cormorant Garamond”,serif;font-size:26px;font-weight:300;color:var(–text);margin-bottom:3px}
-.fin-val.green{color:var(–green)}
-.fin-lbl{font-size:10px;color:var(–text-l);letter-spacing:.08em;text-transform:uppercase}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(27,58,75,.55);z-index:500;backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(–surf);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
-.modal::-webkit-scrollbar{display:none}
-.modal-handle{width:36px;height:4px;background:var(–border);border-radius:2px;margin:12px auto 0}
-.modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid var(–border)}
-.modal-title{font-size:16px;font-weight:500}
-.modal-close{width:28px;height:28px;border-radius:50%;background:var(–surf2);border:1px solid var(–border);color:var(–text-l);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
-.modal-body{padding:16px 18px}
-.info-row{display:flex;gap:10px;margin-bottom:14px}
-.info-box{flex:1;background:white;border:1.5px solid var(–border);border-radius:12px;padding:11px;text-align:center}
-.info-box-val{font-family:“Cormorant Garamond”,serif;font-size:22px;font-weight:300;color:var(–text)}
-.info-box-lbl{font-size:10px;color:var(–text-l);margin-top:2px}
-#toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(16px);background:var(–bg);color:var(–surf);border-radius:30px;padding:10px 18px;font-size:13px;z-index:9000;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;max-width:340px;text-align:center}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#confirm-modal{display:none;position:fixed;inset:0;background:rgba(27,58,75,.55);z-index:8000;backdrop-filter:blur(4px);align-items:center;justify-content:center}
-#confirm-modal.open{display:flex}
-.confirm-box{background:var(–surf);border-radius:18px;padding:24px 22px;max-width:320px;width:90%;text-align:center}
-.confirm-msg{font-size:14px;line-height:1.6;margin-bottom:18px;color:var(–text-m)}
-.confirm-btns{display:flex;gap:8px}
-.confirm-btns .btn{margin-bottom:0}
-.mt{margin-top:16px}
+/* ─── AUTH ─── */
+#auth-screen {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(–teal);
+background-image: radial-gradient(ellipse at 20% 50%, rgba(61,107,79,0.3) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 20%, rgba(184,144,90,0.15) 0%, transparent 50%);
+padding: 24px;
+}
+.auth-card {
+background: var(–cream);
+border-radius: 20px;
+padding: 40px 32px;
+width: 100%;
+max-width: 380px;
+box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.auth-logo {
+text-align: center;
+margin-bottom: 32px;
+}
+.auth-logo h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 32px;
+font-weight: 300;
+color: var(–teal);
+letter-spacing: 0.08em;
+}
+.auth-logo p {
+font-size: 11px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–gold);
+margin-top: 4px;
+}
+.auth-divider {
+width: 40px;
+height: 1px;
+background: var(–gold);
+margin: 12px auto;
+opacity: 0.5;
+}
+.auth-tab-row {
+display: flex;
+gap: 0;
+background: var(–cream-dark);
+border-radius: var(–radius-sm);
+padding: 3px;
+margin-bottom: 24px;
+}
+.auth-tab {
+flex: 1;
+padding: 8px;
+border: none;
+background: transparent;
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-soft);
+cursor: pointer;
+transition: all 0.2s;
+}
+.auth-tab.active {
+background: var(–white);
+color: var(–teal);
+font-weight: 500;
+box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 6px; }
+.field input, .field select {
+width: 100%;
+padding: 12px 14px;
+border: 1.5px solid var(–cream-dark);
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+color: var(–text);
+background: var(–white);
+outline: none;
+transition: border-color 0.2s;
+}
+.field input:focus, .field select:focus { border-color: var(–gold); }
+.btn-primary {
+width: 100%;
+padding: 13px;
+background: var(–teal);
+color: var(–cream);
+border: none;
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 500;
+letter-spacing: 0.04em;
+cursor: pointer;
+transition: background 0.2s;
+margin-top: 4px;
+}
+.btn-primary:hover { background: var(–teal-light); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.auth-error {
+background: #fde8e8;
+color: var(–red);
+border-radius: var(–radius-sm);
+padding: 10px 14px;
+font-size: 13px;
+margin-bottom: 14px;
+display: none;
+}
+
+/* ─── APP SHELL ─── */
+#app { display: none; flex-direction: column; min-height: 100vh; }
+
+/* ─── HEADER ─── */
+.header {
+background: var(–teal);
+padding: 0 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+height: 56px;
+position: sticky;
+top: 0;
+z-index: 100;
+box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.header-brand {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+font-weight: 300;
+color: var(–cream);
+letter-spacing: 0.1em;
+}
+.header-brand span { color: var(–gold); }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-user {
+font-size: 12px;
+color: rgba(245,240,232,0.6);
+letter-spacing: 0.04em;
+max-width: 120px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.btn-icon {
+background: rgba(255,255,255,0.1);
+border: none;
+border-radius: 8px;
+width: 34px;
+height: 34px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+color: var(–cream);
+transition: background 0.2s;
+font-size: 16px;
+}
+.btn-icon:hover { background: rgba(255,255,255,0.2); }
+
+/* ─── CONTENT ─── */
+.content { flex: 1; padding: 20px 16px 80px; max-width: 480px; margin: 0 auto; width: 100%; }
+
+/* ─── DASHBOARD ─── */
+.section-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 26px;
+font-weight: 400;
+color: var(–teal);
+margin-bottom: 4px;
+}
+.section-sub {
+font-size: 12px;
+color: var(–text-soft);
+margin-bottom: 20px;
+letter-spacing: 0.03em;
+}
+
+/* Stats row */
+.stats-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-bottom: 20px;
+}
+.stat-card {
+background: var(–white);
+border-radius: var(–radius);
+padding: 16px;
+box-shadow: var(–shadow);
+border-left: 3px solid transparent;
+}
+.stat-card.gold { border-left-color: var(–gold); }
+.stat-card.green { border-left-color: var(–green); }
+.stat-card.teal { border-left-color: var(–teal); }
+.stat-card.red { border-left-color: #E8A87C; }
+.stat-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 6px; }
+.stat-value { font-family: ‘Cormorant Garamond’, serif; font-size: 26px; font-weight: 500; color: var(–teal); line-height: 1; }
+.stat-value.small { font-size: 18px; }
+.stat-currency { font-size: 11px; color: var(–text-soft); margin-top: 3px; }
+
+/* Quotes list */
+.list-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 12px;
+}
+.list-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 20px;
+font-weight: 400;
+color: var(–teal);
+}
+.btn-new {
+background: var(–gold);
+color: var(–white);
+border: none;
+border-radius: 20px;
+padding: 8px 16px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 12px;
+font-weight: 500;
+letter-spacing: 0.04em;
+cursor: pointer;
+transition: background 0.2s;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.btn-new:hover { background: var(–gold-light); }
+
+/* Filters */
+.filter-row {
+display: flex;
+gap: 8px;
+margin-bottom: 14px;
+overflow-x: auto;
+padding-bottom: 4px;
+scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-chip {
+padding: 6px 14px;
+border-radius: 20px;
+border: 1.5px solid var(–cream-dark);
+background: transparent;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 12px;
+color: var(–text-soft);
+cursor: pointer;
+white-space: nowrap;
+transition: all 0.2s;
+}
+.filter-chip.active {
+background: var(–teal);
+border-color: var(–teal);
+color: var(–cream);
+}
+
+/* Search */
+.search-bar {
+position: relative;
+margin-bottom: 14px;
+}
+.search-bar input {
+width: 100%;
+padding: 10px 14px 10px 38px;
+border: 1.5px solid var(–cream-dark);
+border-radius: 20px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+background: var(–white);
+color: var(–text);
+outline: none;
+transition: border-color 0.2s;
+}
+.search-bar input:focus { border-color: var(–gold); }
+.search-icon {
+position: absolute;
+left: 12px;
+top: 50%;
+transform: translateY(-50%);
+color: var(–text-soft);
+font-size: 14px;
+}
+
+/* Quote Card */
+.quote-card {
+background: var(–white);
+border-radius: var(–radius);
+padding: 16px;
+margin-bottom: 10px;
+box-shadow: var(–shadow);
+cursor: pointer;
+transition: transform 0.15s, box-shadow 0.15s;
+border-left: 3px solid transparent;
+}
+.quote-card:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(27,58,75,0.14); }
+.quote-card.cotizacion { border-left-color: var(–gold); }
+.quote-card.confirmada { border-left-color: var(–green); }
+.quote-card.cancelada { border-left-color: #ccc; }
+.quote-card.en-proceso { border-left-color: var(–teal-light); }
+.qc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.qc-client { font-weight: 500; font-size: 15px; color: var(–teal); }
+.qc-dest { font-size: 12px; color: var(–text-soft); margin-top: 1px; }
+.status-badge {
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 3px 9px;
+border-radius: 10px;
+white-space: nowrap;
+}
+.badge-cotizacion { background: #FEF3E2; color: #B8905A; }
+.badge-confirmada { background: #E8F5EE; color: #3D6B4F; }
+.badge-cancelada { background: #F2F2F2; color: #999; }
+.badge-en-proceso { background: #E8F0F5; color: #2A5470; }
+.qc-meta { display: flex; align-items: center; justify-content: space-between; }
+.qc-amount { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–teal); }
+.qc-amount span { font-size: 12px; font-family: ‘DM Sans’, sans-serif; color: var(–text-soft); }
+.qc-date { font-size: 11px; color: var(–text-soft); }
+
+.empty-state {
+text-align: center;
+padding: 48px 20px;
+color: var(–text-soft);
+}
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-text { font-family: ‘Cormorant Garamond’, serif; font-size: 18px; color: var(–text-soft); }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(27,58,75,0.5);
+backdrop-filter: blur(4px);
+z-index: 200;
+display: none;
+align-items: flex-end;
+justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+background: var(–cream);
+border-radius: 20px 20px 0 0;
+width: 100%;
+max-width: 480px;
+max-height: 92vh;
+overflow-y: auto;
+padding: 0 0 40px;
+animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-handle {
+width: 36px;
+height: 4px;
+background: rgba(27,58,75,0.2);
+border-radius: 2px;
+margin: 12px auto 0;
+}
+.modal-header {
+padding: 16px 20px 12px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px solid var(–cream-dark);
+position: sticky;
+top: 0;
+background: var(–cream);
+z-index: 10;
+}
+.modal-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+font-weight: 400;
+color: var(–teal);
+}
+.modal-body { padding: 20px; }
+
+/* Form sections */
+.form-section {
+background: var(–white);
+border-radius: var(–radius);
+padding: 16px;
+margin-bottom: 12px;
+}
+.form-section-title {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–gold);
+font-weight: 500;
+margin-bottom: 14px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.form-section-title::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–cream-dark);
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+/* Amount input with currency */
+.amount-wrap { position: relative; }
+.amount-wrap .currency-prefix {
+position: absolute;
+left: 12px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 13px;
+color: var(–text-soft);
+pointer-events: none;
+}
+.amount-wrap input { padding-left: 36px !important; }
+
+/* Calculated fields */
+.calc-field {
+background: var(–cream);
+border: 1.5px solid var(–cream-dark);
+border-radius: var(–radius-sm);
+padding: 10px 14px;
+font-size: 14px;
+color: var(–text);
+}
+.calc-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 4px; }
+
+/* Commission row */
+.commission-row {
+background: linear-gradient(135deg, #E8F5EE 0%, #F0F7F3 100%);
+border: 1px solid rgba(61,107,79,0.2);
+border-radius: var(–radius);
+padding: 14px 16px;
+margin-bottom: 12px;
+}
+.commission-row .comm-title {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–green);
+font-weight: 500;
+margin-bottom: 10px;
+}
+.commission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.comm-item label { font-size: 11px; color: var(–text-soft); display: block; margin-bottom: 3px; }
+.comm-value { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–green); }
+
+/* Deposit row */
+.deposit-row {
+background: linear-gradient(135deg, #FEF6EC 0%, #FDF3E6 100%);
+border: 1px solid rgba(184,144,90,0.2);
+border-radius: var(–radius);
+padding: 14px 16px;
+margin-bottom: 12px;
+}
+.deposit-row .dep-title {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–gold);
+font-weight: 500;
+margin-bottom: 10px;
+}
+.deposit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dep-item label { font-size: 11px; color: var(–text-soft); display: block; margin-bottom: 3px; }
+.dep-value { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–gold); }
+
+/* Action buttons */
+.modal-actions {
+display: flex;
+gap: 10px;
+padding: 0 20px;
+margin-top: 8px;
+}
+.btn-secondary {
+flex: 1;
+padding: 12px;
+background: transparent;
+border: 1.5px solid var(–cream-dark);
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-soft);
+cursor: pointer;
+transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(–teal); color: var(–teal); }
+.btn-save {
+flex: 2;
+padding: 12px;
+background: var(–teal);
+border: none;
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 500;
+color: var(–cream);
+cursor: pointer;
+transition: background 0.2s;
+}
+.btn-save:hover { background: var(–teal-light); }
+.btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-delete {
+padding: 12px 16px;
+background: transparent;
+border: 1.5px solid #f0d0d0;
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–red);
+cursor: pointer;
+transition: all 0.2s;
+}
+.btn-delete:hover { background: #fde8e8; }
+
+/* ─── DETAIL VIEW ─── */
+.detail-hero {
+background: var(–teal);
+background-image: linear-gradient(135deg, var(–teal) 0%, #254D62 100%);
+padding: 20px;
+margin: -20px -16px 20px;
+color: var(–cream);
+}
+.detail-back {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 12px;
+color: rgba(245,240,232,0.6);
+margin-bottom: 12px;
+cursor: pointer;
+background: none;
+border: none;
+padding: 0;
+transition: color 0.2s;
+}
+.detail-back:hover { color: var(–cream); }
+.detail-client { font-family: ‘Cormorant Garamond’, serif; font-size: 28px; font-weight: 300; letter-spacing: 0.04em; }
+.detail-dest { font-size: 13px; color: rgba(245,240,232,0.7); margin-top: 2px; margin-bottom: 14px; }
+.detail-amount-row { display: flex; align-items: flex-end; justify-content: space-between; }
+.detail-total { font-family: ‘Cormorant Garamond’, serif; font-size: 36px; font-weight: 400; color: var(–gold-light); }
+.detail-total small { font-size: 16px; margin-left: 4px; color: rgba(184,144,90,0.8); }
+
+/* Costs breakdown */
+.costs-table { width: 100%; }
+.costs-row {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid var(–cream-dark);
+font-size: 13px;
+}
+.costs-row:last-child { border-bottom: none; }
+.costs-label { color: var(–text-soft); display: flex; align-items: center; gap: 8px; }
+.costs-icon { font-size: 14px; }
+.costs-value { font-weight: 500; color: var(–teal); }
+.costs-value.zero { color: #ccc; }
+
+/* Payments section */
+.payment-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid var(–cream-dark);
+font-size: 13px;
+}
+.payment-item:last-child { border-bottom: none; }
+.payment-date { font-size: 11px; color: var(–text-soft); margin-top: 2px; }
+.payment-amount { font-weight: 500; color: var(–green); }
+.btn-add-payment {
+width: 100%;
+padding: 10px;
+border: 1.5px dashed var(–gold);
+border-radius: var(–radius-sm);
+background: transparent;
+color: var(–gold);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+cursor: pointer;
+margin-top: 10px;
+transition: all 0.2s;
+}
+.btn-add-payment:hover { background: rgba(184,144,90,0.06); }
+
+/* Notes */
+.notes-text {
+font-size: 13px;
+color: var(–text-soft);
+line-height: 1.6;
+font-style: italic;
+}
+
+/* Toast */
+.toast {
+position: fixed;
+bottom: 80px;
+left: 50%;
+transform: translateX(-50%) translateY(20px);
+background: var(–teal);
+color: var(–cream);
+padding: 10px 20px;
+border-radius: 20px;
+font-size: 13px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+opacity: 0;
+transition: all 0.3s;
+pointer-events: none;
+white-space: nowrap;
+z-index: 9999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Loading */
+.loading-wrap { display: flex; align-items: center; justify-content: center; padding: 48px 0; }
+.spinner {
+width: 32px;
+height: 32px;
+border: 2px solid var(–cream-dark);
+border-top-color: var(–gold);
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── BOTTOM NAV ─── */
+.bottom-nav {
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+background: var(–white);
+border-top: 1px solid var(–cream-dark);
+display: flex;
+padding: 8px 0 12px;
+z-index: 50;
+max-width: 480px;
+margin: 0 auto;
+}
+.nav-item {
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 3px;
+padding: 4px;
+cursor: pointer;
+border: none;
+background: none;
+transition: all 0.2s;
+color: var(–text-soft);
+}
+.nav-item.active { color: var(–teal); }
+.nav-icon { font-size: 18px; }
+.nav-label { font-size: 10px; letter-spacing: 0.04em; font-family: ‘DM Sans’, sans-serif; }
+
+/* scroll hint */
+.scroll-tag {
+font-size: 10px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–text-soft);
+margin-bottom: 8px;
+padding-left: 2px;
+}
+
+/* currency selector */
+.currency-sel {
+display: flex;
+gap: 6px;
+margin-bottom: 4px;
+}
+.cur-btn {
+padding: 4px 12px;
+border: 1.5px solid var(–cream-dark);
+border-radius: 16px;
+background: transparent;
+font-size: 12px;
+color: var(–text-soft);
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+transition: all 0.2s;
+}
+.cur-btn.active {
+background: var(–teal);
+border-color: var(–teal);
+color: var(–cream);
+}
+
+/* status select pills */
+.status-select-row {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+margin-top: 4px;
+}
+.status-pill {
+padding: 6px 14px;
+border-radius: 20px;
+border: 1.5px solid var(–cream-dark);
+background: transparent;
+font-size: 12px;
+color: var(–text-soft);
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+transition: all 0.2s;
+}
+.status-pill.active-cotizacion { background: #FEF3E2; border-color: var(–gold); color: var(–gold); }
+.status-pill.active-confirmada { background: #E8F5EE; border-color: var(–green); color: var(–green); }
+.status-pill.active-cancelada { background: #F2F2F2; border-color: #bbb; color: #888; }
+.status-pill.active-en-proceso { background: #E8F0F5; border-color: var(–teal-light); color: var(–teal-light); }
+
+textarea.field-input {
+width: 100%;
+padding: 12px 14px;
+border: 1.5px solid var(–cream-dark);
+border-radius: var(–radius-sm);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+color: var(–text);
+background: var(–white);
+outline: none;
+resize: vertical;
+min-height: 72px;
+transition: border-color 0.2s;
+}
+textarea.field-input:focus { border-color: var(–gold); }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tag {
+padding: 4px 12px;
+background: var(–cream);
+border-radius: 12px;
+font-size: 11px;
+color: var(–text-soft);
+border: 1px solid var(–cream-dark);
+}
+
+.section-card {
+background: var(–white);
+border-radius: var(–radius);
+padding: 16px;
+margin-bottom: 10px;
+box-shadow: var(–shadow);
+}
+.sc-title {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–gold);
+font-weight: 500;
+margin-bottom: 12px;
+}
+
+.saldo-bar {
+background: var(–cream-dark);
+border-radius: 4px;
+height: 6px;
+margin-top: 8px;
+overflow: hidden;
+}
+.saldo-fill {
+height: 100%;
+background: var(–green);
+border-radius: 4px;
+transition: width 0.5s ease;
+}
+.saldo-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+.saldo-lbl { font-size: 11px; color: var(–text-soft); }
+
+.payment-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 4px; transition: color 0.2s; }
+.payment-del:hover { color: var(–red); }
+
+/* confirm dialog */
+.confirm-overlay {
+position: fixed;
+inset: 0;
+background: rgba(27,58,75,0.6);
+z-index: 300;
+display: none;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+.confirm-overlay.open { display: flex; }
+.confirm-box {
+background: var(–cream);
+border-radius: 16px;
+padding: 24px;
+max-width: 320px;
+width: 100%;
+text-align: center;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.confirm-box h3 { font-family: ‘Cormorant Garamond’, serif; font-size: 22px; color: var(–teal); margin-bottom: 8px; }
+.confirm-box p { font-size: 13px; color: var(–text-soft); margin-bottom: 20px; line-height: 1.5; }
+.confirm-btns { display: flex; gap: 10px; }
+.confirm-btns button { flex: 1; padding: 10px; border-radius: var(–radius-sm); font-family: ‘DM Sans’, sans-serif; font-size: 13px; cursor: pointer; }
+.confirm-cancel { background: transparent; border: 1.5px solid var(–cream-dark); color: var(–text-soft); }
+.confirm-ok { background: var(–red); border: none; color: white; font-weight: 500; }
 </style>
 
 </head>
 <body>
 
+<!-- AUTH SCREEN -->
+
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <h1>Elevie</h1>
+      <div class="auth-divider"></div>
+      <p>Travel · Cotizaciones</p>
+    </div>
+    <div class="auth-tab-row">
+      <button class="auth-tab active" onclick="switchTab('login')">Iniciar sesión</button>
+      <button class="auth-tab" onclick="switchTab('register')">Registrarme</button>
+    </div>
+    <div id="auth-error" class="auth-error"></div>
+
+```
+<!-- LOGIN -->
+<div id="login-form">
+  <div class="field">
+    <label>Correo electrónico</label>
+    <input type="email" id="login-email" placeholder="nombre@elevietravel.com">
+  </div>
+  <div class="field">
+    <label>Contraseña</label>
+    <input type="password" id="login-pass" placeholder="••••••••">
+  </div>
+  <button class="btn-primary" onclick="handleLogin()" id="btn-login">Entrar</button>
+</div>
+
+<!-- REGISTER -->
+<div id="register-form" style="display:none">
+  <div class="field">
+    <label>Tu nombre completo</label>
+    <input type="text" id="reg-name" placeholder="Nombre Apellido">
+  </div>
+  <div class="field">
+    <label>Correo electrónico</label>
+    <input type="email" id="reg-email" placeholder="nombre@elevietravel.com">
+  </div>
+  <div class="field">
+    <label>Teléfono</label>
+    <input type="tel" id="reg-phone" placeholder="+52 55 0000 0000">
+  </div>
+  <div class="field">
+    <label>Contraseña</label>
+    <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
+  </div>
+  <button class="btn-primary" onclick="handleRegister()" id="btn-register">Crear cuenta</button>
+</div>
+```
+
+  </div>
+</div>
+
 <!-- APP -->
 
 <div id="app">
-  <header class="app-header">
-    <div class="header-brand">
-      <div class="hname">Elevie Travel</div>
-      <div class="htag">Intranet &middot; Agentes</div>
+  <header class="header">
+    <div class="header-brand">Elevie <span>·</span></div>
+    <div class="header-right">
+      <span class="header-user" id="header-user-name"></span>
+      <button class="btn-icon" onclick="handleLogout()" title="Cerrar sesión">⎋</button>
     </div>
-    <div class="header-avatar" id="hdr-avatar" onclick="openModal('modal-perfil')">A</div>
   </header>
 
-  <div class="app-body" id="app-body">
-
-```
-<!-- HOME -->
-<div class="panel active" id="panel-home">
-  <div class="greeting-main" id="dash-greeting">Buenos días</div>
-  <div class="greeting-sub" id="dash-sub">Cargando...</div>
-  <div class="stats-row">
-    <div class="sbox sbox-dark"><div class="sbox-num" id="st-quotes">—</div><div class="sbox-lbl">Cotizaciones activas</div></div>
-    <div class="sbox sbox-green"><div class="sbox-num" id="st-revenue">$—</div><div class="sbox-lbl">Revenue del mes</div></div>
-    <div class="sbox sbox-light"><div class="sbox-num" id="st-trips" style="font-size:26px">—</div><div class="sbox-lbl" style="color:var(--text-m)">Viajes este mes</div></div>
-    <div class="sbox sbox-light"><div class="sbox-num warn" style="font-size:26px" id="st-pending">—</div><div class="sbox-lbl" style="color:var(--text-m)">Pendientes pago</div></div>
+  <div class="content" id="main-content">
+    <!-- Rendered by JS -->
   </div>
-  <div class="slabel">Accesos rápidos</div>
-  <div class="quick-grid">
-    <div class="qcard" onclick="goTo('cotizador')"><div class="qcard-ico">✦</div><div class="qcard-title">Nueva Cotización</div><div class="qcard-desc">Builder completo</div></div>
-    <div class="qcard" onclick="openModal('modal-nuevo-cliente')"><div class="qcard-ico">+</div><div class="qcard-title">Nuevo Cliente</div><div class="qcard-desc">Agregar al CRM</div></div>
-    <div class="qcard" onclick="goTo('reservas')"><div class="qcard-ico">◎</div><div class="qcard-title">Reservas</div><div class="qcard-desc">Ver todas</div></div>
-    <div class="qcard" onclick="goTo('finanzas')"><div class="qcard-ico">◈</div><div class="qcard-title">Finanzas</div><div class="qcard-desc">Comisiones y pagos</div></div>
-  </div>
-  <div class="slabel">Próximos viajes</div>
-  <div id="dash-trips"><div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Cargando...</div></div>
-  <div class="slabel">Cotizaciones recientes</div>
-  <div id="dash-quotes"><div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Cargando...</div></div>
-</div>
-
-<!-- CLIENTES -->
-<div class="panel" id="panel-clientes">
-  <div class="search-bar">
-    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--text-l);flex-shrink:0"><circle cx="11" cy="11" r="8" stroke-width="1.8"/><path d="M21 21l-4-4" stroke-width="1.8"/></svg>
-    <input placeholder="Buscar cliente..." id="client-search" oninput="filterClients()">
-  </div>
-  <div id="clients-list"><div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Cargando...</div></div>
-  <button class="btn btn-green mt" onclick="openModal('modal-nuevo-cliente')">+ Agregar Cliente</button>
-</div>
-
-<!-- COTIZADOR -->
-<div class="panel" id="panel-cotizador">
-  <div class="qb-tab-row">
-    <button class="qb-tab active" onclick="qbTab('cli',this)">Cliente</button>
-    <button class="qb-tab" onclick="qbTab('svc',this)">Servicios</button>
-    <button class="qb-tab" onclick="qbTab('price',this)">Precio</button>
-    <button class="qb-tab" onclick="qbTab('send',this)">Enviar</button>
-  </div>
-  <div class="qb-panel active" id="qbp-cli">
-    <div class="fg"><label class="flbl">Cliente</label><select class="fselect" id="qb-client-sel"><option value="">Seleccionar cliente...</option></select></div>
-    <div class="fg"><label class="flbl">Nombre del viaje</label><input class="finput" id="qb-trip-name" placeholder="Japón — Primavera 2025"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div class="fg"><label class="flbl">Salida</label><input class="finput" type="date" id="qb-start"></div>
-      <div class="fg"><label class="flbl">Regreso</label><input class="finput" type="date" id="qb-end"></div>
-      <div class="fg"><label class="flbl">Adultos</label><input class="finput" type="number" id="qb-adults" value="2" min="1" oninput="qbCalc()"></div>
-      <div class="fg"><label class="flbl">Niños</label><input class="finput" type="number" id="qb-children" value="0" min="0" oninput="qbCalc()"></div>
-    </div>
-    <div class="fg"><label class="flbl">Tipo</label>
-      <select class="fselect" id="qb-type"><option>Lujo personalizado</option><option>Luna de miel</option><option>Viaje familiar</option><option>Cultural</option><option>A la medida</option></select>
-    </div>
-    <div class="fg"><label class="flbl">Moneda</label>
-      <select class="fselect" id="qb-cur" onchange="qbCalc()"><option value="USD">USD</option><option value="EUR">EUR</option><option value="MXN">MXN</option></select>
-    </div>
-    <div style="padding:12px;background:var(--green-xl);border-radius:12px;margin-top:4px">
-      <div style="font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:10px">Tu información (aparece en el PDF)</div>
-      <div class="fg"><label class="flbl">Tu nombre</label><input class="finput" id="qb-agent-name" placeholder="María Rodríguez"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div class="fg"><label class="flbl">Tu email</label><input class="finput" id="qb-agent-email" placeholder="maria@elevietravel.com"></div>
-        <div class="fg"><label class="flbl">Tu teléfono</label><input class="finput" id="qb-agent-phone" placeholder="+52 55..."></div>
-      </div>
-    </div>
-    <button class="btn btn-dark mt" onclick="qbTab('svc',document.querySelectorAll('.qb-tab')[1])">Siguiente &rarr; Servicios</button>
-  </div>
-  <div class="qb-panel" id="qbp-svc">
-    <div id="qb-items-list"></div>
-    <button class="add-row" onclick="openModal('modal-add-svc')">+ Agregar hotel, vuelo o servicio</button>
-    <button class="btn btn-dark" onclick="qbTab('price',document.querySelectorAll('.qb-tab')[2])">Siguiente &rarr; Precio</button>
-  </div>
-  <div class="qb-panel" id="qbp-price">
-    <div class="qb-total-bar">
-      <div class="qt-row"><span>Subtotal servicios</span><span id="qb-subtotal">$0</span></div>
-      <div class="qt-row"><span>Concierge fee</span><span id="qb-cf-disp">—</span></div>
-      <div class="qt-total"><span>Total</span><span class="qt-total-val" id="qb-total-disp">$0</span></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
-      <div class="fin-box"><div class="fin-val green" id="qb-comm-disp">$0</div><div class="fin-lbl">Comisión USD</div></div>
-      <div class="fin-box"><div class="fin-val" id="qb-comm-mxn-disp">$0</div><div class="fin-lbl">Comisión MXN</div></div>
-    </div>
-    <div style="margin-top:12px">
-      <div class="fg"><label class="flbl">Concierge fee</label>
-        <select class="fselect" id="qb-cf-sel" onchange="qbCalc()">
-          <option value="0">Sin concierge fee</option>
-          <option value="250">Pareja 1 semana — $250</option>
-          <option value="500">Pareja +1 semana — $500</option>
-          <option value="400">Familia 1 semana — $400</option>
-          <option value="600">Familia +1 semana — $600</option>
-        </select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div class="fg"><label class="flbl">% Comisión</label><input class="finput" type="number" id="qb-comm-pct" value="12" oninput="qbCalc()"></div>
-        <div class="fg"><label class="flbl">TC MXN</label><input class="finput" type="number" id="qb-fx" value="20" oninput="qbCalc()"></div>
-      </div>
-      <div class="fg"><label class="flbl">Descuento (USD)</label><input class="finput" type="number" id="qb-discount" value="0" oninput="qbCalc()"></div>
-    </div>
-    <button class="btn btn-dark" onclick="qbTab('send',document.querySelectorAll('.qb-tab')[3])">Siguiente &rarr; Enviar</button>
-  </div>
-  <div class="qb-panel" id="qbp-send">
-    <div class="fg"><label class="flbl">Nota para el cliente</label>
-      <textarea class="ftextarea" id="qb-client-note" rows="4" placeholder="*Para reservar, es necesario realizar un depósito no reembolsable del 30% del total."></textarea>
-    </div>
-    <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px">
-      <div style="font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-l);margin-bottom:8px">Resumen</div>
-      <div style="font-size:13px;color:var(--text-m)" id="qb-summary-text">—</div>
-    </div>
-    <button class="btn btn-dark" onclick="qbGeneratePDF()">Generar PDF para cliente</button>
-    <button class="btn btn-sage" onclick="qbSaveToSupabase()">Guardar en base de datos</button>
-  </div>
-</div>
-
-<!-- RESERVAS -->
-<div class="panel" id="panel-reservas">
-  <div style="display:flex;gap:6px;margin-bottom:14px">
-    <button class="pill pill-g" id="res-filter-all" onclick="filterReservas('all',this)" style="cursor:pointer">Todas</button>
-    <button class="pill pill-b" id="res-filter-conf" onclick="filterReservas('confirmed',this)" style="cursor:pointer">Confirmadas</button>
-    <button class="pill pill-w" id="res-filter-pend" onclick="filterReservas('sent',this)" style="cursor:pointer">Pendientes</button>
-  </div>
-  <div id="reservas-list"><div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Cargando...</div></div>
-</div>
-
-<!-- CALENDARIO -->
-<div class="panel" id="panel-calendario">
-  <div class="cal-hdr">
-    <button class="cal-nav" onclick="calPrev()">&#8249;</button>
-    <div class="cal-month" id="cal-month-lbl"></div>
-    <button class="cal-nav" onclick="calNext()">&#8250;</button>
-  </div>
-  <div class="cal-grid" id="cal-days-hdr"></div>
-  <div class="cal-grid" id="cal-days-body"></div>
-  <div class="slabel">Viajes del mes</div>
-  <div id="cal-list-month"></div>
-</div>
-
-<!-- FINANZAS -->
-<div class="panel" id="panel-finanzas">
-  <div style="display:flex;gap:9px;margin-bottom:16px">
-    <select class="fselect" id="fin-year" onchange="loadFinanzas()" style="flex:1">
-      <option value="2026">2026</option><option value="2025">2025</option>
-    </select>
-    <select class="fselect" id="fin-month" onchange="loadFinanzas()" style="flex:1">
-      <option value="">Todo el año</option>
-      <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-      <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
-      <option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option>
-      <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
-    </select>
-  </div>
-  <div class="stats-row" style="margin-bottom:12px">
-    <div class="sbox sbox-green"><div class="sbox-num" id="fin-total">$0</div><div class="sbox-lbl">Ventas confirmadas</div></div>
-    <div class="sbox sbox-dark"><div class="sbox-num" id="fin-comm">$0</div><div class="sbox-lbl">Comisión total</div></div>
-    <div class="sbox sbox-light"><div class="sbox-num" style="font-size:22px" id="fin-comm-mxn">$0</div><div class="sbox-lbl" style="color:var(--text-m)">Comisión MXN</div></div>
-    <div class="sbox sbox-light"><div class="sbox-num warn" style="font-size:26px" id="fin-pending">$0</div><div class="sbox-lbl" style="color:var(--text-m)">Por cobrar</div></div>
-  </div>
-  <div class="slabel">Comisiones por agente</div>
-  <div class="scard">
-    <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr style="background:var(--bg)">
-          <th style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--surf);padding:8px 12px;text-align:left">Agente</th>
-          <th style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--surf);padding:8px 12px;text-align:right">Ventas</th>
-          <th style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--surf);padding:8px 12px;text-align:right">Comisión</th>
-        </tr></thead>
-        <tbody id="fin-agent-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-  <div class="slabel">Control de pagos</div>
-  <div id="fin-pagos-list"></div>
-</div>
-```
-
-  </div><!-- end app-body -->
 
   <nav class="bottom-nav">
-    <div class="nb active" id="nb-home" onclick="goTo('home')"><div class="nb-ico">⌂</div><div class="nb-lbl">Inicio</div></div>
-    <div class="nb" id="nb-clientes" onclick="goTo('clientes')"><div class="nb-ico">◈</div><div class="nb-lbl">Clientes</div></div>
-    <div class="nb" id="nb-cotizador" onclick="goTo('cotizador');qbInit()"><div class="nb-ico">✦</div><div class="nb-lbl">Cotizar</div></div>
-    <div class="nb" id="nb-reservas" onclick="goTo('reservas')">
-      <div style="position:relative;display:inline-block"><div class="nb-ico">◎</div><div class="nb-badge" id="nb-badge-res" style="display:none">0</div></div>
-      <div class="nb-lbl">Reservas</div>
-    </div>
-    <div class="nb" id="nb-finanzas" onclick="goTo('finanzas')"><div class="nb-ico">▣</div><div class="nb-lbl">Finanzas</div></div>
+    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">
+      <span class="nav-icon">◫</span>
+      <span class="nav-label">Inicio</span>
+    </button>
+    <button class="nav-item" id="nav-quotes" onclick="showPage('quotes')">
+      <span class="nav-icon">✦</span>
+      <span class="nav-label">Cotizaciones</span>
+    </button>
+    <button class="nav-item" id="nav-new" onclick="openNewQuote()">
+      <span class="nav-icon">＋</span>
+      <span class="nav-label">Nueva</span>
+    </button>
   </nav>
-</div><!-- end app -->
+</div>
 
-<!-- MODALS -->
+<!-- QUOTE MODAL (new/edit) -->
 
-<div class="modal-overlay" id="modal-perfil">
-  <div class="modal">
+<div class="modal-overlay" id="quote-modal">
+  <div class="modal" id="quote-modal-inner">
     <div class="modal-handle"></div>
-    <div class="modal-head"><div class="modal-title">Mi Perfil</div><button class="modal-close" onclick="closeModal('modal-perfil')">&#215;</button></div>
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Nueva cotización</h2>
+      <button class="btn-icon" style="color:var(--text-soft);background:var(--cream-dark)" onclick="closeModal()">✕</button>
+    </div>
     <div class="modal-body">
-      <div style="text-align:center;margin-bottom:18px">
-        <div class="cav" id="perfil-av" style="width:60px;height:60px;font-size:24px;margin:0 auto 10px;background:var(--green)">A</div>
-        <div style="font-size:17px;font-weight:500" id="perfil-name">—</div>
-        <div style="font-size:12px;color:var(--text-l);margin-top:3px" id="perfil-role">Agente</div>
+      <!-- Cliente -->
+      <div class="form-section">
+        <div class="form-section-title">Cliente</div>
+        <div class="field">
+          <label>Nombre del cliente *</label>
+          <input type="text" id="f-client" placeholder="Nombre Apellido">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Destino *</label>
+            <input type="text" id="f-dest" placeholder="París, Tokio...">
+          </div>
+          <div class="field">
+            <label>Fecha de viaje</label>
+            <input type="date" id="f-date">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>No. de viajeros</label>
+            <input type="number" id="f-travelers" placeholder="2" min="1">
+          </div>
+          <div class="field">
+            <label>Estatus</label>
+            <div class="status-select-row" id="status-pills">
+              <button class="status-pill active-cotizacion" data-status="cotizacion" onclick="selectStatus(this)">Cotización</button>
+              <button class="status-pill" data-status="en-proceso" onclick="selectStatus(this)">En proceso</button>
+              <button class="status-pill" data-status="confirmada" onclick="selectStatus(this)">Confirmada</button>
+              <button class="status-pill" data-status="cancelada" onclick="selectStatus(this)">Cancelada</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="fg"><label class="flbl">Nombre completo</label><input class="finput" id="perfil-name-inp"></div>
-      <div class="fg"><label class="flbl">Teléfono / WhatsApp</label><input class="finput" id="perfil-phone-inp" placeholder="+52 55 0000 0000"></div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px" id="color-picker-modal">
-        <div onclick="pickColor(this,'#3D6B4F')" style="width:30px;height:30px;border-radius:50%;background:#3D6B4F;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#1B3A4B')" style="width:30px;height:30px;border-radius:50%;background:#1B3A4B;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#C0514A')" style="width:30px;height:30px;border-radius:50%;background:#C0514A;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#B8905A')" style="width:30px;height:30px;border-radius:50%;background:#B8905A;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#5A7A6A')" style="width:30px;height:30px;border-radius:50%;background:#5A7A6A;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#7B6FA0')" style="width:30px;height:30px;border-radius:50%;background:#7B6FA0;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#3B7BAE')" style="width:30px;height:30px;border-radius:50%;background:#3B7BAE;cursor:pointer;border:2px solid transparent"></div>
-        <div onclick="pickColor(this,'#C45A7A')" style="width:30px;height:30px;border-radius:50%;background:#C45A7A;cursor:pointer;border:2px solid transparent"></div>
+
+```
+  <!-- Moneda -->
+  <div class="form-section">
+    <div class="form-section-title">Moneda principal</div>
+    <div class="currency-sel" id="currency-sel">
+      <button class="cur-btn active" data-cur="USD" onclick="selectCurrency(this)">USD</button>
+      <button class="cur-btn" data-cur="MXN" onclick="selectCurrency(this)">MXN</button>
+      <button class="cur-btn" data-cur="EUR" onclick="selectCurrency(this)">EUR</button>
+      <button class="cur-btn" data-cur="GBP" onclick="selectCurrency(this)">GBP</button>
+      <button class="cur-btn" data-cur="OTRO" onclick="selectCurrency(this)">Otro</button>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Tipo de cambio a MXN</label>
+        <input type="number" id="f-tc" placeholder="19.50" step="0.01" oninput="calcAll()">
       </div>
-      <button class="btn btn-dark" onclick="saveProfile()">Guardar cambios</button>
-      <button class="btn btn-out" onclick="closeModal('modal-perfil')">Cerrar</button>
+      <div class="field" id="other-cur-field" style="display:none">
+        <label>Nombre moneda</label>
+        <input type="text" id="f-other-cur" placeholder="CHF, JPY...">
+      </div>
+    </div>
+  </div>
+
+  <!-- Costos -->
+  <div class="form-section">
+    <div class="form-section-title">Costos del viaje</div>
+    <div class="field-row">
+      <div class="field">
+        <label>DMC / Operador</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-dmc">$</span>
+          <input type="number" id="f-dmc" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Vuelos</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-vuelos">$</span>
+          <input type="number" id="f-vuelos" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Hoteles</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-hoteles">$</span>
+          <input type="number" id="f-hoteles" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Tours</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-tours">$</span>
+          <input type="number" id="f-tours" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Transfers</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-transfers">$</span>
+          <input type="number" id="f-transfers" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Otros</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-otros">$</span>
+          <input type="number" id="f-otros" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Concierge Fee</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-concierge">$</span>
+          <input type="number" id="f-concierge" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Planning Fee</label>
+        <div class="amount-wrap">
+          <span class="currency-prefix" id="pfx-planning">$</span>
+          <input type="number" id="f-planning" placeholder="0" oninput="calcAll()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comisión -->
+  <div class="form-section">
+    <div class="form-section-title">Comisión de Elevie</div>
+    <div class="field-row">
+      <div class="field">
+        <label>% Comisión</label>
+        <input type="number" id="f-comm-pct" placeholder="12" min="0" max="100" step="0.1" oninput="calcAll()" value="12">
+      </div>
+      <div class="field">
+        <label>Comisión calculada</label>
+        <div class="calc-field" id="calc-comm">—</div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Comisión en MXN</label>
+        <div class="calc-field" id="calc-comm-mxn">—</div>
+      </div>
+      <div class="field">
+        <label>50% del agente MXN</label>
+        <div class="calc-field" id="calc-comm-agent">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total + Depósito -->
+  <div class="deposit-row">
+    <div class="dep-title">Resumen financiero</div>
+    <div class="deposit-grid">
+      <div class="dep-item">
+        <label>Total del viaje</label>
+        <div class="dep-value" id="calc-total">—</div>
+      </div>
+      <div class="dep-item">
+        <label>Depósito 30%</label>
+        <div class="dep-value" id="calc-deposit">—</div>
+      </div>
+      <div class="dep-item">
+        <label>Saldo restante</label>
+        <div class="dep-value" id="calc-saldo">—</div>
+      </div>
+      <div class="dep-item">
+        <label>Total en MXN</label>
+        <div class="dep-value" id="calc-total-mxn" style="font-size:15px">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notas -->
+  <div class="form-section">
+    <div class="form-section-title">Notas</div>
+    <div class="field">
+      <label>Observaciones / comentarios</label>
+      <textarea class="field-input" id="f-notes" placeholder="Preferencias del cliente, proveedores, detalles importantes..."></textarea>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-nuevo-cliente">
-  <div class="modal">
+<div class="modal-actions">
+  <button class="btn-delete" id="btn-delete-quote" style="display:none" onclick="confirmDeleteQuote()">🗑</button>
+  <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+  <button class="btn-save" onclick="saveQuote()" id="btn-save">Guardar</button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal" style="max-height:60vh">
     <div class="modal-handle"></div>
-    <div class="modal-head"><div class="modal-title">Nuevo Cliente</div><button class="modal-close" onclick="closeModal('modal-nuevo-cliente')">&#215;</button></div>
+    <div class="modal-header">
+      <h2 class="modal-title">Registrar pago</h2>
+      <button class="btn-icon" style="color:var(--text-soft);background:var(--cream-dark)" onclick="closePaymentModal()">✕</button>
+    </div>
     <div class="modal-body">
-      <div class="fg"><label class="flbl">Nombre completo</label><input class="finput" id="nc-name" placeholder="Valentina Cruz"></div>
-      <div class="fg"><label class="flbl">Email</label><input class="finput" id="nc-email" type="email" placeholder="correo@email.com"></div>
-      <div class="fg"><label class="flbl">Teléfono</label><input class="finput" id="nc-phone" type="tel" placeholder="+52 55 0000 0000"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div class="fg"><label class="flbl">Nacimiento</label><input class="finput" id="nc-dob" type="date"></div>
-        <div class="fg"><label class="flbl">Pasaporte</label><input class="finput" id="nc-passport" placeholder="MEXXXXXXXG"></div>
+      <div class="form-section">
+        <div class="field-row">
+          <div class="field">
+            <label>Fecha</label>
+            <input type="date" id="pay-date">
+          </div>
+          <div class="field">
+            <label>Monto recibido</label>
+            <input type="number" id="pay-amount" placeholder="0" step="0.01">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Moneda</label>
+            <select id="pay-currency">
+              <option value="USD">USD</option>
+              <option value="MXN">MXN</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Método de pago</label>
+            <select id="pay-method">
+              <option value="Transferencia">Transferencia</option>
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="OpenPay">OpenPay</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Wire Transfer">Wire Transfer</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Nota (opcional)</label>
+          <input type="text" id="pay-note" placeholder="Anticipo, saldo, etc.">
+        </div>
       </div>
-      <div class="fg"><label class="flbl">Budget estimado (USD)</label><input class="finput" id="nc-budget" placeholder="20,000 – 40,000"></div>
-      <div class="fg"><label class="flbl">Tier</label>
-        <select class="fselect" id="nc-tier"><option>Nuevo</option><option>Premium</option><option>Elite</option></select>
-      </div>
-      <div class="fg"><label class="flbl">Preferencias</label><input class="finput" id="nc-prefs" placeholder="Business class, hoteles boutique..."></div>
-      <div class="fg"><label class="flbl">Notas internas</label><textarea class="ftextarea" id="nc-notes" placeholder="Observaciones..."></textarea></div>
-      <button class="btn btn-green" onclick="saveNewClient()">Guardar cliente</button>
-      <button class="btn btn-out" onclick="closeModal('modal-nuevo-cliente')">Cancelar</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closePaymentModal()">Cancelar</button>
+      <button class="btn-save" onclick="savePayment()">Registrar</button>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-cliente-detalle">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head" id="cli-detail-head"><div class="modal-title">Cliente</div><button class="modal-close" onclick="closeModal('modal-cliente-detalle')">&#215;</button></div>
-    <div class="modal-body" id="cli-detail-body"></div>
-  </div>
-</div>
+<!-- CONFIRM DELETE -->
 
-<div class="modal-overlay" id="modal-reserva">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><div class="modal-title" id="res-detail-title">Reserva</div><button class="modal-close" onclick="closeModal('modal-reserva')">&#215;</button></div>
-    <div class="modal-body" id="res-detail-body"></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-add-svc">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-head"><div class="modal-title">Agregar servicio</div><button class="modal-close" onclick="closeModal('modal-add-svc')">&#215;</button></div>
-    <div class="modal-body">
-      <div class="fg"><label class="flbl">Tipo</label>
-        <select class="fselect" id="svc-type">
-          <option value="Hotel">Hotel</option>
-          <option value="Vuelo">Vuelo</option>
-          <option value="Transfer">Transfer</option>
-          <option value="Tour">Tour / Actividad</option>
-          <option value="Crucero">Crucero</option>
-          <option value="Seguro">Seguro</option>
-        </select>
-      </div>
-      <div class="fg"><label class="flbl">Nombre</label><input class="finput" id="svc-name" placeholder="Ej. Aman Tokyo"></div>
-      <div class="fg"><label class="flbl">Descripción</label><input class="finput" id="svc-desc" placeholder="4 noches · Suite Deluxe"></div>
-      <div class="fg"><label class="flbl">Precio (USD)</label><input class="finput" type="number" id="svc-price" value="0" oninput="qbCalc()"></div>
-      <button class="btn btn-dark" onclick="addServiceItem()">Agregar</button>
-      <button class="btn btn-out" onclick="closeModal('modal-add-svc')">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<div id="confirm-modal">
+<div class="confirm-overlay" id="confirm-overlay">
   <div class="confirm-box">
-    <div class="confirm-msg" id="confirm-msg-text"></div>
+    <h3>Eliminar cotización</h3>
+    <p>Esta acción no se puede deshacer. ¿Estás segura de que deseas eliminar esta cotización?</p>
     <div class="confirm-btns">
-      <button class="btn btn-out" onclick="resolveConfirm(false)" style="margin-bottom:0">Cancelar</button>
-      <button class="btn btn-dark" onclick="resolveConfirm(true)" style="margin-bottom:0">Confirmar</button>
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancelar</button>
+      <button class="confirm-ok" onclick="executeDelete()">Eliminar</button>
     </div>
   </div>
 </div>
 
-<div id="toast"></div>
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
 
 <script>
 const SUPABASE_URL = 'https://ibdvwntcahiodeujkozb.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZHZ3bnRjYWhpb2RldWprb3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzA2ODcsImV4cCI6MjA5MDI0NjY4N30.WRf0oAdoOZ-53P-zQx_mKswdw0e0yPqfL8KRbjq5GLk';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Demo profile — no login required
-let currentUser = { id: 'demo-user' };
-let currentProfile = {
-  id: 'demo-user',
-  full_name: 'Alexis Warman',
-  email: 'alexis@elevietravel.com',
-  phone: '',
-  role: 'admin',
-  avatar_color: '#3D6B4F'
-};
-let allQuotes = [], allClients = [];
-let qbItemsList = [], selectedColor = null;
-let calDate = new Date();
+let currentUser = null;
+let currentPage = 'dashboard';
+let allQuotes = [];
+let currentFilter = 'todas';
+let searchTerm = '';
+let editingQuoteId = null;
+let selectedStatus = 'cotizacion';
+let selectedCurrency = 'USD';
+let viewingQuote = null;
+let pendingDeleteId = null;
+let currentPaymentQuoteId = null;
 
-// Boot directly — no auth needed
-document.addEventListener('DOMContentLoaded', () => {
-  const ini = currentProfile.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  const av = document.getElementById('hdr-avatar');
-  if (av) { av.textContent = ini; av.style.background = currentProfile.avatar_color; }
-  document.getElementById('perfil-name').textContent = currentProfile.full_name;
-  document.getElementById('perfil-role').textContent = 'Administrador';
-  document.getElementById('perfil-av').textContent = ini;
-  document.getElementById('perfil-av').style.background = currentProfile.avatar_color;
-  document.getElementById('perfil-name-inp').value = currentProfile.full_name;
-  document.getElementById('perfil-phone-inp').value = currentProfile.phone || '';
-  const qan = document.getElementById('qb-agent-name');
-  const qae = document.getElementById('qb-agent-email');
-  const qap = document.getElementById('qb-agent-phone');
-  if (qan) qan.value = currentProfile.full_name;
-  if (qae) qae.value = currentProfile.email;
-  if (qap) qap.value = currentProfile.phone || '';
-  loadDashboard();
+// ─── AUTH ───
+sb.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    currentUser = session.user;
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    loadUserName();
+    loadQuotes();
+    showPage('dashboard');
+  } else {
+    currentUser = null;
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
 });
 
-// NAV
-function goTo(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(n => n.classList.remove('active'));
-  const panel = document.getElementById('panel-' + id);
-  if (panel) panel.classList.add('active');
-  const nb = document.getElementById('nb-' + id);
-  if (nb) nb.classList.add('active');
-  document.getElementById('app-body').scrollTop = 0;
-  if (id === 'clientes') loadClients();
-  if (id === 'reservas') loadReservas();
-  if (id === 'calendario') renderCalendar();
-  if (id === 'finanzas') loadFinanzas();
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)));
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+  hideAuthError();
 }
 
-// DASHBOARD
-async function loadDashboard() {
-  const isAdmin = currentProfile?.role === 'admin';
-  const h = new Date().getHours();
-  const greet = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
-  document.getElementById('dash-greeting').textContent = greet + ', ' + (currentProfile?.full_name?.split(' ')[0] || '');
-  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  const now = new Date();
-  document.getElementById('dash-sub').textContent = days[now.getDay()] + ' ' + now.getDate() + ' de ' + months[now.getMonth()];
-
-  let qQ = sb.from('quotes').select('id,status,total,currency,travel_start,client_name,destination', { count: 'exact' });
-  if (!isAdmin) qQ = qQ.eq('agent_id', currentProfile.id);
-  const { data: qData, count: qCount } = await qQ.order('created_at', { ascending: false });
-  document.getElementById('st-quotes').textContent = qCount || 0;
-
-  const thisMonth = now.toISOString().slice(0, 7);
-  const rev = (qData || []).filter(q => q.status === 'confirmed' && (q.travel_start || '').startsWith(thisMonth)).reduce((s, q) => s + (parseFloat(q.total) || 0), 0);
-  document.getElementById('st-revenue').textContent = '$' + rev.toLocaleString('es-MX', { maximumFractionDigits: 0 });
-
-  const pending = (qData || []).filter(q => q.status === 'sent');
-  document.getElementById('st-pending').textContent = pending.length;
-  document.getElementById('nb-badge-res').textContent = pending.length;
-  document.getElementById('nb-badge-res').style.display = pending.length > 0 ? 'flex' : 'none';
-
-  const today = now.toISOString().split('T')[0];
-  let tQ = sb.from('trips').select('*').gte('departure_date', today).order('departure_date').limit(5);
-  if (!isAdmin) tQ = tQ.eq('agent_id', currentProfile.id);
-  const { data: trips, count: tCount } = await tQ;
-  document.getElementById('st-trips').textContent = tCount || 0;
-
-  const tripsEl = document.getElementById('dash-trips');
-  tripsEl.innerHTML = (trips || []).length ? (trips || []).map(t => {
-    const du = Math.ceil((new Date(t.departure_date) - now) / 86400000);
-    const dl = du === 0 ? 'Hoy' : du === 1 ? 'Mañana' : fmtDate(t.departure_date);
-    return `<div class="tcard"><div class="tcard-emoji">${emojiDest(t.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${t.client_name}</div><div class="tcard-dest">${t.destination}</div><div class="tcard-date">${dl}</div></div><span class="pill ${t.status==='confirmed'?'pill-g':'pill-w'}">${statusLabel(t.status)}</span></div>`;
-  }).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin viajes próximos</div>';
-
-  document.getElementById('dash-quotes').innerHTML = (qData || []).slice(0, 5).map(q =>
-    `<div class="tcard"><div class="tcard-emoji" style="background:#EAF0F5;font-size:16px">📋</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.destination || '—'}</div></div><div class="tcard-right"><span class="pill pill-${q.status==='confirmed'?'g':q.status==='sent'?'b':q.status==='cancelled'?'d':'go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total) || 0).toLocaleString('es-MX', {maximumFractionDigits:0})}</div></div></div>`
-  ).join('') || '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin cotizaciones aún</div>';
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideAuthError() {
+  document.getElementById('auth-error').style.display = 'none';
 }
 
-function emojiDest(dest) {
-  const d = (dest || '').toLowerCase();
-  const map = {'japón':'🗾','tokyo':'🗾','paris':'🗼','italia':'🇮🇹','maldivas':'🌊','dubai':'🏙️','kenya':'🌿','grecia':'🏛️','tailandia':'🌴','madrid':'💃','barcelona':'🏟️','cancun':'🏖️','miami':'🌴','london':'🎡'};
-  for (const [k, v] of Object.entries(map)) if (d.includes(k)) return v;
-  return '✈️';
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  if (!email || !pass) return showAuthError('Por favor completa todos los campos.');
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Entrando...';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  btn.disabled = false; btn.textContent = 'Entrar';
+  if (error) showAuthError('Error: ' + (error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : error.message));
 }
 
-// CLIENTS
-async function loadClients() {
-  const { data } = await sb.from('profiles').select('*').order('full_name');
-  allClients = data || [];
-  renderClients(allClients);
-  const sel = document.getElementById('qb-client-sel');
-  if (sel) {
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">Seleccionar cliente...</option>' + allClients.map(c => `<option value="${c.id}" ${c.id === cur ? 'selected' : ''}>${c.full_name}</option>`).join('');
+async function handleRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  if (!name || !email || !pass) return showAuthError('Nombre, correo y contraseña son obligatorios.');
+  if (pass.length < 6) return showAuthError('La contraseña debe tener mínimo 6 caracteres.');
+  const btn = document.getElementById('btn-register');
+  btn.disabled = true; btn.textContent = 'Registrando...';
+  const { data, error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
+  btn.disabled = false; btn.textContent = 'Crear cuenta';
+  if (error) return showAuthError('Error: ' + error.message);
+  if (data.user) {
+    // upsert profile
+    await sb.from('profiles').upsert({ id: data.user.id, full_name: name, email, phone });
+    showToast('¡Cuenta creada! Bienvenida a Elevie.');
+    switchTab('login');
   }
 }
 
-function renderClients(clients) {
-  const el = document.getElementById('clients-list');
-  if (!clients.length) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin clientes aún</div>'; return; }
-  el.innerHTML = clients.map(c => {
-    const ini = c.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-    return `<div class="ccard" onclick="openClientDetail('${c.id}')"><div class="cav" style="background:${c.avatar_color || '#3D6B4F'}">${ini}</div><div style="flex:1;min-width:0"><div class="cname">${c.full_name}</div><div class="cemail">${c.email}</div><div style="font-size:11px;color:var(--text-l)">${c.phone || 'Sin teléfono'}</div></div><span class="pill ${c.role==='admin'?'pill-go':'pill-g'}">${c.role==='admin'?'Admin':'Agente'}</span></div>`;
-  }).join('');
+async function handleLogout() {
+  await sb.auth.signOut();
 }
 
-function filterClients() {
-  const s = (document.getElementById('client-search')?.value || '').toLowerCase();
-  renderClients(allClients.filter(c => (c.full_name || '').toLowerCase().includes(s) || (c.email || '').toLowerCase().includes(s)));
+async function loadUserName() {
+  if (!currentUser) return;
+  const { data } = await sb.from('profiles').select('full_name').eq('id', currentUser.id).single();
+  const name = data?.full_name || currentUser.email;
+  document.getElementById('header-user-name').textContent = name.split(' ')[0];
 }
 
-function openClientDetail(id) {
-  const c = allClients.find(x => x.id === id); if (!c) return;
-  const ini = c.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  document.getElementById('cli-detail-head').innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div class="cav" style="width:34px;height:34px;font-size:13px;background:${c.avatar_color || '#3D6B4F'}">${ini}</div><div><div class="modal-title">${c.full_name}</div><div style="font-size:11.5px;color:var(--text-l)">${c.email}</div></div></div><button class="modal-close" onclick="closeModal('modal-cliente-detalle')">&#215;</button>`;
-  document.getElementById('cli-detail-body').innerHTML = `<div class="fg"><label class="flbl">Teléfono</label><div style="font-size:14px;padding:10px 0;color:var(--text-m)">${c.phone || '—'}</div></div><button class="btn btn-dark" onclick="goTo('cotizador');qbInit();closeModal('modal-cliente-detalle')">Nueva Cotización</button><button class="btn btn-out" onclick="closeModal('modal-cliente-detalle')">Cerrar</button>`;
-  openModal('modal-cliente-detalle');
+// ─── DATA ───
+async function loadQuotes() {
+  const { data, error } = await sb.from('quotes')
+    .select('*')
+    .eq('agent_id', currentUser.id)
+    .order('created_at', { ascending: false });
+  if (!error) {
+    allQuotes = (data || []).map(q => ({
+      ...q,
+      payments: q.payments || []
+    }));
+    renderCurrentPage();
+  }
 }
 
-async function saveNewClient() {
-  const name = document.getElementById('nc-name')?.value.trim();
-  const email = document.getElementById('nc-email')?.value.trim();
-  if (!name || !email) { showToast('Nombre y email son obligatorios'); return; }
-  showToast('Cliente guardado');
-  closeModal('modal-nuevo-cliente');
-  ['nc-name','nc-email','nc-phone','nc-dob','nc-passport','nc-budget','nc-prefs','nc-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+// ─── PAGES ───
+function showPage(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navMap = { dashboard: 'nav-dashboard', quotes: 'nav-quotes' };
+  if (navMap[page]) document.getElementById(navMap[page])?.classList.add('active');
+  renderCurrentPage();
 }
 
-// RESERVAS
-async function loadReservas(filter) {
-  const isAdmin = currentProfile?.role === 'admin';
-  let q = sb.from('quotes').select('*').order('travel_start', { ascending: true });
-  if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
-  if (filter && filter !== 'all') q = q.eq('status', filter);
-  const { data } = await q;
-  allQuotes = data || [];
-  renderReservas(allQuotes);
+function renderCurrentPage() {
+  const c = document.getElementById('main-content');
+  if (currentPage === 'dashboard') renderDashboard(c);
+  else if (currentPage === 'quotes') renderQuotesList(c);
+  else if (currentPage === 'detail') renderDetail(c);
 }
 
-function filterReservas(f, btn) {
-  document.querySelectorAll('[id^="res-filter-"]').forEach(b => { b.style.opacity = '.5'; });
-  if (btn) btn.style.opacity = '1';
-  loadReservas(f);
+function renderDashboard(c) {
+  const total = allQuotes.length;
+  const confirmadas = allQuotes.filter(q => q.status === 'confirmada').length;
+  const totalUSD = allQuotes.filter(q => q.status !== 'cancelada' && q.currency === 'USD').reduce((s,q) => s + (q.total||0), 0);
+  const totalMXN = allQuotes.filter(q => q.status !== 'cancelada' && q.currency === 'MXN').reduce((s,q) => s + (q.total||0), 0);
+  const totalComm = allQuotes.filter(q => q.status === 'confirmada').reduce((s,q) => s + (q.comm_mxn||0), 0);
+
+  c.innerHTML = `
+    <div class="section-title">Buen día ✦</div>
+    <div class="section-sub">Tu resumen de cotizaciones</div>
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-label">Total cotizaciones</div>
+        <div class="stat-value">${total}</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Confirmadas</div>
+        <div class="stat-value">${confirmadas}</div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-label">Valor en USD</div>
+        <div class="stat-value small">${fmtCur(totalUSD, 'USD')}</div>
+        <div class="stat-currency">cotizaciones activas</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Comisión total</div>
+        <div class="stat-value small">${fmtMXN(totalComm)}</div>
+        <div class="stat-currency">MXN confirmadas</div>
+      </div>
+    </div>
+
+    <div class="list-header">
+      <div class="list-title">Recientes</div>
+      <button class="btn-new" onclick="showPage('quotes')">Ver todas →</button>
+    </div>
+    ${allQuotes.slice(0,5).map(quoteCardHTML).join('') || '<div class="empty-state"><div class="empty-icon">✦</div><div class="empty-text">Sin cotizaciones aún</div></div>'}
+
+    <div style="margin-top:20px">
+      <button class="btn-new" style="width:100%;justify-content:center;padding:14px;border-radius:${RADIUS};font-size:14px" onclick="openNewQuote()">
+        + Nueva cotización
+      </button>
+    </div>
+  `;
+  c.querySelectorAll('.quote-card').forEach(card => {
+    card.addEventListener('click', () => openDetail(card.dataset.id));
+  });
 }
 
-function renderReservas(quotes) {
-  const el = document.getElementById('reservas-list');
-  if (!quotes.length) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-l);font-size:13px">Sin reservas</div>'; return; }
-  el.innerHTML = quotes.map(q =>
-    `<div class="tcard" onclick="showReservaDetail('${q.id}')"><div class="tcard-emoji">${emojiDest(q.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.quote_num || ''} · ${q.destination || '—'}</div><div class="tcard-date">${q.travel_start ? fmtDate(q.travel_start) : '—'}${q.travel_end ? ' – ' + fmtDate(q.travel_end) : ''}</div></div><div class="tcard-right"><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':q.status==='cancelled'?'pill-d':'pill-go'}">${statusLabel(q.status)}</span><div class="tcard-amt">$${(parseFloat(q.total)||0).toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`
-  ).join('');
+const RADIUS = '12px';
+
+function renderQuotesList(c) {
+  const filtered = allQuotes.filter(q => {
+    const matchFilter = currentFilter === 'todas' || q.status === currentFilter;
+    const matchSearch = !searchTerm || q.client_name?.toLowerCase().includes(searchTerm) || q.destination?.toLowerCase().includes(searchTerm);
+    return matchFilter && matchSearch;
+  });
+
+  c.innerHTML = `
+    <div class="list-header">
+      <div class="section-title">Cotizaciones</div>
+      <button class="btn-new" onclick="openNewQuote()">+ Nueva</button>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar cliente o destino..." value="${searchTerm}" oninput="onSearch(this.value)">
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip ${currentFilter==='todas'?'active':''}" onclick="setFilter('todas')">Todas (${allQuotes.length})</button>
+      <button class="filter-chip ${currentFilter==='cotizacion'?'active':''}" onclick="setFilter('cotizacion')">Cotización</button>
+      <button class="filter-chip ${currentFilter==='en-proceso'?'active':''}" onclick="setFilter('en-proceso')">En proceso</button>
+      <button class="filter-chip ${currentFilter==='confirmada'?'active':''}" onclick="setFilter('confirmada')">Confirmada</button>
+      <button class="filter-chip ${currentFilter==='cancelada'?'active':''}" onclick="setFilter('cancelada')">Cancelada</button>
+    </div>
+    ${filtered.length ? filtered.map(quoteCardHTML).join('') : `<div class="empty-state"><div class="empty-icon">✦</div><div class="empty-text">Sin resultados</div></div>`}
+  `;
+  c.querySelectorAll('.quote-card').forEach(card => {
+    card.addEventListener('click', () => openDetail(card.dataset.id));
+  });
 }
 
-function showReservaDetail(id) {
-  const q = allQuotes.find(x => x.id === id); if (!q) return;
-  let data = {}; try { data = JSON.parse(q.data || '{}'); } catch(e) {}
-  const nights = q.travel_start && q.travel_end ? Math.round((new Date(q.travel_end) - new Date(q.travel_start)) / 86400000) : '—';
-  const paid = parseFloat(data.paid) || 0, total = parseFloat(q.total) || 0, saldo = total - paid;
-  document.getElementById('res-detail-title').textContent = q.quote_num || 'Reserva';
-  document.getElementById('res-detail-body').innerHTML = `<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="font-size:30px">${emojiDest(q.destination)}</div><div style="flex:1"><div style="font-size:15px;font-weight:500">${q.client_name||'—'} · ${q.destination||'—'}</div><div style="font-size:12px;color:var(--text-l)">${q.travel_start?fmtDate(q.travel_start):'—'} – ${q.travel_end?fmtDate(q.travel_end):'—'}</div></div><span class="pill ${q.status==='confirmed'?'pill-g':q.status==='sent'?'pill-b':'pill-go'}">${statusLabel(q.status)}</span></div><div class="info-row"><div class="info-box"><div class="info-box-val">${nights}</div><div class="info-box-lbl">Noches</div></div><div class="info-box"><div class="info-box-val" style="color:var(--green);font-size:17px">$${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Total</div></div><div class="info-box"><div class="info-box-val" style="color:${saldo>0?'var(--warn)':'var(--green)'}">$${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="info-box-lbl">Saldo</div></div></div><div style="margin-bottom:12px"><div class="slabel" style="margin-top:0">Actualizar estado</div><div style="display:flex;gap:7px;flex-wrap:wrap">${['draft','sent','confirmed','cancelled'].map(s=>`<button onclick="updateQuoteStatus('${q.id}','${s}')" class="pill ${s==='confirmed'?'pill-g':s==='sent'?'pill-b':s==='cancelled'?'pill-d':'pill-go'}" style="cursor:pointer;padding:6px 12px;font-size:11.5px">${statusLabel(s)}</button>`).join('')}</div></div><button class="btn btn-dark" onclick="registerPago('${q.id}','${(q.client_name||'').replace(/'/g,"\\'")}',${total},${paid})">Registrar pago</button><button class="btn btn-out" onclick="closeModal('modal-reserva')">Cerrar</button>`;
-  openModal('modal-reserva');
+function quoteCardHTML(q) {
+  const paidTotal = (q.payments || []).reduce((s,p) => s + (p.amount || 0), 0);
+  return `
+    <div class="quote-card ${q.status}" data-id="${q.id}">
+      <div class="qc-top">
+        <div>
+          <div class="qc-client">${q.client_name || '—'}</div>
+          <div class="qc-dest">✈ ${q.destination || '—'} ${q.travel_date ? '· ' + fmtDate(q.travel_date) : ''}</div>
+        </div>
+        <span class="status-badge badge-${q.status}">${statusLabel(q.status)}</span>
+      </div>
+      <div class="qc-meta">
+        <div class="qc-amount">${fmtCur(q.total||0, q.currency||'USD')} <span>${q.currency||'USD'}</span></div>
+        <div class="qc-date">${q.travelers ? q.travelers + ' viaj.' : ''} ${paidTotal > 0 ? '· $'+fmt(paidTotal)+' recibido' : ''}</div>
+      </div>
+    </div>
+  `;
 }
 
-async function updateQuoteStatus(id, status) {
-  await sb.from('quotes').update({ status }).eq('id', id);
-  showToast('Estado actualizado'); loadReservas(); closeModal('modal-reserva');
+function renderDetail(c) {
+  const q = viewingQuote;
+  if (!q) return showPage('quotes');
+
+  const paid = (q.payments||[]).reduce((s,p) => s+(p.amount||0),0);
+  const saldo = Math.max(0,(q.total||0) - paid);
+  const pct = q.total > 0 ? Math.min(100, Math.round(paid/q.total*100)) : 0;
+  const costs = [
+    { label:'DMC / Operador', icon:'🏢', val: q.cost_dmc },
+    { label:'Vuelos', icon:'✈', val: q.cost_vuelos },
+    { label:'Hoteles', icon:'🏨', val: q.cost_hoteles },
+    { label:'Tours', icon:'🗺', val: q.cost_tours },
+    { label:'Transfers', icon:'🚗', val: q.cost_transfers },
+    { label:'Otros', icon:'📋', val: q.cost_otros },
+    { label:'Concierge Fee', icon:'💎', val: q.cost_concierge },
+    { label:'Planning Fee', icon:'✏', val: q.cost_planning },
+  ].filter(x => x.val > 0);
+
+  c.innerHTML = `
+    <div class="detail-hero">
+      <button class="detail-back" onclick="showPage('quotes')">← Regresar</button>
+      <div class="detail-client">${q.client_name || '—'}</div>
+      <div class="detail-dest">✈ ${q.destination || '—'} ${q.travel_date ? '· ' + fmtDate(q.travel_date) : ''} ${q.travelers ? '· '+q.travelers+' viajeros' : ''}</div>
+      <div class="detail-amount-row">
+        <div class="detail-total">${fmtCur(q.total||0, q.currency||'USD')}<small>${q.currency||'USD'}</small></div>
+        <span class="status-badge badge-${q.status}">${statusLabel(q.status)}</span>
+      </div>
+    </div>
+
+    <!-- Desglose de costos -->
+    ${costs.length ? `
+    <div class="section-card">
+      <div class="sc-title">Desglose de costos</div>
+      <div class="costs-table">
+        ${costs.map(x => `
+          <div class="costs-row">
+            <span class="costs-label"><span class="costs-icon">${x.icon}</span>${x.label}</span>
+            <span class="costs-value">${fmtCur(x.val, q.currency||'USD')}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- Comisión -->
+    <div class="commission-row">
+      <div class="comm-title">Comisión Elevie · ${q.comm_pct||12}%</div>
+      <div class="commission-grid">
+        <div class="comm-item"><label>Comisión ${q.currency}</label><div class="comm-value">${fmtCur(q.commission||0, q.currency||'USD')}</div></div>
+        <div class="comm-item"><label>En MXN</label><div class="comm-value">${fmtMXN(q.comm_mxn||0)}</div></div>
+        <div class="comm-item"><label>50% del agente</label><div class="comm-value">${fmtMXN(q.comm_agent||0)}</div></div>
+        <div class="comm-item"><label>Tipo de cambio</label><div class="comm-value" style="font-size:16px">${q.tipo_cambio ? '$'+q.tipo_cambio : '—'}</div></div>
+      </div>
+    </div>
+
+    <!-- Depósitos y saldo -->
+    <div class="deposit-row">
+      <div class="dep-title">Pagos y saldo</div>
+      <div class="deposit-grid">
+        <div class="dep-item"><label>Total del viaje</label><div class="dep-value">${fmtCur(q.total||0, q.currency||'USD')}</div></div>
+        <div class="dep-item"><label>Depósito 30%</label><div class="dep-value">${fmtCur((q.total||0)*0.3, q.currency||'USD')}</div></div>
+        <div class="dep-item"><label>Total recibido</label><div class="dep-value" style="color:var(--green)">${fmtCur(paid, q.currency||'USD')}</div></div>
+        <div class="dep-item"><label>Saldo pendiente</label><div class="dep-value" style="color:var(--red);font-size:16px">${fmtCur(saldo, q.currency||'USD')}</div></div>
+      </div>
+      <div class="saldo-bar"><div class="saldo-fill" style="width:${pct}%"></div></div>
+      <div class="saldo-labels"><span class="saldo-lbl">Pagado ${pct}%</span><span class="saldo-lbl">Pendiente ${100-pct}%</span></div>
+    </div>
+
+    <!-- Historial de pagos -->
+    <div class="section-card">
+      <div class="sc-title">Historial de pagos</div>
+      ${(q.payments||[]).length === 0 ? '<p style="font-size:13px;color:var(--text-soft);text-align:center;padding:8px 0">Sin pagos registrados</p>' :
+        (q.payments||[]).map((p,i) => `
+          <div class="payment-item">
+            <div>
+              <div style="font-weight:500;font-size:13px">${p.note || p.method || 'Pago'}</div>
+              <div class="payment-date">${p.date ? fmtDate(p.date) : ''} · ${p.method||''} · ${p.currency||''}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="payment-amount">+${fmtCur(p.amount||0, p.currency||q.currency||'USD')}</span>
+              <button class="payment-del" onclick="deletePayment('${q.id}',${i},event)">×</button>
+            </div>
+          </div>
+        `).join('')
+      }
+      <button class="btn-add-payment" onclick="openPaymentModal('${q.id}')">+ Registrar pago</button>
+    </div>
+
+    ${q.notes ? `
+    <div class="section-card">
+      <div class="sc-title">Notas</div>
+      <div class="notes-text">${q.notes}</div>
+    </div>` : ''}
+
+    <!-- Acciones -->
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn-secondary" onclick="openEditQuote('${q.id}')" style="flex:1">✏ Editar</button>
+      <button class="btn-save" onclick="openEditQuote('${q.id}')" style="flex:1;background:var(--green)">Actualizar estatus</button>
+    </div>
+  `;
 }
 
-async function registerPago(id, clientName, total, paid) {
-  const ok = await safeConfirm('Registrar pago — ' + clientName); if (!ok) return;
-  const nuevoStr = window.prompt('Monto total pagado hasta ahora (USD):', paid); if (nuevoStr === null) return;
-  const nuevoPagado = parseFloat(nuevoStr) || 0;
-  const { data: q } = await sb.from('quotes').select('data').eq('id', id).single();
-  let dataObj = {}; try { dataObj = JSON.parse(q?.data || '{}'); } catch(e) {}
-  dataObj.paid = nuevoPagado;
-  await sb.from('quotes').update({ data: JSON.stringify(dataObj), status: nuevoPagado >= total ? 'confirmed' : 'sent' }).eq('id', id);
-  showToast('Pago registrado'); loadReservas(); closeModal('modal-reserva');
+// ─── MODAL ───
+function openNewQuote() {
+  editingQuoteId = null;
+  selectedStatus = 'cotizacion';
+  selectedCurrency = 'USD';
+  document.getElementById('modal-title').textContent = 'Nueva cotización';
+  document.getElementById('btn-delete-quote').style.display = 'none';
+  clearForm();
+  document.getElementById('quote-modal').classList.add('open');
 }
 
-// CALENDAR
-async function renderCalendar() {
-  const isAdmin = currentProfile?.role === 'admin';
-  const y = calDate.getFullYear(), m = calDate.getMonth();
-  const mn = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('cal-month-lbl').textContent = mn[m] + ' ' + y;
-  const start = new Date(y, m, 1).toISOString().split('T')[0];
-  const end = new Date(y, m + 1, 0).toISOString().split('T')[0];
-  let q = sb.from('trips').select('*').gte('departure_date', start).lte('departure_date', end).order('departure_date');
-  if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
-  const { data: trips } = await q;
-  document.getElementById('cal-days-hdr').innerHTML = ['L','M','X','J','V','S','D'].map(d => `<div class="cal-dh">${d}</div>`).join('');
-  const firstDay = new Date(y, m, 1);
-  const lastDay = new Date(y, m + 1, 0);
-  let startDow = firstDay.getDay(); startDow = startDow === 0 ? 6 : startDow - 1;
+function openEditQuote(id) {
+  const q = allQuotes.find(x => x.id === id);
+  if (!q) return;
+  editingQuoteId = id;
+  selectedStatus = q.status || 'cotizacion';
+  selectedCurrency = q.currency || 'USD';
+  document.getElementById('modal-title').textContent = 'Editar cotización';
+  document.getElementById('btn-delete-quote').style.display = 'flex';
+
+  document.getElementById('f-client').value = q.client_name || '';
+  document.getElementById('f-dest').value = q.destination || '';
+  document.getElementById('f-date').value = q.travel_date || '';
+  document.getElementById('f-travelers').value = q.travelers || '';
+  document.getElementById('f-tc').value = q.tipo_cambio || '';
+  document.getElementById('f-dmc').value = q.cost_dmc || '';
+  document.getElementById('f-vuelos').value = q.cost_vuelos || '';
+  document.getElementById('f-hoteles').value = q.cost_hoteles || '';
+  document.getElementById('f-tours').value = q.cost_tours || '';
+  document.getElementById('f-transfers').value = q.cost_transfers || '';
+  document.getElementById('f-otros').value = q.cost_otros || '';
+  document.getElementById('f-concierge').value = q.cost_concierge || '';
+  document.getElementById('f-planning').value = q.cost_planning || '';
+  document.getElementById('f-comm-pct').value = q.comm_pct || 12;
+  document.getElementById('f-notes').value = q.notes || '';
+
+  refreshStatusPills();
+  refreshCurrencyBtns();
+  calcAll();
+  document.getElementById('quote-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('quote-modal').classList.remove('open');
+}
+
+function clearForm() {
+  ['f-client','f-dest','f-date','f-travelers','f-tc','f-dmc','f-vuelos','f-hoteles',
+   'f-tours','f-transfers','f-otros','f-concierge','f-planning','f-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-comm-pct').value = '12';
+  refreshStatusPills();
+  refreshCurrencyBtns();
+  calcAll();
+}
+
+function selectStatus(btn) {
+  selectedStatus = btn.dataset.status;
+  refreshStatusPills();
+}
+function refreshStatusPills() {
+  document.querySelectorAll('#status-pills .status-pill').forEach(p => {
+    p.className = 'status-pill' + (p.dataset.status === selectedStatus ? ' active-'+p.dataset.status : '');
+  });
+}
+
+function selectCurrency(btn) {
+  selectedCurrency = btn.dataset.cur;
+  refreshCurrencyBtns();
+  calcAll();
+  document.getElementById('other-cur-field').style.display = selectedCurrency === 'OTRO' ? 'block' : 'none';
+}
+function refreshCurrencyBtns() {
+  document.querySelectorAll('#currency-sel .cur-btn').forEach(b => b.classList.toggle('active', b.dataset.cur === selectedCurrency));
+  const sym = currencySymbol(selectedCurrency);
+  ['dmc','vuelos','hoteles','tours','transfers','otros','concierge','planning'].forEach(k => {
+    const el = document.getElementById('pfx-'+k);
+    if(el) el.textContent = sym;
+  });
+}
+
+function currencySymbol(cur) {
+  return {USD:'$',MXN:'$',EUR:'€',GBP:'£'}[cur] || '$';
+}
+
+function calcAll() {
+  const vals = ['f-dmc','f-vuelos','f-hoteles','f-tours','f-transfers','f-otros','f-concierge','f-planning']
+    .map(id => parseFloat(document.getElementById(id).value)||0);
+  const total = vals.reduce((s,v)=>s+v,0);
+  const pct = parseFloat(document.getElementById('f-comm-pct').value)||0;
+  const comm = total * pct / 100;
+  const tc = parseFloat(document.getElementById('f-tc').value)||0;
+  const commMXN = tc > 0 ? comm * tc : 0;
+  const commAgent = commMXN / 2;
+  const deposit = total * 0.3;
+  const saldo = total * 0.7;
+  const totalMXN = tc > 0 ? total * tc : 0;
+  const cur = selectedCurrency;
+
+  document.getElementById('calc-total').textContent = fmtCur(total, cur);
+  document.getElementById('calc-deposit').textContent = fmtCur(deposit, cur);
+  document.getElementById('calc-saldo').textContent = fmtCur(saldo, cur);
+  document.getElementById('calc-total-mxn').textContent = tc > 0 ? fmtMXN(totalMXN) : '—';
+  document.getElementById('calc-comm').textContent = fmtCur(comm, cur);
+  document.getElementById('calc-comm-mxn').textContent = tc > 0 ? fmtMXN(commMXN) : '—';
+  document.getElementById('calc-comm-agent').textContent = tc > 0 ? fmtMXN(commAgent) : '—';
+}
+
+async function saveQuote() {
+  const client = document.getElementById('f-client').value.trim();
+  const dest = document.getElementById('f-dest').value.trim();
+  if (!client || !dest) return showToast('Nombre del cliente y destino son requeridos');
+
+  const vals = ['f-dmc','f-vuelos','f-hoteles','f-tours','f-transfers','f-otros','f-concierge','f-planning']
+    .map(id => parseFloat(document.getElementById(id).value)||0);
+  const total = vals.reduce((s,v)=>s+v,0);
+  const pct = parseFloat(document.getElementById('f-comm-pct').value)||12;
+  const comm = total * pct / 100;
+  const tc = parseFloat(document.getElementById('f-tc').value)||0;
+
+  const payload = {
+    agent_id: currentUser.id,
+    client_name: client,
+    destination: dest,
+    travel_date: document.getElementById('f-date').value || null,
+    travelers: parseInt(document.getElementById('f-travelers').value)||null,
+    status: selectedStatus,
+    currency: selectedCurrency === 'OTRO' ? (document.getElementById('f-other-cur').value||'OTRO') : selectedCurrency,
+    tipo_cambio: tc || null,
+    cost_dmc: vals[0]||null,
+    cost_vuelos: vals[1]||null,
+    cost_hoteles: vals[2]||null,
+    cost_tours: vals[3]||null,
+    cost_transfers: vals[4]||null,
+    cost_otros: vals[5]||null,
+    cost_concierge: vals[6]||null,
+    cost_planning: vals[7]||null,
+    total,
+    comm_pct: pct,
+    commission: comm,
+    comm_mxn: tc > 0 ? comm * tc : null,
+    comm_agent: tc > 0 ? (comm * tc) / 2 : null,
+    deposit: total * 0.3,
+    saldo: total * 0.7,
+    notes: document.getElementById('f-notes').value || null,
+  };
+
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+
+  let error;
+  if (editingQuoteId) {
+    const existing = allQuotes.find(q => q.id === editingQuoteId);
+    ({ error } = await sb.from('quotes').update(payload).eq('id', editingQuoteId));
+    if (!error) {
+      const idx = allQuotes.findIndex(q => q.id === editingQuoteId);
+      allQuotes[idx] = { ...existing, ...payload, id: editingQuoteId };
+      if (viewingQuote?.id === editingQuoteId) viewingQuote = allQuotes[idx];
+    }
+  } else {
+    const { data, error: e } = await sb.from('quotes').insert(payload).select().single();
+    error = e;
+    if (!error && data) allQuotes.unshift({ ...data, payments: [] });
+  }
+
+  btn.disabled = false; btn.textContent = 'Guardar';
+  if (error) return showToast('Error al guardar: ' + error.message);
+  closeModal();
+  showToast(editingQuoteId ? 'Cotización actualizada ✓' : 'Cotización guardada ✓');
+  if (currentPage === 'detail') renderCurrentPage();
+  else renderCurrentPage();
+}
+
+function confirmDeleteQuote() {
+  pendingDeleteId = editingQuoteId;
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('open');
+  pendingDeleteId = null;
+}
+async function executeDelete() {
+  if (!pendingDeleteId) return closeConfirm();
+  const { error } = await sb.from('quotes').delete().eq('id', pendingDeleteId);
+  closeConfirm();
+  if (error) return showToast('Error al eliminar');
+  allQuotes = allQuotes.filter(q => q.id !== pendingDeleteId);
+  closeModal();
+  showToast('Cotización eliminada');
+  showPage('quotes');
+}
+
+// ─── DETAIL ───
+function openDetail(id) {
+  viewingQuote = allQuotes.find(q => q.id === id);
+  if (!viewingQuote) return;
+  currentPage = 'detail';
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  renderCurrentPage();
+}
+
+// ─── PAYMENTS ───
+function openPaymentModal(quoteId) {
+  currentPaymentQuoteId = quoteId;
   const today = new Date().toISOString().split('T')[0];
-  let html = '';
-  for (let i = 0; i < startDow; i++) html += '<div class="cal-cell empty"></div>';
-  for (let d = 1; d <= lastDay.getDate(); d++) {
-    const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dt = (trips || []).filter(t => t.departure_date === ds);
-    html += `<div class="cal-cell${ds === today ? ' today' : ''}"><div class="cal-n">${d}</div>${dt.map(t => `<div class="cal-ev">${t.client_name.split(' ')[0]}</div>`).join('')}</div>`;
-  }
-  document.getElementById('cal-days-body').innerHTML = html;
-  document.getElementById('cal-list-month').innerHTML = (trips || []).length ? (trips || []).map(t =>
-    `<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji">${emojiDest(t.destination)}</div><div style="flex:1;min-width:0"><div class="tcard-name">${t.client_name}</div><div class="tcard-dest">${t.destination}</div><div class="tcard-date">${fmtDate(t.departure_date)}</div></div><span class="pill ${t.status==='confirmed'?'pill-g':'pill-w'}">${statusLabel(t.status)}</span></div>`
-  ).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin viajes este mes</div>';
+  document.getElementById('pay-date').value = today;
+  document.getElementById('pay-amount').value = '';
+  document.getElementById('pay-note').value = '';
+  document.getElementById('payment-modal').classList.add('open');
+}
+function closePaymentModal() {
+  document.getElementById('payment-modal').classList.remove('open');
+  currentPaymentQuoteId = null;
 }
 
-function calPrev() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(); }
-function calNext() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(); }
+async function savePayment() {
+  const amount = parseFloat(document.getElementById('pay-amount').value)||0;
+  if (amount <= 0) return showToast('Ingresa un monto válido');
+  const q = allQuotes.find(x => x.id === currentPaymentQuoteId);
+  if (!q) return;
 
-// FINANZAS
-async function loadFinanzas() {
-  const isAdmin = currentProfile?.role === 'admin';
-  const year = document.getElementById('fin-year')?.value || '2026';
-  const month = document.getElementById('fin-month')?.value;
-  let q = sb.from('quotes').select('*,profiles(full_name)').order('created_at', { ascending: false });
-  if (!isAdmin) q = q.eq('agent_id', currentProfile.id);
-  const { data } = await q;
-  let filtered = (data || []).filter(q => {
-    const d = q.travel_start || q.created_at?.split('T')[0] || '';
-    if (year && !d.startsWith(year)) return false;
-    if (month && d.slice(5, 7) !== month) return false;
-    return true;
-  });
-  const confirmed = filtered.filter(q => q.status === 'confirmed');
-  const totalUSD = confirmed.reduce((s, q) => s + (parseFloat(q.total) || 0), 0);
-  const commUSD = totalUSD * 0.12;
-  const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  s('fin-total', '$' + totalUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
-  s('fin-comm', '$' + commUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
-  s('fin-comm-mxn', '$' + (commUSD * 20).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN');
-  let pendTotal = 0;
-  filtered.forEach(q => {
-    const t = parseFloat(q.total) || 0;
-    let p = 0;
-    try { p = parseFloat(JSON.parse(q.data || '{}').paid) || 0; } catch(e) {}
-    if (t - p > 0) pendTotal += t - p;
-  });
-  s('fin-pending', '$' + pendTotal.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
-  const byAgent = {};
-  confirmed.forEach(q => {
-    const name = q.profiles?.full_name || '—';
-    if (!byAgent[name]) byAgent[name] = 0;
-    byAgent[name] += parseFloat(q.total) || 0;
-  });
-  const tbody = document.getElementById('fin-agent-tbody');
-  if (tbody) {
-    const rows = Object.entries(byAgent).sort((a, b) => b[1] - a[1]);
-    tbody.innerHTML = rows.length ? rows.map(([name, tot]) =>
-      `<tr><td style="padding:10px 12px;font-size:13px;font-weight:500">${name}</td><td style="padding:10px 12px;font-size:13px;text-align:right">$${tot.toLocaleString('es-MX',{maximumFractionDigits:0})}</td><td style="padding:10px 12px;font-size:13px;text-align:right;color:var(--green)">$${(tot*0.12).toLocaleString('es-MX',{maximumFractionDigits:0})}</td></tr>`
-    ).join('') : '<tr><td colspan="3" style="text-align:center;padding:16px;font-size:13px;color:var(--text-l)">Sin ventas confirmadas</td></tr>';
-  }
-  const pendingQ = filtered.filter(q => q.status === 'sent' || q.status === 'confirmed');
-  document.getElementById('fin-pagos-list').innerHTML = pendingQ.length ? pendingQ.map(q => {
-    const total = parseFloat(q.total) || 0;
-    let paid = 0;
-    try { paid = parseFloat(JSON.parse(q.data || '{}').paid) || 0; } catch(e) {}
-    const saldo = total - paid;
-    return `<div class="tcard" style="margin-bottom:8px"><div class="tcard-emoji" style="font-size:16px;background:#EAF0F5">💳</div><div style="flex:1;min-width:0"><div class="tcard-name">${q.client_name || '—'}</div><div class="tcard-dest">${q.destination || '—'}</div></div><div class="tcard-right"><div style="font-size:12px;color:var(--text-l)">Total: $${total.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div style="font-size:13px;font-weight:500;color:${saldo>0?'var(--warn)':'var(--green)'}">Saldo: $${saldo.toLocaleString('es-MX',{maximumFractionDigits:0})}</div></div></div>`;
-  }).join('') : '<div style="text-align:center;padding:14px;color:var(--text-l);font-size:13px">Sin pagos pendientes</div>';
+  const payment = {
+    date: document.getElementById('pay-date').value,
+    amount,
+    currency: document.getElementById('pay-currency').value,
+    method: document.getElementById('pay-method').value,
+    note: document.getElementById('pay-note').value,
+  };
+
+  const payments = [...(q.payments||[]), payment];
+  const { error } = await sb.from('quotes').update({ payments }).eq('id', q.id);
+  if (error) return showToast('Error al guardar pago');
+  q.payments = payments;
+  if (viewingQuote?.id === q.id) viewingQuote = q;
+  closePaymentModal();
+  showToast('Pago registrado ✓');
+  if (currentPage === 'detail') renderCurrentPage();
 }
 
-// QUOTE BUILDER
-function qbInit() {
-  qbItemsList = [];
-  document.getElementById('qb-items-list').innerHTML = '';
-  if (currentProfile) {
-    const n = document.getElementById('qb-agent-name');
-    const e = document.getElementById('qb-agent-email');
-    const p = document.getElementById('qb-agent-phone');
-    if (n) n.value = currentProfile.full_name || '';
-    if (e) e.value = currentProfile.email || '';
-    if (p) p.value = currentProfile.phone || '';
-  }
-  document.getElementById('qb-client-sel').value = '';
-  qbCalc();
-  qbTab('cli', document.querySelectorAll('.qb-tab')[0]);
-  loadClients();
+async function deletePayment(quoteId, idx, e) {
+  e.stopPropagation();
+  const q = allQuotes.find(x => x.id === quoteId);
+  if (!q) return;
+  const payments = (q.payments||[]).filter((_,i)=>i!==idx);
+  const { error } = await sb.from('quotes').update({ payments }).eq('id', q.id);
+  if (error) return showToast('Error al eliminar pago');
+  q.payments = payments;
+  if (viewingQuote?.id === q.id) viewingQuote = q;
+  if (currentPage === 'detail') renderCurrentPage();
+  showToast('Pago eliminado');
 }
 
-function qbTab(id, btn) {
-  document.querySelectorAll('.qb-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.qb-tab').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById('qbp-' + id); if (el) el.classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (id === 'send') qbUpdateSummary();
+// ─── FILTERS ───
+function setFilter(f) {
+  currentFilter = f;
+  renderQuotesList(document.getElementById('main-content'));
+}
+function onSearch(val) {
+  searchTerm = val.toLowerCase();
+  renderQuotesList(document.getElementById('main-content'));
 }
 
-function addServiceItem() {
-  const type = document.getElementById('svc-type')?.value || 'Hotel';
-  const name = document.getElementById('svc-name')?.value.trim();
-  const desc = document.getElementById('svc-desc')?.value.trim();
-  const price = parseFloat(document.getElementById('svc-price')?.value) || 0;
-  if (!name) { showToast('Escribe el nombre del servicio'); return; }
-  const id = Date.now();
-  qbItemsList.push({ id, type, name, desc, price });
-  const el = document.createElement('div');
-  el.className = 'qb-item'; el.id = 'qbi-' + id;
-  el.innerHTML = `<div class="qb-item-ico" style="font-size:13px;font-weight:500">${type.slice(0,3)}</div><div style="flex:1;min-width:0"><div class="qb-item-name">${name}</div><div class="qb-item-sub">${desc || '—'}</div></div><div class="qb-item-price">$${price.toLocaleString('es-MX',{maximumFractionDigits:0})}</div><div class="qb-item-del" onclick="removeQbItem(${id})">&#215;</div>`;
-  document.getElementById('qb-items-list').appendChild(el);
-  ['svc-name','svc-desc'].forEach(x => { const el = document.getElementById(x); if (el) el.value = ''; });
-  document.getElementById('svc-price').value = '0';
-  closeModal('modal-add-svc');
-  qbCalc();
-  showToast('Servicio agregado');
+// ─── HELPERS ───
+function fmt(n) { return new Intl.NumberFormat('es-MX', {minimumFractionDigits:0,maximumFractionDigits:0}).format(n||0); }
+function fmtCur(n, cur) { return (currencySymbol(cur)) + fmt(n); }
+function fmtMXN(n) { return '$' + fmt(n) + ' MXN'; }
+function fmtDate(d) { if(!d) return ''; try { return new Date(d+'T12:00:00').toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}); } catch(e){ return d; } }
+function statusLabel(s) { return {cotizacion:'Cotización','en-proceso':'En proceso',confirmada:'Confirmada',cancelada:'Cancelada'}[s]||s; }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
 }
 
-function removeQbItem(id) { qbItemsList = qbItemsList.filter(i => i.id !== id); document.getElementById('qbi-' + id)?.remove(); qbCalc(); }
+// ─── SUPABASE TABLE SETUP ───
+// Run this once via Supabase SQL editor to create the quotes table:
+/*
+CREATE TABLE IF NOT EXISTS quotes (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  agent_id uuid REFERENCES auth.users(id),
+  client_name text,
+  destination text,
+  travel_date date,
+  travelers integer,
+  status text DEFAULT 'cotizacion',
+  currency text DEFAULT 'USD',
+  tipo_cambio numeric,
+  cost_dmc numeric,
+  cost_vuelos numeric,
+  cost_hoteles numeric,
+  cost_tours numeric,
+  cost_transfers numeric,
+  cost_otros numeric,
+  cost_concierge numeric,
+  cost_planning numeric,
+  total numeric DEFAULT 0,
+  comm_pct numeric DEFAULT 12,
+  commission numeric,
+  comm_mxn numeric,
+  comm_agent numeric,
+  deposit numeric,
+  saldo numeric,
+  notes text,
+  payments jsonb DEFAULT '[]',
+  created_at timestamptz DEFAULT now()
+);
 
-function qbCalc() {
-  const cur = document.getElementById('qb-cur')?.value || 'USD';
-  const subtotal = qbItemsList.reduce((s, i) => s + i.price, 0);
-  const cf = parseFloat(document.getElementById('qb-cf-sel')?.value) || 0;
-  const commPct = parseFloat(document.getElementById('qb-comm-pct')?.value) || 12;
-  const fx = parseFloat(document.getElementById('qb-fx')?.value) || 20;
-  const discount = parseFloat(document.getElementById('qb-discount')?.value) || 0;
-  const total = subtotal + cf - discount;
-  const commUSD = subtotal * (commPct / 100);
-  const fmt = n => '$' + n.toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' ' + cur;
-  const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  s('qb-subtotal', fmt(subtotal));
-  s('qb-cf-disp', cf ? fmt(cf) : '—');
-  s('qb-total-disp', fmt(total));
-  s('qb-comm-disp', '$' + commUSD.toLocaleString('es-MX', { maximumFractionDigits: 0 }));
-  s('qb-comm-mxn-disp', '$' + (commUSD * fx).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN');
-}
-
-function qbUpdateSummary() {
-  const name = document.getElementById('qb-trip-name')?.value || '—';
-  const adults = document.getElementById('qb-adults')?.value || '2';
-  const start = document.getElementById('qb-start')?.value;
-  const end = document.getElementById('qb-end')?.value;
-  const total = document.getElementById('qb-total-disp')?.textContent || '$0';
-  const agentName = document.getElementById('qb-agent-name')?.value || '—';
-  const items = qbItemsList.length;
-  document.getElementById('qb-summary-text').innerHTML = `<strong>${name}</strong><br>${adults} personas · ${start ? fmtDate(start) : '—'} – ${end ? fmtDate(end) : '—'}<br>${items} servicio${items !== 1 ? 's' : ''}<br><strong style="color:var(--green)">${total}</strong><br>Agente: ${agentName}`;
-}
-
-async function qbSaveToSupabase() {
-  const sv = id => document.getElementById(id)?.value?.trim() || '';
-  const total = qbItemsList.reduce((s, i) => s + i.price, 0) + (parseFloat(document.getElementById('qb-cf-sel')?.value) || 0);
-  const { error } = await sb.from('quotes').insert({
-    agent_id: currentProfile.id,
-    quote_num: 'COT-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 900) + 100).padStart(3, '0'),
-    client_name: sv('qb-trip-name'), destination: sv('qb-trip-name'),
-    travel_start: sv('qb-start') || null, travel_end: sv('qb-end') || null,
-    package_type: sv('qb-type'), currency: sv('qb-cur'), total, status: 'draft',
-    data: JSON.stringify({ items: qbItemsList, agent: { name: sv('qb-agent-name'), email: sv('qb-agent-email'), phone: sv('qb-agent-phone') }, note: sv('qb-client-note') })
-  });
-  if (error) { showToast('Error: ' + error.message); return; }
-  showToast('Cotización guardada');
-}
-
-function qbGeneratePDF() {
-  const sv = id => document.getElementById(id)?.value?.trim() || '';
-  const total = qbItemsList.reduce((s, i) => s + i.price, 0);
-  const cf = parseFloat(document.getElementById('qb-cf-sel')?.value) || 0;
-  const discount = parseFloat(document.getElementById('qb-discount')?.value) || 0;
-  const grandTotal = total + cf - discount;
-  const cur = sv('qb-cur');
-  const fmt = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: cur, minimumFractionDigits: 0 }).format(n);
-  const fmtD = d => { if (!d) return ''; const [y,m,dy] = d.split('-'); const ms = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']; return `${parseInt(dy)} ${ms[parseInt(m)]} ${y}`; };
-  const totalPax = parseInt(sv('qb-adults')) + (parseInt(sv('qb-children')) || 0);
-  const itemsHTML = qbItemsList.map(i =>
-    `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EDEAE2"><div style="width:36px;height:36px;border-radius:10px;background:#E8F0EA;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;color:#3D6B4F">${i.type.slice(0,3)}</div><div style="flex:1"><div style="font-size:13px;font-weight:500">${i.name}</div><div style="font-size:11px;color:#8A9E92">${i.desc || '—'}</div></div><div style="font-size:14px;font-weight:500">${fmt(i.price)}</div></div>`
-  ).join('');
-  const doc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;color:#1B2A22}</style></head><body><div style="background:#1B3A4B;padding:32px 40px 24px"><div style="font-family:Cormorant Garamond,serif;font-size:20px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:#F5F0E8;margin-bottom:3px">Elevie Travel.</div><div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,.5)">The Key to Elevated Journeys</div><div style="height:1px;background:rgba(245,240,232,.15);margin:14px 0"></div><div style="font-family:Cormorant Garamond,serif;font-size:24px;font-weight:300;color:#F5F0E8">${sv('qb-trip-name') || 'Propuesta de viaje'}</div><div style="font-size:11px;color:rgba(245,240,232,.6);margin-top:4px">${fmtD(sv('qb-start'))} – ${fmtD(sv('qb-end'))} · ${totalPax} pasajero${totalPax!==1?'s':''}</div></div><div style="padding:24px 40px"><div style="font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#8A9E92;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #E2D9C8">Servicios incluidos</div>${itemsHTML}<div style="background:#1B3A4B;border-radius:12px;padding:16px 20px;margin-top:16px;color:#F5F0E8;text-align:center"><div style="font-family:Cormorant Garamond,serif;font-size:26px;font-weight:300;margin-bottom:4px">${fmt(grandTotal)} TOTAL</div><div style="font-size:11px;opacity:.6">Los precios pueden variar según el día de reserva</div></div>${sv('qb-client-note') ? `<div style="padding:10px 12px;background:#FDF3E7;border-left:3px solid #B8905A;margin-top:10px;font-size:11px;color:#4A5E52;line-height:1.7">${sv('qb-client-note').replace(/\n/g,'<br>')}</div>` : ''}<div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid #E2D9C8;font-family:Cormorant Garamond,serif;font-size:13px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#8A9E92">Gracias por elegirnos</div></div><div style="background:#EDE7D9;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #E2D9C8"><div style="font-family:Cormorant Garamond,serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#1B3A4B">Elevie Travel.</div><div style="font-size:9px;color:#8A9E92;text-align:right">${sv('qb-agent-email') || 'info@elevietravel.com'}<br>${sv('qb-agent-name') || ''}</div></div></body></html>`;
-
-const blob = new Blob([doc], { type: ‘text/html’ });
-const url = URL.createObjectURL(blob);
-try { const win = window.open(url, ‘_blank’); if (win) { win.onload = () => setTimeout(() => win.print(), 800); return; } } catch(e) {}
-const a = document.createElement(‘a’); a.href = url; a.download = ‘propuesta-elevie.html’; a.click();
-showToast(‘PDF generado’);
-}
-
-// PROFILE
-async function saveProfile() {
-const name = document.getElementById(‘perfil-name-inp’)?.value.trim();
-const phone = document.getElementById(‘perfil-phone-inp’)?.value.trim();
-if (!name) { showToast(‘El nombre es obligatorio’); return; }
-const updates = { full_name: name, phone: phone || null, avatar_color: selectedColor || currentProfile?.avatar_color || ‘#3D6B4F’ };
-currentProfile = { …currentProfile, …updates };
-const ini = name.split(’ ‘).map(n => n[0]).join(’’).toUpperCase().slice(0, 2);
-const av = document.getElementById(‘hdr-avatar’);
-if (av) { av.textContent = ini; av.style.background = updates.avatar_color; }
-document.getElementById(‘perfil-av’).textContent = ini;
-document.getElementById(‘perfil-name’).textContent = name;
-showToast(‘Perfil actualizado’);
-closeModal(‘modal-perfil’);
-}
-
-function pickColor(el, color) {
-selectedColor = color;
-document.querySelectorAll(’#color-picker-modal div’).forEach(d => d.style.borderColor = ‘transparent’);
-el.style.borderColor = ‘white’;
-}
-
-// UTILS
-function fmtDate(d) { if (!d) return ‘—’; const [y,m,dy] = d.split(’-’); const ms = [’’,‘Ene’,‘Feb’,‘Mar’,‘Abr’,‘May’,‘Jun’,‘Jul’,‘Ago’,‘Sep’,‘Oct’,‘Nov’,‘Dic’]; return `${parseInt(dy)} ${ms[parseInt(m)]}`; }
-function statusLabel(s) { return { draft:‘Borrador’, sent:‘Enviada’, confirmed:‘Confirmado’, cancelled:‘Cancelado’, completed:‘Completado’, pending:‘Pendiente’ }[s] || s; }
-function showToast(msg) { const t = document.getElementById(‘toast’); t.textContent = msg; t.classList.add(‘show’); clearTimeout(window._tt); window._tt = setTimeout(() => t.classList.remove(‘show’), 2600); }
-function openModal(id) { document.getElementById(id)?.classList.add(‘open’); }
-function closeModal(id) { document.getElementById(id)?.classList.remove(‘open’); }
-document.querySelectorAll(’.modal-overlay’).forEach(o => { o.addEventListener(‘click’, e => { if (e.target === o) o.classList.remove(‘open’); }); });
-let _confirmResolve = null;
-function safeConfirm(msg) { return new Promise(resolve => { _confirmResolve = resolve; document.getElementById(‘confirm-msg-text’).textContent = msg; document.getElementById(‘confirm-modal’).classList.add(‘open’); }); }
-function resolveConfirm(val) { document.getElementById(‘confirm-modal’).classList.remove(‘open’); if (_confirmResolve) { _confirmResolve(val); _confirmResolve = null; } }
+ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Agents see own quotes" ON quotes FOR ALL USING (agent_id = auth.uid());
+*/
 </script>
 
 </body>
