@@ -3,140 +3,1350 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevie Travel</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Elevie Travel - Cotizaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; font-size: 14px; background: #F5F0E8; color: #1B3A4B; min-height: 100vh; }
-#login { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #1B3A4B; padding: 24px; }
-.card { background: #F5F0E8; border-radius: 20px; padding: 40px 32px; width: 100%; max-width: 380px; }
-.logo { text-align: center; margin-bottom: 32px; }
-.logo h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: #1B3A4B; letter-spacing: 2px; }
-.logo p { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #B8905A; margin-top: 6px; }
-.line { width: 40px; height: 1px; background: #B8905A; margin: 10px auto; opacity: 0.5; }
-label { display: block; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #5a7080; margin-bottom: 5px; }
-input { width: 100%; padding: 11px 13px; border: 1.5px solid #EDE7D8; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #1B3A4B; background: #fff; outline: none; margin-bottom: 14px; }
-input:focus { border-color: #B8905A; }
-button#btn-login { width: 100%; padding: 13px; background: #1B3A4B; color: #F5F0E8; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; }
-button#btn-login:disabled { opacity: 0.6; }
-#msg { background: #fde8e8; color: #C0392B; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none; }
-#app { display: none; padding: 20px; }
-.header { background: #1B3A4B; color: #F5F0E8; padding: 16px 20px; margin: -20px -20px 20px; display: flex; justify-content: space-between; align-items: center; }
-.header h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; }
-.header button { background: rgba(255,255,255,0.15); border: none; color: #F5F0E8; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 12px; }
+body { font-family: 'DM Sans', sans-serif; font-size: 14px; background: #F5F0E8; color: #1B3A4B; }
+/* AUTH */
+#pg-auth { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #1B3A4B; padding: 24px; }
+.auth-card { background: #F5F0E8; border-radius: 20px; padding: 40px 32px; width: 100%; max-width: 380px; box-shadow: 0 24px 64px rgba(0,0,0,.3); }
+.auth-logo { text-align: center; margin-bottom: 32px; }
+.auth-logo h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: #1B3A4B; letter-spacing: 2px; }
+.auth-logo p { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #B8905A; margin-top: 6px; }
+.auth-line { width: 40px; height: 1px; background: #B8905A; margin: 10px auto; opacity: .5; }
+.auth-tabs { display: flex; background: #EDE7D8; border-radius: 8px; padding: 3px; margin-bottom: 24px; }
+.auth-tab { flex: 1; padding: 8px; border: none; background: transparent; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5a7080; cursor: pointer; }
+.auth-tab.on { background: #fff; color: #1B3A4B; font-weight: 500; }
+.auth-err { background: #fde8e8; color: #C0392B; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none; }
+.f-label { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #5a7080; margin-bottom: 5px; }
+.f-input { width: 100%; padding: 11px 13px; border: 1.5px solid #EDE7D8; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #1B3A4B; background: #fff; outline: none; margin-bottom: 13px; }
+.f-input:focus { border-color: #B8905A; }
+.f-select { width: 100%; padding: 11px 13px; border: 1.5px solid #EDE7D8; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #1B3A4B; background: #fff; outline: none; margin-bottom: 13px; }
+textarea.f-input { resize: vertical; min-height: 64px; line-height: 1.5; }
+.btn-main { width: 100%; padding: 13px; background: #1B3A4B; color: #F5F0E8; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; }
+.btn-main:disabled { opacity: .6; cursor: not-allowed; }
+/* APP SHELL */
+#pg-app { display: none; flex-direction: column; min-height: 100vh; }
+.top-bar { background: #1B3A4B; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+.top-bar-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: #F5F0E8; letter-spacing: 2px; }
+.top-bar-brand span { color: #B8905A; }
+.top-bar-right { display: flex; align-items: center; gap: 10px; }
+.top-bar-user { font-size: 12px; color: rgba(245,240,232,.6); max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn-icon { background: rgba(255,255,255,.1); border: none; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; color: #F5F0E8; font-size: 14px; }
+.page-content { flex: 1; padding: 16px 16px 80px; max-width: 480px; margin: 0 auto; width: 100%; }
+/* HOME */
+.page-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: #1B3A4B; margin-bottom: 4px; }
+.page-sub { font-size: 12px; color: #5a7080; margin-bottom: 16px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.stat-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 2px 16px rgba(27,58,75,.1); border-left: 3px solid #ccc; }
+.stat-card.gold { border-left-color: #B8905A; }
+.stat-card.green { border-left-color: #3D6B4F; }
+.stat-card.teal { border-left-color: #1B3A4B; }
+.stat-card.amber { border-left-color: #E8A87C; }
+.stat-lbl { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #5a7080; margin-bottom: 5px; }
+.stat-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: #1B3A4B; line-height: 1; }
+.stat-val.sm { font-size: 17px; }
+.list-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.list-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #1B3A4B; }
+.btn-gold { background: #B8905A; color: #fff; border: none; border-radius: 20px; padding: 7px 16px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; }
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-wrap input { width: 100%; padding: 9px 13px 9px 36px; border: 1.5px solid #EDE7D8; border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; background: #fff; color: #1B3A4B; outline: none; }
+.search-wrap input:focus { border-color: #B8905A; }
+.search-ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #5a7080; font-size: 13px; pointer-events: none; }
+.filter-row { display: flex; gap: 7px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.filter-row::-webkit-scrollbar { display: none; }
+.chip { padding: 5px 13px; border-radius: 20px; border: 1.5px solid #EDE7D8; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 11px; color: #5a7080; cursor: pointer; white-space: nowrap; }
+.chip.on { background: #1B3A4B; border-color: #1B3A4B; color: #F5F0E8; }
+/* QUOTE CARDS */
+.q-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 9px; box-shadow: 0 2px 16px rgba(27,58,75,.1); cursor: pointer; border-left: 3px solid #ccc; }
+.q-card.cotizacion { border-left-color: #B8905A; }
+.q-card.confirmada { border-left-color: #3D6B4F; }
+.q-card.cancelada { border-left-color: #ccc; }
+.q-card.en-proceso { border-left-color: #2A5470; }
+.q-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 7px; }
+.q-name { font-weight: 500; font-size: 14px; color: #1B3A4B; }
+.q-dest { font-size: 11px; color: #5a7080; margin-top: 1px; }
+.q-bot { display: flex; align-items: center; justify-content: space-between; }
+.q-amt { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 500; color: #1B3A4B; }
+.q-cur { font-size: 11px; font-family: 'DM Sans', sans-serif; color: #5a7080; }
+.badge { font-size: 10px; font-weight: 500; letter-spacing: .5px; text-transform: uppercase; padding: 2px 8px; border-radius: 9px; white-space: nowrap; }
+.badge-cotizacion { background: #FEF3E2; color: #B8905A; }
+.badge-confirmada { background: #E8F5EE; color: #3D6B4F; }
+.badge-cancelada { background: #F2F2F2; color: #999; }
+.badge-en-proceso { background: #E8F0F5; color: #2A5470; }
+.empty-state { text-align: center; padding: 40px 16px; color: #5a7080; }
+.empty-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; margin-top: 8px; }
+/* MODAL */
+.modal-bg { position: fixed; inset: 0; background: rgba(27,58,75,.5); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.modal-bg.open { display: flex; }
+.modal-box { background: #F5F0E8; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 93vh; overflow-y: auto; padding-bottom: 40px; }
+.modal-grip { width: 36px; height: 4px; background: rgba(27,58,75,.2); border-radius: 2px; margin: 12px auto 0; }
+.modal-head { padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EDE7D8; position: sticky; top: 0; background: #F5F0E8; z-index: 10; }
+.modal-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: #1B3A4B; }
+.modal-close { background: #EDE7D8; border: none; border-radius: 8px; width: 30px; height: 30px; cursor: pointer; font-size: 15px; color: #5a7080; }
+.modal-body { padding: 16px 18px; }
+.modal-foot { display: flex; gap: 10px; padding: 0 18px; margin-top: 6px; }
+.btn-save { flex: 2; padding: 12px; background: #1B3A4B; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: #F5F0E8; cursor: pointer; }
+.btn-save:disabled { opacity: .6; cursor: not-allowed; }
+.btn-cancel { flex: 1; padding: 12px; background: transparent; border: 1.5px solid #EDE7D8; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5a7080; cursor: pointer; }
+.btn-del { padding: 11px 14px; background: transparent; border: 1.5px solid #f0d0d0; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #C0392B; cursor: pointer; }
+/* FORM SECTIONS */
+.f-sec { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.f-sec-title { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #B8905A; font-weight: 500; margin-bottom: 12px; }
+.f-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.f-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
+.f-group { margin-bottom: 11px; }
+.f-prefix { position: relative; }
+.f-prefix-sym { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: #5a7080; pointer-events: none; }
+.f-prefix .f-input { padding-left: 24px; margin-bottom: 0; }
+.f-pct { position: relative; }
+.f-pct .f-input { padding-right: 22px; text-align: right; margin-bottom: 0; }
+.f-pct-sym { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #B8905A; pointer-events: none; font-weight: 500; }
+/* STATUS PILLS */
+.status-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 3px; }
+.s-pill { padding: 4px 11px; border-radius: 20px; border: 1.5px solid #EDE7D8; background: transparent; font-size: 11px; color: #5a7080; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.s-pill.cot { background: #FEF3E2; border-color: #B8905A; color: #B8905A; }
+.s-pill.conf { background: #E8F5EE; border-color: #3D6B4F; color: #3D6B4F; }
+.s-pill.canc { background: #F2F2F2; border-color: #bbb; color: #888; }
+.s-pill.proc { background: #E8F0F5; border-color: #2A5470; color: #2A5470; }
+/* CURRENCY BUTTONS */
+.cur-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 9px; }
+.cur-btn { padding: 3px 11px; border: 1.5px solid #EDE7D8; border-radius: 16px; background: transparent; font-size: 11px; color: #5a7080; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.cur-btn.on { background: #1B3A4B; border-color: #1B3A4B; color: #F5F0E8; }
+/* SECTION TABS */
+.sec-tabs { background: #fff; border-bottom: 1px solid #EDE7D8; overflow-x: auto; display: flex; scrollbar-width: none; position: sticky; top: 52px; z-index: 9; }
+.sec-tabs::-webkit-scrollbar { display: none; }
+.sec-tab { flex-shrink: 0; padding: 10px 13px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px; color: #5a7080; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.sec-tab.on { color: #1B3A4B; border-bottom-color: #B8905A; font-weight: 500; }
+.sec-body { display: none; padding: 14px; }
+.sec-body.on { display: block; }
+/* ROWS */
+.t-row { background: #fff; border-radius: 8px; padding: 12px; margin-bottom: 8px; border: 1px solid #EDE7D8; }
+.t-row-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+.t-row-num { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #B8905A; font-weight: 500; }
+.t-row-tot { font-size: 12px; font-weight: 500; color: #3D6B4F; }
+.btn-add-row { width: 100%; padding: 8px; border: 1.5px dashed #B8905A; border-radius: 8px; background: transparent; color: #B8905A; font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; margin-top: 4px; }
+.btn-del-row { background: none; border: none; color: #ccc; cursor: pointer; font-size: 17px; padding: 0 3px; line-height: 1; }
+.calc-box { background: #EDE7D8; border-radius: 8px; padding: 9px 12px; font-size: 13px; color: #1B3A4B; }
+.calc-lbl { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #5a7080; margin-bottom: 3px; }
+/* SUMMARY BANNERS */
+.green-banner { background: linear-gradient(135deg, #E8F5EE, #F0F7F3); border: 1px solid rgba(61,107,79,.2); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.green-banner-t { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #3D6B4F; font-weight: 500; margin-bottom: 10px; }
+.gold-banner { background: linear-gradient(135deg, #FEF6EC, #FDF3E6); border: 1px solid rgba(184,144,90,.2); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.gold-banner-t { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #B8905A; font-weight: 500; margin-bottom: 10px; }
+.banner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.banner-item label { font-size: 11px; color: #5a7080; display: block; margin-bottom: 3px; }
+.banner-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; }
+.banner-val.gold { color: #B8905A; }
+.banner-val.green { color: #3D6B4F; }
+.banner-val.sm { font-size: 15px; }
+/* DETAIL */
+.detail-hero { background: #1B3A4B; padding: 20px; margin: -16px -16px 20px; color: #F5F0E8; }
+.detail-back { background: none; border: none; color: rgba(245,240,232,.6); font-size: 12px; cursor: pointer; padding: 0; margin-bottom: 12px; display: block; }
+.detail-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; }
+.detail-dest { font-size: 13px; color: rgba(245,240,232,.7); margin-top: 2px; margin-bottom: 12px; }
+.detail-amt { font-family: 'Cormorant Garamond', serif; font-size: 34px; color: #D4AF7A; }
+.sec-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 16px rgba(27,58,75,.1); }
+.sec-card-t { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #B8905A; font-weight: 500; margin-bottom: 12px; }
+.prog-bar { background: #EDE7D8; border-radius: 4px; height: 6px; margin-top: 8px; overflow: hidden; }
+.prog-fill { height: 100%; background: #3D6B4F; border-radius: 4px; }
+.prog-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+.prog-lbl { font-size: 11px; color: #5a7080; }
+.pay-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #EDE7D8; font-size: 13px; }
+.pay-item:last-child { border-bottom: none; }
+.pay-date { font-size: 11px; color: #5a7080; margin-top: 2px; }
+.pay-amt { font-weight: 500; color: #3D6B4F; }
+.btn-add-pay { width: 100%; padding: 9px; border: 1.5px dashed #B8905A; border-radius: 8px; background: transparent; color: #B8905A; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; margin-top: 9px; }
+.btn-del-pay { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 0 3px; }
+/* AMENIDADES */
+.amen-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.amen-chip { padding: 3px 9px; background: #F5F0E8; border: 1px solid #EDE7D8; border-radius: 9px; font-size: 10px; color: #5a7080; cursor: pointer; user-select: none; }
+.amen-chip.on { background: #E8F5EE; border-color: #3D6B4F; color: #3D6B4F; }
+/* TOAST */
+.toast { position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1B3A4B; color: #F5F0E8; padding: 9px 18px; border-radius: 20px; font-size: 13px; opacity: 0; transition: all .3s; pointer-events: none; z-index: 9999; white-space: nowrap; }
+.toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* BOTTOM NAV */
+.bot-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #EDE7D8; display: flex; padding: 6px 0 10px; z-index: 50; max-width: 480px; margin: 0 auto; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 3px; cursor: pointer; border: none; background: none; color: #5a7080; }
+.nav-btn.on { color: #1B3A4B; }
+.nav-ico { font-size: 17px; }
+.nav-lbl { font-size: 10px; font-family: 'DM Sans', sans-serif; }
+/* CONFIRM */
+.confirm-bg { position: fixed; inset: 0; background: rgba(27,58,75,.6); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
+.confirm-bg.open { display: flex; }
+.confirm-box { background: #F5F0E8; border-radius: 16px; padding: 24px; max-width: 300px; width: 100%; text-align: center; }
+.confirm-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #1B3A4B; margin-bottom: 8px; }
+.confirm-box p { font-size: 13px; color: #5a7080; margin-bottom: 18px; line-height: 1.5; }
+.confirm-btns { display: flex; gap: 8px; }
+.confirm-btns button { flex: 1; padding: 10px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; }
+.confirm-no { background: transparent; border: 1.5px solid #EDE7D8; color: #5a7080; }
+.confirm-yes { background: #C0392B; border: none; color: #fff; font-weight: 500; }
 </style>
 </head>
 <body>
 
-<div id="login">
-  <div class="card">
-    <div class="logo">
+<!-- AUTH -->
+
+<div id="pg-auth">
+  <div class="auth-card">
+    <div class="auth-logo">
       <h1>Elevie</h1>
-      <div class="line"></div>
+      <div class="auth-line"></div>
       <p>Travel - Cotizaciones</p>
     </div>
-    <div id="msg"></div>
-    <div>
-      <label>Correo</label>
-      <input type="email" id="email" placeholder="nombre@elevietravel.com">
-      <label>Contrasena</label>
-      <input type="password" id="pass">
-      <button type="button" id="btn-login">Entrar</button>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab on" id="tab-login-btn" onclick="switchAuthTab('login')">Iniciar sesion</button>
+      <button type="button" class="auth-tab" id="tab-reg-btn" onclick="switchAuthTab('reg')">Registrarme</button>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <div id="login-form">
+      <label class="f-label">Correo</label>
+      <input type="email" id="login-email" class="f-input" placeholder="nombre@elevietravel.com">
+      <label class="f-label">Contrasena</label>
+      <input type="password" id="login-pass" class="f-input">
+      <button type="button" class="btn-main" id="login-btn" onclick="doLogin()">Entrar</button>
+    </div>
+    <div id="reg-form" style="display:none">
+      <label class="f-label">Nombre completo</label>
+      <input type="text" id="reg-name" class="f-input" placeholder="Nombre Apellido">
+      <label class="f-label">Correo</label>
+      <input type="email" id="reg-email" class="f-input" placeholder="nombre@elevietravel.com">
+      <label class="f-label">Telefono</label>
+      <input type="tel" id="reg-phone" class="f-input" placeholder="+52 55 0000 0000">
+      <label class="f-label">Contrasena</label>
+      <input type="password" id="reg-pass" class="f-input">
+      <button type="button" class="btn-main" id="reg-btn" onclick="doReg()">Crear cuenta</button>
     </div>
   </div>
 </div>
 
-<div id="app">
-  <div class="header">
-    <h2>Elevie Travel</h2>
-    <button type="button" id="btn-logout">Salir</button>
+<!-- APP -->
+
+<div id="pg-app">
+  <div class="top-bar">
+    <div class="top-bar-brand">Elevie <span>.</span></div>
+    <div class="top-bar-right">
+      <span class="top-bar-user" id="top-user"></span>
+      <button type="button" class="btn-icon" onclick="doLogout()">x</button>
+    </div>
   </div>
-  <p id="welcome" style="font-size:16px;color:#1B3A4B;">Bienvenida</p>
+  <div class="page-content" id="main-view"></div>
+  <div class="bot-nav">
+    <button type="button" class="nav-btn on" id="nav-home" onclick="goHome()">
+      <span class="nav-ico">&#9633;</span>
+      <span class="nav-lbl">Inicio</span>
+    </button>
+    <button type="button" class="nav-btn" id="nav-new" onclick="openNewQuote()">
+      <span class="nav-ico">+</span>
+      <span class="nav-lbl">Nueva</span>
+    </button>
+  </div>
 </div>
+
+<!-- QUOTE MODAL -->
+
+<div class="modal-bg" id="q-modal">
+  <div class="modal-box">
+    <div class="modal-grip"></div>
+    <div class="modal-head">
+      <div class="modal-title" id="q-modal-title">Nueva cotizacion</div>
+      <button type="button" class="modal-close" onclick="closeQuoteModal()">x</button>
+    </div>
+    <!-- Section tabs -->
+    <div class="sec-tabs">
+      <button type="button" class="sec-tab on" data-sec="general" onclick="goSec('general')">Resumen</button>
+      <button type="button" class="sec-tab" data-sec="vuelos" onclick="goSec('vuelos')">Vuelos</button>
+      <button type="button" class="sec-tab" data-sec="hoteles" onclick="goSec('hoteles')">Hoteles</button>
+      <button type="button" class="sec-tab" data-sec="transfers" onclick="goSec('transfers')">Transfers</button>
+      <button type="button" class="sec-tab" data-sec="tours" onclick="goSec('tours')">Tours</button>
+      <button type="button" class="sec-tab" data-sec="extras" onclick="goSec('extras')">Extras</button>
+      <button type="button" class="sec-tab" data-sec="pagos" onclick="goSec('pagos')">Pagos</button>
+    </div>
+    <div class="modal-body">
+
+```
+  <!-- GENERAL -->
+  <div id="sec-general" class="sec-body on">
+    <div class="f-sec">
+      <div class="f-sec-title">Datos generales</div>
+      <div class="f-row2">
+        <div class="f-group"><label class="f-label">Nombre del viaje</label><input type="text" id="g-nombre" class="f-input" placeholder="Japon Dic 2025" oninput="refreshModalTitle()"></div>
+        <div class="f-group"><label class="f-label">Agente</label><input type="text" id="g-agente" class="f-input" placeholder="Nombre agente"></div>
+      </div>
+      <div class="f-row2">
+        <div class="f-group"><label class="f-label">Destino principal</label><input type="text" id="g-destino" class="f-input" placeholder="Japon" oninput="refreshModalTitle()"></div>
+        <div class="f-group"><label class="f-label">Otros destinos</label><input type="text" id="g-destinos2" class="f-input" placeholder="Tokio, Kioto..."></div>
+      </div>
+      <div class="f-row2">
+        <div class="f-group"><label class="f-label">Fecha salida</label><input type="date" id="g-salida" class="f-input" oninput="calcNoches()"></div>
+        <div class="f-group"><label class="f-label">Fecha regreso</label><input type="date" id="g-regreso" class="f-input" oninput="calcNoches()"></div>
+      </div>
+      <div class="f-row3">
+        <div class="f-group"><label class="f-label">Pasajeros</label><input type="number" id="g-pax" class="f-input" placeholder="2" min="1" oninput="calcAll()"></div>
+        <div class="f-group"><label class="f-label">Noches</label><div class="calc-box" id="g-noches">--</div></div>
+        <div class="f-group"><label class="f-label">Dias</label><div class="calc-box" id="g-dias">--</div></div>
+      </div>
+      <div class="f-row2">
+        <div class="f-group"><label class="f-label">Tipo de viaje</label>
+          <select id="g-tipo" class="f-select">
+            <option value="">Seleccionar...</option>
+            <option>Luna de miel / Pareja</option>
+            <option>Familiar</option>
+            <option>Corporativo</option>
+            <option>Grupo</option>
+            <option>Individual</option>
+          </select>
+        </div>
+        <div class="f-group"><label class="f-label">Estatus</label>
+          <div class="status-row" id="status-pills">
+            <button type="button" class="s-pill cot" data-s="cotizacion" onclick="setStatus(this)">Cotizacion</button>
+            <button type="button" class="s-pill" data-s="en-proceso" onclick="setStatus(this)">En proceso</button>
+            <button type="button" class="s-pill" data-s="confirmada" onclick="setStatus(this)">Confirmada</button>
+            <button type="button" class="s-pill" data-s="cancelada" onclick="setStatus(this)">Cancelada</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="f-sec">
+      <div class="f-sec-title">Moneda y tipo de cambio</div>
+      <div class="cur-row" id="cur-btns">
+        <button type="button" class="cur-btn on" data-c="USD" onclick="setCur(this)">USD</button>
+        <button type="button" class="cur-btn" data-c="MXN" onclick="setCur(this)">MXN</button>
+        <button type="button" class="cur-btn" data-c="EUR" onclick="setCur(this)">EUR</button>
+        <button type="button" class="cur-btn" data-c="GBP" onclick="setCur(this)">GBP</button>
+      </div>
+      <div class="f-group"><label class="f-label">Tipo de cambio a MXN</label><input type="number" id="g-tc" class="f-input" placeholder="19.50" step="0.01" oninput="calcAll()"></div>
+    </div>
+    <div id="g-summary"></div>
+    <div class="gold-banner">
+      <div class="gold-banner-t">Cobro al cliente</div>
+      <div class="banner-grid">
+        <div class="banner-item"><label>Total al cliente</label><div class="banner-val gold" id="d-total">--</div></div>
+        <div class="banner-item"><label>Deposito 30%</label><div class="banner-val gold" id="d-dep">--</div></div>
+        <div class="banner-item"><label>Saldo 70%</label><div class="banner-val gold" id="d-sal">--</div></div>
+        <div class="banner-item"><label>Precio x pax</label><div class="banner-val gold" id="d-pax">--</div></div>
+      </div>
+    </div>
+    <div class="green-banner">
+      <div class="green-banner-t">Comision Elevie</div>
+      <div class="banner-grid">
+        <div class="banner-item"><label>Costo neto</label><div class="banner-val green" id="c-neto">--</div></div>
+        <div class="banner-item"><label>Comision total</label><div class="banner-val green" id="c-comm">--</div></div>
+        <div class="banner-item"><label>Comision MXN</label><div class="banner-val green sm" id="c-mxn">--</div></div>
+        <div class="banner-item"><label>50% agente MXN</label><div class="banner-val green sm" id="c-agent">--</div></div>
+      </div>
+    </div>
+    <div class="f-sec">
+      <div class="f-sec-title">Notas</div>
+      <textarea id="g-notas" class="f-input" rows="3" placeholder="Condiciones especiales, politica de cancelacion..."></textarea>
+    </div>
+    <div style="margin-top:4px">
+      <button type="button" id="btn-del-q" class="btn-del" style="display:none" onclick="confirmDeleteQuote()">Eliminar cotizacion</button>
+    </div>
+  </div>
+
+  <!-- VUELOS -->
+  <div id="sec-vuelos" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Vuelos internacionales</div>
+      <div id="rows-vi"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('vi')">+ Agregar vuelo internacional</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal</label><div class="calc-box" id="st-vi">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-vi" class="f-input" value="10" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="f-sec">
+      <div class="f-sec-title">Vuelos domesticos</div>
+      <div id="rows-vd"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('vd')">+ Agregar vuelo domestico</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal</label><div class="calc-box" id="st-vd">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-vd" class="f-input" value="10" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOTELES -->
+  <div id="sec-hoteles" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Hoteles y alojamiento</div>
+      <div id="rows-h"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('h')">+ Agregar hotel</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal</label><div class="calc-box" id="st-h">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-h" class="f-input" value="12" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSFERS -->
+  <div id="sec-transfers" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Transfers y traslados</div>
+      <div id="rows-tr"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('tr')">+ Agregar transfer</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal</label><div class="calc-box" id="st-tr">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-tr" class="f-input" value="15" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOURS -->
+  <div id="sec-tours" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Tours y excursiones</div>
+      <div id="rows-to"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('to')">+ Agregar tour / actividad</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal</label><div class="calc-box" id="st-to">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-to" class="f-input" value="15" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXTRAS -->
+  <div id="sec-extras" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Seguro de viaje</div>
+      <div id="rows-es"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('es')">+ Agregar seguro</button>
+    </div>
+    <div class="f-sec">
+      <div class="f-sec-title">Otros servicios (visa, propinas, entradas...)</div>
+      <div id="rows-eo"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('eo')">+ Agregar servicio</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Subtotal extras</label><div class="calc-box" id="st-ex">--</div></div>
+          <div class="f-group"><label class="f-label">% Markup</label>
+            <div class="f-pct"><input type="number" id="mk-ex" class="f-input" value="10" min="0" max="100" oninput="calcAll()"><span class="f-pct-sym">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGOS -->
+  <div id="sec-pagos" class="sec-body">
+    <div class="f-sec">
+      <div class="f-sec-title">Pagos a proveedores</div>
+      <div id="rows-pg"></div>
+      <button type="button" class="btn-add-row" onclick="addRow('pg')">+ Agregar proveedor</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #EDE7D8">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Total pagado</label><div class="calc-box" id="st-pg-paid">--</div></div>
+          <div class="f-group"><label class="f-label">Total pendiente</label><div class="calc-box" id="st-pg-pend">--</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="green-banner">
+      <div class="green-banner-t">Resumen comisiones por categoria</div>
+      <div id="comm-detail" style="font-size:12px;color:#5a7080">Agrega costos para ver el resumen.</div>
+    </div>
+  </div>
+
+</div><!-- modal-body -->
+<div class="modal-foot">
+  <button type="button" class="btn-cancel" onclick="closeQuoteModal()">Cancelar</button>
+  <button type="button" class="btn-save" id="btn-save-q" onclick="saveQuote()">Guardar cotizacion</button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+
+<div class="modal-bg" id="pay-modal">
+  <div class="modal-box" style="max-height:60vh">
+    <div class="modal-grip"></div>
+    <div class="modal-head">
+      <div class="modal-title">Registrar pago</div>
+      <button type="button" class="modal-close" onclick="closePayModal()">x</button>
+    </div>
+    <div class="modal-body">
+      <div class="f-sec">
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Fecha</label><input type="date" id="pay-date" class="f-input"></div>
+          <div class="f-group"><label class="f-label">Monto</label><input type="number" id="pay-amt" class="f-input" placeholder="0" step="0.01"></div>
+        </div>
+        <div class="f-row2">
+          <div class="f-group"><label class="f-label">Moneda</label>
+            <select id="pay-cur" class="f-select">
+              <option>USD</option><option>MXN</option><option>EUR</option><option>GBP</option>
+            </select>
+          </div>
+          <div class="f-group"><label class="f-label">Metodo</label>
+            <select id="pay-method" class="f-select">
+              <option>Transferencia</option><option>Tarjeta</option><option>OpenPay</option>
+              <option>Efectivo</option><option>Wire Transfer</option><option>Amex</option><option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-group"><label class="f-label">Cuenta / nota</label><input type="text" id="pay-note" class="f-input" placeholder="BBVA MXN, anticipo 30%..."></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn-cancel" onclick="closePayModal()">Cancelar</button>
+      <button type="button" class="btn-save" onclick="savePayment()">Registrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+
+<div class="confirm-bg" id="confirm-bg">
+  <div class="confirm-box">
+    <h3>Eliminar cotizacion</h3>
+    <p>Esta accion no se puede deshacer.</p>
+    <div class="confirm-btns">
+      <button type="button" class="confirm-no" onclick="closeConfirm()">Cancelar</button>
+      <button type="button" class="confirm-yes" onclick="doDeleteQuote()">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 (function() {
-  var SURL = 'https://ibdvwntcahiodeujkozb.supabase.co';
-  var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZHZ3bnRjYWhpb2RldWprb3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzA2ODcsImV4cCI6MjA5MDI0NjY4N30.WRf0oAdoOZ-53P-zQx_mKswdw0e0yPqfL8KRbjq5GLk';
 
-  var client = supabase.createClient(SURL, SKEY);
+var SB = supabase.createClient(
+  'https://ibdvwntcahiodeujkozb.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZHZ3bnRjYWhpb2RldWprb3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzA2ODcsImV4cCI6MjA5MDI0NjY4N30.WRf0oAdoOZ-53P-zQx_mKswdw0e0yPqfL8KRbjq5GLk'
+);
 
-  function showMsg(text) {
-    var el = document.getElementById('msg');
-    el.textContent = text;
-    el.style.display = text ? 'block' : 'none';
-  }
+var currentUser = null;
+var allQuotes = [];
+var editingId = null;
+var deletingId = null;
+var payingQuoteId = null;
+var currentStatus = 'cotizacion';
+var currentCur = 'USD';
+var filterStatus = 'todas';
+var searchTerm = '';
 
-  function showApp(user) {
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('welcome').textContent = 'Bienvenida, ' + (user.email || '');
-  }
+// Row data store
+var RD = { vi:[], vd:[], h:[], tr:[], to:[], es:[], eo:[], pg:[] };
 
-  function showLogin() {
-    document.getElementById('login').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
+function resetRD() {
+  RD = { vi:[], vd:[], h:[], tr:[], to:[], es:[], eo:[], pg:[] };
+}
 
-  // Check session on load
-  client.auth.getSession().then(function(result) {
-    if (result.data && result.data.session && result.data.session.user) {
-      showApp(result.data.session.user);
-    }
+// -- HELPERS ----------------------------------
+function fmtNum(n) {
+  return new Intl.NumberFormat('es-MX', { minimumFractionDigits:0, maximumFractionDigits:0 }).format(n || 0);
+}
+function curSym(c) {
+  if (c === 'EUR') return 'EUR ';
+  if (c === 'GBP') return 'GBP ';
+  return '$';
+}
+function statusLabel(s) {
+  var map = { cotizacion:'Cotizacion', 'en-proceso':'En proceso', confirmada:'Confirmada', cancelada:'Cancelada' };
+  return map[s] || s;
+}
+function fmtDate(d) {
+  if (!d) return '';
+  try { return new Date(d + 'T12:00:00').toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' }); }
+  catch(e) { return d; }
+}
+function safeStr(v) {
+  if (v === undefined || v === null || v === '') return '';
+  return String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  setTimeout(function() { t.classList.remove('on'); }, 2800);
+}
+function setEl(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+// -- AUTH --------------------------------------
+function showApp(user) {
+  currentUser = user;
+  document.getElementById('pg-auth').style.display = 'none';
+  document.getElementById('pg-app').style.display = 'flex';
+  SB.from('profiles').select('full_name').eq('id', user.id).single().then(function(r) {
+    var name = (r.data && r.data.full_name) ? r.data.full_name : user.email;
+    document.getElementById('top-user').textContent = name.split(' ')[0];
   });
+  loadQuotes();
+}
+function showAuth() {
+  currentUser = null;
+  document.getElementById('pg-auth').style.display = 'flex';
+  document.getElementById('pg-app').style.display = 'none';
+}
+function showAuthErr(msg) {
+  var el = document.getElementById('auth-err');
+  el.textContent = msg;
+  el.style.display = msg ? 'block' : 'none';
+}
 
-  // Auth state listener
-  client.auth.onAuthStateChange(function(event, session) {
-    if (session && session.user) {
-      showApp(session.user);
-    } else {
-      showLogin();
+SB.auth.onAuthStateChange(function(ev, session) {
+  if (session && session.user) { showApp(session.user); }
+  else { showAuth(); }
+});
+SB.auth.getSession().then(function(r) {
+  if (r.data && r.data.session && r.data.session.user) { showApp(r.data.session.user); }
+});
+
+function switchAuthTab(tab) {
+  document.getElementById('tab-login-btn').classList.toggle('on', tab === 'login');
+  document.getElementById('tab-reg-btn').classList.toggle('on', tab === 'reg');
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('reg-form').style.display = tab === 'reg' ? 'block' : 'none';
+  showAuthErr('');
+}
+
+function doLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  if (!email || !pass) { showAuthErr('Completa todos los campos.'); return; }
+  var btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Entrando...'; showAuthErr('');
+  SB.auth.signInWithPassword({ email: email, password: pass }).then(function(r) {
+    btn.disabled = false; btn.textContent = 'Entrar';
+    if (r.error) {
+      var m = r.error.message || '';
+      if (m.indexOf('Invalid') >= 0 || m.indexOf('credentials') >= 0) showAuthErr('Correo o contrasena incorrectos.');
+      else if (m.indexOf('confirm') >= 0) showAuthErr('Confirma tu correo antes de entrar.');
+      else showAuthErr('Error: ' + m);
     }
+  }).catch(function(e) {
+    btn.disabled = false; btn.textContent = 'Entrar';
+    showAuthErr('Error de conexion.');
   });
+}
 
-  // Login button
-  document.getElementById('btn-login').addEventListener('click', function() {
-    var email = document.getElementById('email').value.trim();
-    var pass = document.getElementById('pass').value;
-
-    if (!email || !pass) {
-      showMsg('Ingresa tu correo y contrasena.');
-      return;
+function doReg() {
+  var name = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim();
+  var phone = document.getElementById('reg-phone').value.trim();
+  var pass = document.getElementById('reg-pass').value;
+  if (!name || !email || !pass) { showAuthErr('Nombre, correo y contrasena son requeridos.'); return; }
+  if (pass.length < 6) { showAuthErr('Contrasena minimo 6 caracteres.'); return; }
+  var btn = document.getElementById('reg-btn');
+  btn.disabled = true; btn.textContent = 'Registrando...'; showAuthErr('');
+  SB.auth.signUp({ email: email, password: pass, options: { data: { full_name: name, phone: phone } } }).then(function(r) {
+    btn.disabled = false; btn.textContent = 'Crear cuenta';
+    if (r.error) { showAuthErr('Error: ' + r.error.message); return; }
+    if (r.data && r.data.user) {
+      SB.from('profiles').upsert({ id: r.data.user.id, full_name: name, email: email, phone: phone });
+      if (r.data.session) { showApp(r.data.user); }
+      else { switchAuthTab('login'); showToast('Cuenta creada. Ya puedes iniciar sesion.'); }
     }
+  }).catch(function() { btn.disabled = false; btn.textContent = 'Crear cuenta'; showAuthErr('Error de conexion.'); });
+}
 
-    var btn = document.getElementById('btn-login');
-    btn.disabled = true;
-    btn.textContent = 'Entrando...';
-    showMsg('');
+function doLogout() { SB.auth.signOut(); }
 
-    client.auth.signInWithPassword({ email: email, password: pass })
-      .then(function(result) {
-        btn.disabled = false;
-        btn.textContent = 'Entrar';
-        if (result.error) {
-          var m = result.error.message || '';
-          if (m.indexOf('Invalid') >= 0 || m.indexOf('credentials') >= 0) {
-            showMsg('Correo o contrasena incorrectos.');
-          } else if (m.indexOf('confirm') >= 0) {
-            showMsg('Confirma tu correo antes de entrar.');
-          } else {
-            showMsg('Error: ' + m);
-          }
-        }
-      })
-      .catch(function(err) {
-        btn.disabled = false;
-        btn.textContent = 'Entrar';
-        showMsg('Error de conexion: ' + (err.message || 'intenta de nuevo'));
+// -- DATA --------------------------------------
+function loadQuotes() {
+  SB.from('quotes').select('*').eq('agent_id', currentUser.id).order('created_at', { ascending: false }).then(function(r) {
+    if (!r.error) {
+      allQuotes = (r.data || []).map(function(q) {
+        return Object.assign({}, q, { payments: q.payments || [] });
       });
+      renderHome();
+    }
   });
+}
 
-  // Logout
-  document.getElementById('btn-logout').addEventListener('click', function() {
-    client.auth.signOut();
+// -- HOME --------------------------------------
+function renderHome() {
+  document.getElementById('nav-home').classList.add('on');
+  var view = document.getElementById('main-view');
+  var tot = allQuotes.length;
+  var conf = 0, usd = 0, mxnComm = 0;
+  for (var i = 0; i < allQuotes.length; i++) {
+    var q = allQuotes[i];
+    if (q.status === 'confirmada') { conf++; mxnComm += (q.comm_mxn || 0); }
+    if (q.status !== 'cancelada' && q.currency === 'USD') usd += (q.total || 0);
+  }
+  var filtered = [];
+  for (var i = 0; i < allQuotes.length; i++) {
+    var q = allQuotes[i];
+    var matchF = filterStatus === 'todas' || q.status === filterStatus;
+    var matchS = !searchTerm || (q.client_name || '').toLowerCase().indexOf(searchTerm) >= 0 || (q.destination || '').toLowerCase().indexOf(searchTerm) >= 0;
+    if (matchF && matchS) filtered.push(q);
+  }
+  var h = '';
+  h += '<div class="page-title">Buen dia</div>';
+  h += '<div class="page-sub">Tu resumen de cotizaciones</div>';
+  h += '<div class="stats-grid">';
+  h += '<div class="stat-card gold"><div class="stat-lbl">Cotizaciones</div><div class="stat-val">' + tot + '</div></div>';
+  h += '<div class="stat-card green"><div class="stat-lbl">Confirmadas</div><div class="stat-val">' + conf + '</div></div>';
+  h += '<div class="stat-card teal"><div class="stat-lbl">Valor activo USD</div><div class="stat-val sm">$' + fmtNum(usd) + '</div></div>';
+  h += '<div class="stat-card amber"><div class="stat-lbl">Comision MXN</div><div class="stat-val sm">$' + fmtNum(mxnComm) + '</div></div>';
+  h += '</div>';
+  h += '<div class="list-hdr"><div class="list-title">Cotizaciones</div><button type="button" class="btn-gold" onclick="openNewQuote()">+ Nueva</button></div>';
+  h += '<div class="search-wrap"><span class="search-ico">&#128269;</span><input type="text" placeholder="Buscar cliente o destino..." value="' + safeStr(searchTerm) + '" oninput="onSearch(this.value)"></div>';
+  h += '<div class="filter-row">';
+  var filters = ['todas','cotizacion','en-proceso','confirmada','cancelada'];
+  for (var fi = 0; fi < filters.length; fi++) {
+    var f = filters[fi];
+    var lbl = f === 'todas' ? ('Todas (' + tot + ')') : statusLabel(f);
+    h += '<button type="button" class="chip' + (filterStatus === f ? ' on' : '') + '" onclick="setFilter('' + f + '')">' + lbl + '</button>';
+  }
+  h += '</div>';
+  if (filtered.length === 0) {
+    h += '<div class="empty-state"><div class="empty-title">Sin cotizaciones</div></div>';
+  } else {
+    for (var qi = 0; qi < filtered.length; qi++) {
+      h += quoteCardHTML(filtered[qi]);
+    }
+  }
+  view.innerHTML = h;
+  var cards = view.querySelectorAll('.q-card');
+  for (var ci = 0; ci < cards.length; ci++) {
+    (function(card) {
+      card.addEventListener('click', function() { openDetail(card.getAttribute('data-id')); });
+    })(cards[ci]);
+  }
+}
+
+function quoteCardHTML(q) {
+  var paid = 0;
+  for (var i = 0; i < (q.payments || []).length; i++) paid += (q.payments[i].amount || 0);
+  var h = '<div class="q-card ' + q.status + '" data-id="' + q.id + '">';
+  h += '<div class="q-top">';
+  h += '<div><div class="q-name">' + safeStr(q.client_name || 'Sin nombre') + '</div>';
+  h += '<div class="q-dest">' + safeStr(q.destination || '--') + (q.travel_date ? ' - ' + fmtDate(q.travel_date) : '') + '</div></div>';
+  h += '<span class="badge badge-' + q.status + '">' + statusLabel(q.status) + '</span>';
+  h += '</div>';
+  h += '<div class="q-bot">';
+  h += '<div><span class="q-amt">' + curSym(q.currency || 'USD') + fmtNum(q.total || 0) + '</span> <span class="q-cur">' + (q.currency || 'USD') + '</span></div>';
+  h += '<div style="font-size:11px;color:#5a7080">' + (q.travelers ? q.travelers + ' pax' : '') + '</div>';
+  h += '</div></div>';
+  return h;
+}
+
+function goHome() { loadQuotes(); }
+function setFilter(f) { filterStatus = f; renderHome(); }
+function onSearch(v) { searchTerm = v.toLowerCase(); renderHome(); }
+
+// -- DETAIL ----------------------------------
+function openDetail(id) {
+  var q = null;
+  for (var i = 0; i < allQuotes.length; i++) { if (allQuotes[i].id === id) { q = allQuotes[i]; break; } }
+  if (!q) return;
+  var view = document.getElementById('main-view');
+  var paid = 0;
+  for (var i = 0; i < (q.payments || []).length; i++) paid += (q.payments[i].amount || 0);
+  var bal = Math.max(0, (q.total || 0) - paid);
+  var pct = q.total > 0 ? Math.min(100, Math.round(paid / q.total * 100)) : 0;
+  var cur = curSym(q.currency || 'USD');
+  var h = '<div class="detail-hero">';
+  h += '<button type="button" class="detail-back" onclick="renderHome()">&#8592; Regresar</button>';
+  h += '<div class="detail-name">' + safeStr(q.client_name || '--') + '</div>';
+  h += '<div class="detail-dest">' + safeStr(q.destination || '--') + (q.travel_date ? ' - ' + fmtDate(q.travel_date) : '') + (q.travelers ? ' - ' + q.travelers + ' pax' : '') + '</div>';
+  h += '<div style="display:flex;align-items:flex-end;justify-content:space-between">';
+  h += '<div class="detail-amt">' + cur + fmtNum(q.total || 0) + ' <span style="font-size:16px;opacity:.7">' + (q.currency || 'USD') + '</span></div>';
+  h += '<span class="badge badge-' + q.status + '">' + statusLabel(q.status) + '</span>';
+  h += '</div></div>';
+  h += '<div class="gold-banner"><div class="gold-banner-t">Pagos y saldo</div><div class="banner-grid">';
+  h += '<div class="banner-item"><label>Total</label><div class="banner-val gold">' + cur + fmtNum(q.total || 0) + '</div></div>';
+  h += '<div class="banner-item"><label>Deposito 30%</label><div class="banner-val gold">' + cur + fmtNum((q.total || 0) * 0.3) + '</div></div>';
+  h += '<div class="banner-item"><label>Recibido</label><div class="banner-val" style="color:#3D6B4F">' + cur + fmtNum(paid) + '</div></div>';
+  h += '<div class="banner-item"><label>Saldo</label><div class="banner-val" style="color:#C0392B;font-size:16px">' + cur + fmtNum(bal) + '</div></div>';
+  h += '</div>';
+  h += '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>';
+  h += '<div class="prog-labels"><span class="prog-lbl">Pagado ' + pct + '%</span><span class="prog-lbl">Pendiente ' + (100 - pct) + '%</span></div>';
+  h += '</div>';
+  h += '<div class="sec-card"><div class="sec-card-t">Historial de pagos</div>';
+  var pays = q.payments || [];
+  if (pays.length === 0) {
+    h += '<p style="font-size:13px;color:#5a7080;text-align:center;padding:8px 0">Sin pagos registrados</p>';
+  } else {
+    for (var pi = 0; pi < pays.length; pi++) {
+      var p = pays[pi];
+      h += '<div class="pay-item"><div>';
+      h += '<div style="font-weight:500">' + safeStr(p.note || p.method || 'Pago') + '</div>';
+      h += '<div class="pay-date">' + (p.date ? fmtDate(p.date) : '') + ' - ' + safeStr(p.method || '') + ' - ' + safeStr(p.currency || '') + '</div>';
+      h += '</div><div style="display:flex;align-items:center;gap:8px">';
+      h += '<span class="pay-amt">+' + curSym(p.currency || q.currency || 'USD') + fmtNum(p.amount || 0) + '</span>';
+      h += '<button type="button" class="btn-del-pay" data-qid="' + q.id + '" data-pi="' + pi + '" onclick="delPayment(this)">x</button>';
+      h += '</div></div>';
+    }
+  }
+  h += '<button type="button" class="btn-add-pay" data-qid="' + q.id + '" onclick="openPayModal(this.getAttribute('data-qid'))">+ Registrar pago</button>';
+  h += '</div>';
+  if (q.notes) {
+    h += '<div class="sec-card"><div class="sec-card-t">Notas</div>';
+    h += '<p style="font-size:13px;color:#5a7080;line-height:1.6;font-style:italic">' + safeStr(q.notes) + '</p></div>';
+  }
+  h += '<div style="display:flex;gap:8px;margin-top:4px">';
+  h += '<button type="button" class="btn-cancel" style="flex:1" onclick="openEditQuote('' + q.id + '')">Editar</button>';
+  h += '</div>';
+  view.innerHTML = h;
+}
+
+function delPayment(btn) {
+  var qid = btn.getAttribute('data-qid');
+  var idx = parseInt(btn.getAttribute('data-pi'));
+  var q = null;
+  for (var i = 0; i < allQuotes.length; i++) { if (allQuotes[i].id === qid) { q = allQuotes[i]; break; } }
+  if (!q) return;
+  var newPays = [];
+  for (var i = 0; i < (q.payments || []).length; i++) { if (i !== idx) newPays.push(q.payments[i]); }
+  SB.from('quotes').update({ payments: newPays }).eq('id', qid).then(function(r) {
+    if (r.error) { showToast('Error'); return; }
+    q.payments = newPays;
+    openDetail(qid);
+    showToast('Pago eliminado');
   });
+}
+
+// -- QUOTE MODAL ------------------------------
+function openNewQuote() {
+  editingId = null;
+  currentStatus = 'cotizacion';
+  currentCur = 'USD';
+  resetRD();
+  clearGeneralFields();
+  document.getElementById('btn-del-q').style.display = 'none';
+  document.getElementById('q-modal-title').textContent = 'Nueva cotizacion';
+  rebuildAllRows();
+  goSec('general');
+  calcAll();
+  document.getElementById('q-modal').classList.add('open');
+}
+
+function openEditQuote(id) {
+  var q = null;
+  for (var i = 0; i < allQuotes.length; i++) { if (allQuotes[i].id === id) { q = allQuotes[i]; break; } }
+  if (!q) return;
+  editingId = id;
+  currentStatus = q.status || 'cotizacion';
+  currentCur = q.currency || 'USD';
+  document.getElementById('btn-del-q').style.display = 'block';
+  document.getElementById('q-modal-title').textContent = 'Editar cotizacion';
+  var fieldMap = [
+    ['g-nombre', q.nombre || ''], ['g-agente', q.agente || ''],
+    ['g-destino', q.destination || ''], ['g-destinos2', q.destinos2 || ''],
+    ['g-salida', q.travel_date || ''], ['g-regreso', q.fecha_regreso || ''],
+    ['g-pax', q.travelers || ''], ['g-tc', q.tipo_cambio || ''],
+    ['g-notas', q.notes || '']
+  ];
+  for (var i = 0; i < fieldMap.length; i++) {
+    var el = document.getElementById(fieldMap[i][0]);
+    if (el) el.value = fieldMap[i][1];
+  }
+  document.getElementById('g-tipo').value = q.tipo_viaje || '';
+  calcNoches();
+  refreshStatusPills();
+  refreshCurBtns();
+  RD = q.item_data ? JSON.parse(JSON.stringify(q.item_data)) : {};
+  var secs = ['vi','vd','h','tr','to','es','eo','pg'];
+  for (var si = 0; si < secs.length; si++) { if (!RD[secs[si]]) RD[secs[si]] = []; }
+  if (q.markups) {
+    var mks = ['vi','vd','h','tr','to','ex'];
+    for (var mi = 0; mi < mks.length; mi++) {
+      var mkEl = document.getElementById('mk-' + mks[mi]);
+      if (mkEl && q.markups[mks[mi]] !== undefined) mkEl.value = q.markups[mks[mi]];
+    }
+  }
+  rebuildAllRows();
+  goSec('general');
+  calcAll();
+  document.getElementById('q-modal').classList.add('open');
+}
+
+function closeQuoteModal() {
+  document.getElementById('q-modal').classList.remove('open');
+}
+
+function clearGeneralFields() {
+  var ids = ['g-nombre','g-agente','g-destino','g-destinos2','g-salida','g-regreso','g-pax','g-tc','g-notas'];
+  for (var i = 0; i < ids.length; i++) {
+    var el = document.getElementById(ids[i]);
+    if (el) el.value = '';
+  }
+  document.getElementById('g-tipo').value = '';
+  document.getElementById('g-noches').textContent = '--';
+  document.getElementById('g-dias').textContent = '--';
+  refreshStatusPills();
+  refreshCurBtns();
+}
+
+function refreshModalTitle() {
+  var n = document.getElementById('g-nombre').value || document.getElementById('g-destino').value || 'Nueva cotizacion';
+  document.getElementById('q-modal-title').textContent = n;
+}
+
+function setStatus(btn) {
+  currentStatus = btn.getAttribute('data-s');
+  refreshStatusPills();
+}
+function refreshStatusPills() {
+  var pills = document.querySelectorAll('#status-pills .s-pill');
+  var classMap = { cotizacion:'cot', 'en-proceso':'proc', confirmada:'conf', cancelada:'canc' };
+  for (var i = 0; i < pills.length; i++) {
+    var s = pills[i].getAttribute('data-s');
+    pills[i].className = 's-pill' + (s === currentStatus ? ' ' + (classMap[s] || '') : '');
+  }
+}
+
+function setCur(btn) {
+  currentCur = btn.getAttribute('data-c');
+  refreshCurBtns();
+  rebuildAllRows();
+  calcAll();
+}
+function refreshCurBtns() {
+  var btns = document.querySelectorAll('#cur-btns .cur-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle('on', btns[i].getAttribute('data-c') === currentCur);
+  }
+}
+
+function calcNoches() {
+  var s = document.getElementById('g-salida').value;
+  var r = document.getElementById('g-regreso').value;
+  if (s && r) {
+    var diff = Math.round((new Date(r) - new Date(s)) / 86400000);
+    if (diff >= 0) {
+      document.getElementById('g-noches').textContent = diff;
+      document.getElementById('g-dias').textContent = diff + 1;
+    }
+  }
+}
+
+// -- SECTION TABS ------------------------------
+function goSec(sec) {
+  var tabs = document.querySelectorAll('.sec-tab');
+  var bodies = document.querySelectorAll('.sec-body');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-sec') === sec);
+  for (var j = 0; j < bodies.length; j++) bodies[j].classList.toggle('on', bodies[j].id === 'sec-' + sec);
+}
+
+// -- ROWS --------------------------------------
+var SMETA = {
+  vi:{ label:'Vuelo intl', cont:'rows-vi' },
+  vd:{ label:'Vuelo dom',  cont:'rows-vd' },
+  h: { label:'Hotel',      cont:'rows-h'  },
+  tr:{ label:'Transfer',   cont:'rows-tr' },
+  to:{ label:'Tour',       cont:'rows-to' },
+  es:{ label:'Seguro',     cont:'rows-es' },
+  eo:{ label:'Servicio',   cont:'rows-eo' },
+  pg:{ label:'Proveedor',  cont:'rows-pg' }
+};
+
+function defRow(sec) {
+  if (sec === 'vi' || sec === 'vd') return { ruta:'', fecha:'', aerolinea:'', vuelo:'', clase:'Economy', costo:0, pax:1, impuestos:0, proveedor:'' };
+  if (sec === 'h') return { hotel:'', ciudad:'', checkin:'', checkout:'', noches:0, tipo:'', tarifa:0, habitaciones:1, impuestos:0, proveedor:'', amenidades:[], notas:'' };
+  if (sec === 'tr') return { tipo:'Llegada', origen:'', destino:'', fecha:'', pax:1, vehiculo:'Sedan privado', costo:0, cantidad:1, proveedor:'' };
+  if (sec === 'to') return { tour:'', ciudad:'', fecha:'', duracion:'', pax:1, modalidad:'Privado', costoPax:0, propina:0, operador:'' };
+  if (sec === 'es' || sec === 'eo') return { descripcion:'', destino:'', costoUnit:0, cantidad:1, pax:1, proveedor:'' };
+  if (sec === 'pg') return { proveedor:'', vencimiento:'', monto:0, anticipo:30, estado:'PENDIENTE', referencia:'' };
+  return {};
+}
+
+function rowTotal(sec, it) {
+  if (!it) return 0;
+  if (sec === 'vi' || sec === 'vd') return (parseFloat(it.costo) || 0) * (parseFloat(it.pax) || 1) + (parseFloat(it.impuestos) || 0);
+  if (sec === 'h') return (parseFloat(it.tarifa) || 0) * (parseFloat(it.noches) || 1) * (parseFloat(it.habitaciones) || 1) + (parseFloat(it.impuestos) || 0);
+  if (sec === 'tr') return (parseFloat(it.costo) || 0) * (parseFloat(it.cantidad) || 1);
+  if (sec === 'to') return (parseFloat(it.costoPax) || 0) * (parseFloat(it.pax) || 1) + (parseFloat(it.propina) || 0);
+  if (sec === 'es' || sec === 'eo') return (parseFloat(it.costoUnit) || 0) * (parseFloat(it.cantidad) || 1) * (parseFloat(it.pax) || 1);
+  if (sec === 'pg') return parseFloat(it.monto) || 0;
+  return 0;
+}
+
+function secTotal(sec) {
+  var t = 0, rows = RD[sec] || [];
+  for (var i = 0; i < rows.length; i++) t += rowTotal(sec, rows[i]);
+  return t;
+}
+
+function addRow(sec) {
+  RD[sec].push(defRow(sec));
+  rebuildSec(sec);
+  calcAll();
+}
+function delRow(sec, idx) {
+  RD[sec].splice(idx, 1);
+  rebuildSec(sec);
+  calcAll();
+}
+function setField(sec, idx, field, val) {
+  if (!RD[sec]) RD[sec] = [];
+  if (!RD[sec][idx]) RD[sec][idx] = {};
+  RD[sec][idx][field] = val;
+}
+function setFieldNum(sec, idx, field, val) {
+  setField(sec, idx, field, parseFloat(val) || 0);
+  calcAll();
+}
+function autoNoches(sec, idx) {
+  var it = RD[sec][idx];
+  if (it && it.checkin && it.checkout) {
+    var diff = Math.round((new Date(it.checkout) - new Date(it.checkin)) / 86400000);
+    if (diff > 0) {
+      it.noches = diff;
+      var el = document.getElementById('hn-' + idx);
+      if (el) el.value = diff;
+      calcAll();
+    }
+  }
+}
+function toggleAmen(sec, idx, val, el) {
+  if (!RD[sec][idx].amenidades) RD[sec][idx].amenidades = [];
+  var arr = RD[sec][idx].amenidades;
+  var pos = arr.indexOf(val);
+  if (pos >= 0) { arr.splice(pos, 1); el.classList.remove('on'); }
+  else { arr.push(val); el.classList.add('on'); }
+}
+
+function buildRowHTML(sec, idx) {
+  var it = RD[sec][idx] || {};
+  var t = rowTotal(sec, it);
+  var cur = curSym(currentCur);
+  var sf = "setField('" + sec + "'," + idx + ",";
+  var sfn = "setFieldNum('" + sec + "'," + idx + ",";
+  var h = '<div class="t-row">';
+  h += '<div class="t-row-hdr"><span class="t-row-num">' + SMETA[sec].label + ' #' + (idx + 1) + '</span>';
+  h += '<div style="display:flex;align-items:center;gap:7px">';
+  if (t > 0) h += '<span class="t-row-tot">' + cur + fmtNum(t) + '</span>';
+  h += '<button type="button" class="btn-del-row" onclick="delRow('' + sec + '',' + idx + ')">x</button>';
+  h += '</div></div>';
+
+  if (sec === 'vi' || sec === 'vd') {
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Fecha</label><input type="date" class="f-input" value="' + safeStr(it.fecha) + '" oninput="' + sf + ''fecha',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Ruta</label><input type="text" class="f-input" placeholder="MEX-NRT" value="' + safeStr(it.ruta) + '" oninput="' + sf + ''ruta',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Aerolinea</label><input type="text" class="f-input" placeholder="Aeromexico" value="' + safeStr(it.aerolinea) + '" oninput="' + sf + ''aerolinea',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">No. vuelo</label><input type="text" class="f-input" placeholder="AM 57" value="' + safeStr(it.vuelo) + '" oninput="' + sf + ''vuelo',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Clase</label><select class="f-select" onchange="' + sf + ''clase',this.value)">';
+    var clases = ['Economy','Premium Economy','Business','First','AM Plus'];
+    for (var ci = 0; ci < clases.length; ci++) h += '<option' + (it.clase === clases[ci] ? ' selected' : '') + '>' + clases[ci] + '</option>';
+    h += '</select></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Costo x pax</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.costo || '') + '" oninput="' + sfn + ''costo',this.value)"></div></div>';
+    h += '<div class="f-group"><label class="f-label">Pasajeros</label><input type="number" class="f-input" placeholder="1" min="1" value="' + (it.pax || 1) + '" oninput="' + sfn + ''pax',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Impuestos</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.impuestos || '') + '" oninput="' + sfn + ''impuestos',this.value)"></div></div></div>';
+    h += '<div class="f-group"><label class="f-label">Proveedor / PNR</label><input type="text" class="f-input" placeholder="PNR..." value="' + safeStr(it.proveedor) + '" oninput="' + sf + ''proveedor',this.value)"></div>';
+  }
+  else if (sec === 'h') {
+    h += '<div class="f-group"><label class="f-label">Hotel</label><input type="text" class="f-input" placeholder="Palace Hotel Tokyo..." value="' + safeStr(it.hotel) + '" oninput="' + sf + ''hotel',this.value)"></div>';
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Ciudad</label><input type="text" class="f-input" placeholder="Tokio..." value="' + safeStr(it.ciudad) + '" oninput="' + sf + ''ciudad',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Tipo habitacion</label><input type="text" class="f-input" placeholder="Deluxe King..." value="' + safeStr(it.tipo) + '" oninput="' + sf + ''tipo',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Check-in</label><input type="date" class="f-input" value="' + safeStr(it.checkin) + '" oninput="' + sf + ''checkin',this.value);autoNoches('h',' + idx + ')"></div>';
+    h += '<div class="f-group"><label class="f-label">Check-out</label><input type="date" class="f-input" value="' + safeStr(it.checkout) + '" oninput="' + sf + ''checkout',this.value);autoNoches('h',' + idx + ')"></div>';
+    h += '<div class="f-group"><label class="f-label">Noches</label><input type="number" id="hn-' + idx + '" class="f-input" placeholder="2" min="1" value="' + (it.noches || '') + '" oninput="' + sfn + ''noches',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Tarifa x noche</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.tarifa || '') + '" oninput="' + sfn + ''tarifa',this.value)"></div></div>';
+    h += '<div class="f-group"><label class="f-label">Habitaciones</label><input type="number" class="f-input" placeholder="1" min="1" value="' + (it.habitaciones || 1) + '" oninput="' + sfn + ''habitaciones',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Impuestos</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.impuestos || '') + '" oninput="' + sfn + ''impuestos',this.value)"></div></div></div>';
+    h += '<div class="f-group"><label class="f-label">Proveedor / Confirmacion</label><input type="text" class="f-input" value="' + safeStr(it.proveedor) + '" oninput="' + sf + ''proveedor',this.value)"></div>';
+    var amens = ['Desayuno diario','Credito F&B','WiFi Premium','Early check-in','Late check-out','Upgrade habitacion','Credito Spa','Bienvenida especial'];
+    h += '<div class="f-group"><label class="f-label">Amenidades Virtuoso</label><div class="amen-row">';
+    for (var ai = 0; ai < amens.length; ai++) {
+      var a = amens[ai];
+      var isOn = (it.amenidades || []).indexOf(a) >= 0;
+      h += '<span class="amen-chip' + (isOn ? ' on' : '') + '" onclick="toggleAmen('h',' + idx + ','' + a + '',this)">' + a + '</span>';
+    }
+    h += '</div></div>';
+    h += '<div class="f-group"><label class="f-label">Notas / city tax</label><input type="text" class="f-input" placeholder="City tax, condiciones..." value="' + safeStr(it.notas) + '" oninput="' + sf + ''notas',this.value)"></div>';
+  }
+  else if (sec === 'tr') {
+    var trTypes = ['Llegada','Salida','Entre ciudades','Traslado turistico','Transfer VIP','Otro'];
+    h += '<div class="f-row2"><div class="f-group"><label class="f-label">Tipo</label><select class="f-select" onchange="' + sf + ''tipo',this.value)">';
+    for (var ti = 0; ti < trTypes.length; ti++) h += '<option' + (it.tipo === trTypes[ti] ? ' selected' : '') + '>' + trTypes[ti] + '</option>';
+    h += '</select></div>';
+    h += '<div class="f-group"><label class="f-label">Fecha</label><input type="date" class="f-input" value="' + safeStr(it.fecha) + '" oninput="' + sf + ''fecha',this.value)"></div></div>';
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Origen</label><input type="text" class="f-input" placeholder="Aeropuerto Narita..." value="' + safeStr(it.origen) + '" oninput="' + sf + ''origen',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Destino</label><input type="text" class="f-input" placeholder="Palace Hotel..." value="' + safeStr(it.destino) + '" oninput="' + sf + ''destino',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Pasajeros</label><input type="number" class="f-input" placeholder="2" min="1" value="' + (it.pax || 1) + '" oninput="' + sfn + ''pax',this.value)"></div>';
+    var vTypes = ['Sedan privado','SUV privada','Van/Minivan','Bus privado','Tren','Otro'];
+    h += '<div class="f-group"><label class="f-label">Vehiculo</label><select class="f-select" onchange="' + sf + ''vehiculo',this.value)">';
+    for (var vi2 = 0; vi2 < vTypes.length; vi2++) h += '<option' + (it.vehiculo === vTypes[vi2] ? ' selected' : '') + '>' + vTypes[vi2] + '</option>';
+    h += '</select></div>';
+    h += '<div class="f-group"><label class="f-label">Costo unitario</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.costo || '') + '" oninput="' + sfn + ''costo',this.value)"></div></div></div>';
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Cantidad</label><input type="number" class="f-input" placeholder="1" min="1" value="' + (it.cantidad || 1) + '" oninput="' + sfn + ''cantidad',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Proveedor</label><input type="text" class="f-input" placeholder="Rolzo, DMC local..." value="' + safeStr(it.proveedor) + '" oninput="' + sf + ''proveedor',this.value)"></div></div>';
+  }
+  else if (sec === 'to') {
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Tour / Actividad</label><input type="text" class="f-input" placeholder="Tour privado Kioto..." value="' + safeStr(it.tour) + '" oninput="' + sf + ''tour',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Ciudad</label><input type="text" class="f-input" placeholder="Kioto..." value="' + safeStr(it.ciudad) + '" oninput="' + sf + ''ciudad',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Fecha</label><input type="date" class="f-input" value="' + safeStr(it.fecha) + '" oninput="' + sf + ''fecha',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Duracion</label><input type="text" class="f-input" placeholder="4 hrs..." value="' + safeStr(it.duracion) + '" oninput="' + sf + ''duracion',this.value)"></div>';
+    var mods = ['Privado','Compartido','Semi-privado'];
+    h += '<div class="f-group"><label class="f-label">Modalidad</label><select class="f-select" onchange="' + sf + ''modalidad',this.value)">';
+    for (var mi2 = 0; mi2 < mods.length; mi2++) h += '<option' + (it.modalidad === mods[mi2] ? ' selected' : '') + '>' + mods[mi2] + '</option>';
+    h += '</select></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Pasajeros</label><input type="number" class="f-input" placeholder="2" min="1" value="' + (it.pax || 1) + '" oninput="' + sfn + ''pax',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Costo x pax</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.costoPax || '') + '" oninput="' + sfn + ''costoPax',this.value)"></div></div>';
+    h += '<div class="f-group"><label class="f-label">Propina guia</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.propina || '') + '" oninput="' + sfn + ''propina',this.value)"></div></div></div>';
+    h += '<div class="f-group"><label class="f-label">Operador local</label><input type="text" class="f-input" value="' + safeStr(it.operador) + '" oninput="' + sf + ''operador',this.value)"></div>';
+  }
+  else if (sec === 'es' || sec === 'eo') {
+    var ph3 = sec === 'es' ? 'Seguro de viaje...' : 'Visa, propinas, entradas...';
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Descripcion</label><input type="text" class="f-input" placeholder="' + ph3 + '" value="' + safeStr(it.descripcion) + '" oninput="' + sf + ''descripcion',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Destino / fecha</label><input type="text" class="f-input" placeholder="Tokio, 10 Dic..." value="' + safeStr(it.destino) + '" oninput="' + sf + ''destino',this.value)"></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Costo unitario</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.costoUnit || '') + '" oninput="' + sfn + ''costoUnit',this.value)"></div></div>';
+    h += '<div class="f-group"><label class="f-label">Cantidad</label><input type="number" class="f-input" placeholder="1" min="1" value="' + (it.cantidad || 1) + '" oninput="' + sfn + ''cantidad',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Pasajeros</label><input type="number" class="f-input" placeholder="1" min="1" value="' + (it.pax || 1) + '" oninput="' + sfn + ''pax',this.value)"></div></div>';
+    h += '<div class="f-group"><label class="f-label">Proveedor</label><input type="text" class="f-input" value="' + safeStr(it.proveedor) + '" oninput="' + sf + ''proveedor',this.value)"></div>';
+  }
+  else if (sec === 'pg') {
+    h += '<div class="f-row2">';
+    h += '<div class="f-group"><label class="f-label">Proveedor / Concepto</label><input type="text" class="f-input" placeholder="Afro Asia Travel..." value="' + safeStr(it.proveedor) + '" oninput="' + sf + ''proveedor',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Monto total</label><div class="f-prefix"><span class="f-prefix-sym">' + cur + '</span><input type="number" class="f-input" placeholder="0" value="' + (it.monto || '') + '" oninput="' + sfn + ''monto',this.value)"></div></div></div>';
+    h += '<div class="f-row3">';
+    h += '<div class="f-group"><label class="f-label">Anticipo %</label><div class="f-pct"><input type="number" class="f-input" placeholder="30" value="' + (it.anticipo || 30) + '" min="0" max="100" oninput="' + sf + ''anticipo',parseFloat(this.value)||0)"><span class="f-pct-sym">%</span></div></div>';
+    h += '<div class="f-group"><label class="f-label">Fecha limite</label><input type="date" class="f-input" value="' + safeStr(it.vencimiento) + '" oninput="' + sf + ''vencimiento',this.value)"></div>';
+    h += '<div class="f-group"><label class="f-label">Estado</label><select class="f-select" onchange="' + sf + ''estado',this.value);calcAll()">';
+    var estados = ['PENDIENTE','PAGADO','PARCIAL'];
+    for (var ei = 0; ei < estados.length; ei++) h += '<option' + (it.estado === estados[ei] ? ' selected' : '') + '>' + estados[ei] + '</option>';
+    h += '</select></div></div>';
+    h += '<div class="f-group"><label class="f-label">Referencia</label><input type="text" class="f-input" placeholder="No. referencia, wire..." value="' + safeStr(it.referencia) + '" oninput="' + sf + ''referencia',this.value)"></div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function rebuildSec(sec) {
+  var cont = document.getElementById(SMETA[sec].cont);
+  if (!cont) return;
+  var h = '';
+  var rows = RD[sec] || [];
+  for (var i = 0; i < rows.length; i++) h += buildRowHTML(sec, i);
+  cont.innerHTML = h;
+}
+
+function rebuildAllRows() {
+  var secs = ['vi','vd','h','tr','to','es','eo','pg'];
+  for (var i = 0; i < secs.length; i++) rebuildSec(secs[i]);
+}
+
+// -- CALC ALL ----------------------------------
+function calcAll() {
+  var tc = parseFloat(document.getElementById('g-tc').value) || 0;
+  var pax = parseInt(document.getElementById('g-pax').value) || 1;
+  var cur = curSym(currentCur);
+  var cats = [
+    { keys:['vi'], lbl:'Vuelos Internacionales', mk:'mk-vi' },
+    { keys:['vd'], lbl:'Vuelos Domesticos',      mk:'mk-vd' },
+    { keys:['h'],  lbl:'Hoteles',                mk:'mk-h'  },
+    { keys:['tr'], lbl:'Transfers',              mk:'mk-tr' },
+    { keys:['to'], lbl:'Tours',                  mk:'mk-to' },
+    { keys:['es','eo'], lbl:'Extras',            mk:'mk-ex' }
+  ];
+  var totalNeto = 0, totalComm = 0, totalVenta = 0;
+  var commLines = '';
+  for (var ci = 0; ci < cats.length; ci++) {
+    var cat = cats[ci];
+    var neto = 0;
+    for (var ki = 0; ki < cat.keys.length; ki++) neto += secTotal(cat.keys[ki]);
+    var mkEl = document.getElementById(cat.mk);
+    var mkPct = mkEl ? (parseFloat(mkEl.value) || 0) : 10;
+    var comm = neto * mkPct / 100;
+    var venta = neto + comm;
+    totalNeto += neto; totalComm += comm; totalVenta += venta;
+    var stEl = document.getElementById('st-' + cat.keys[0]);
+    if (stEl) stEl.textContent = neto > 0 ? cur + fmtNum(neto) : '--';
+    if (neto > 0) commLines += '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #EDE7D8;font-size:12px"><span>' + cat.lbl + '</span><span style="color:#3D6B4F">' + cur + fmtNum(comm) + ' (' + mkPct + '%)</span></div>';
+  }
+  var commEl = document.getElementById('comm-detail');
+  if (commEl) commEl.innerHTML = commLines || 'Agrega costos para ver el resumen.';
+  setEl('d-total', totalVenta > 0 ? cur + fmtNum(totalVenta) : '--');
+  setEl('d-dep',   totalVenta > 0 ? cur + fmtNum(totalVenta * 0.3) : '--');
+  setEl('d-sal',   totalVenta > 0 ? cur + fmtNum(totalVenta * 0.7) : '--');
+  setEl('d-pax',   totalVenta > 0 && pax > 0 ? cur + fmtNum(totalVenta / pax) : '--');
+  setEl('c-neto',  totalNeto > 0 ? cur + fmtNum(totalNeto) : '--');
+  setEl('c-comm',  totalComm > 0 ? cur + fmtNum(totalComm) : '--');
+  setEl('c-mxn',   tc > 0 && totalComm > 0 ? '$' + fmtNum(totalComm * tc) + ' MXN' : '--');
+  setEl('c-agent', tc > 0 && totalComm > 0 ? '$' + fmtNum(totalComm * tc / 2) + ' MXN' : '--');
+  var pgPaid = 0, pgPend = 0;
+  for (var pgi = 0; pgi < (RD.pg || []).length; pgi++) {
+    var pg = RD.pg[pgi];
+    if (pg.estado === 'PAGADO') pgPaid += (parseFloat(pg.monto) || 0);
+    else pgPend += (parseFloat(pg.monto) || 0);
+  }
+  setEl('st-pg-paid', pgPaid > 0 ? cur + fmtNum(pgPaid) : '--');
+  setEl('st-pg-pend', pgPend > 0 ? cur + fmtNum(pgPend) : '--');
+  var sum = document.getElementById('g-summary');
+  if (sum && totalVenta > 0) {
+    var sh = '<div class="f-sec" style="margin-bottom:12px"><div class="f-sec-title">Desglose de costos</div>';
+    for (var si2 = 0; si2 < cats.length; si2++) {
+      var sc = cats[si2]; var sn = 0;
+      for (var sk = 0; sk < sc.keys.length; sk++) sn += secTotal(sc.keys[sk]);
+      var smk = document.getElementById(sc.mk);
+      var spct = smk ? (parseFloat(smk.value) || 0) : 10;
+      var sv = sn * (1 + spct / 100);
+      if (sn > 0) sh += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #EDE7D8;font-size:13px"><span style="color:#5a7080">' + sc.lbl + '</span><span style="font-weight:500">' + cur + fmtNum(sv) + '</span></div>';
+    }
+    sh += '</div>';
+    sum.innerHTML = sh;
+  } else if (sum) { sum.innerHTML = ''; }
+}
+
+// -- SAVE QUOTE ------------------------------
+function saveQuote() {
+  var dest = document.getElementById('g-destino').value.trim() || document.getElementById('g-nombre').value.trim();
+  if (!dest) { showToast('Agrega al menos el destino o nombre del viaje'); return; }
+  var tc = parseFloat(document.getElementById('g-tc').value) || 0;
+  var pax = parseInt(document.getElementById('g-pax').value) || 1;
+  var cats = [
+    { keys:['vi'], mk:'mk-vi' }, { keys:['vd'], mk:'mk-vd' },
+    { keys:['h'],  mk:'mk-h'  }, { keys:['tr'], mk:'mk-tr' },
+    { keys:['to'], mk:'mk-to' }, { keys:['es','eo'], mk:'mk-ex' }
+  ];
+  var totalNeto = 0, totalComm = 0, totalVenta = 0;
+  var markups = {};
+  for (var ci = 0; ci < cats.length; ci++) {
+    var cat = cats[ci]; var neto = 0;
+    for (var ki = 0; ki < cat.keys.length; ki++) neto += secTotal(cat.keys[ki]);
+    var mkEl = document.getElementById(cat.mk);
+    var mkPct = mkEl ? (parseFloat(mkEl.value) || 0) : 10;
+    markups[cat.keys[0]] = mkPct;
+    totalNeto += neto; totalComm += neto * mkPct / 100; totalVenta += neto * (1 + mkPct / 100);
+  }
+  var payload = {
+    agent_id: currentUser.id,
+    client_name: document.getElementById('g-nombre').value || dest,
+    destination: dest,
+    nombre: document.getElementById('g-nombre').value || '',
+    agente: document.getElementById('g-agente').value || '',
+    destinos2: document.getElementById('g-destinos2').value || '',
+    travel_date: document.getElementById('g-salida').value || null,
+    fecha_regreso: document.getElementById('g-regreso').value || null,
+    travelers: pax,
+    tipo_viaje: document.getElementById('g-tipo').value || '',
+    status: currentStatus,
+    currency: currentCur,
+    tipo_cambio: tc || null,
+    total: totalVenta,
+    cost_neto: totalNeto,
+    commission: totalComm,
+    comm_mxn: tc > 0 ? totalComm * tc : null,
+    comm_agent: tc > 0 ? totalComm * tc / 2 : null,
+    deposit: totalVenta * 0.3,
+    saldo: totalVenta * 0.7,
+    item_data: JSON.parse(JSON.stringify(RD)),
+    markups: markups,
+    notes: document.getElementById('g-notas').value || null
+  };
+  var btn = document.getElementById('btn-save-q');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  function onDone(error, data) {
+    btn.disabled = false; btn.textContent = 'Guardar cotizacion';
+    if (error) { showToast('Error: ' + error.message); return; }
+    if (data && !editingId) allQuotes.unshift(Object.assign({}, data, { payments: [] }));
+    if (editingId) {
+      for (var i = 0; i < allQuotes.length; i++) {
+        if (allQuotes[i].id === editingId) { allQuotes[i] = Object.assign({}, allQuotes[i], payload, { id: editingId }); break; }
+      }
+    }
+    closeQuoteModal();
+    showToast(editingId ? 'Cotizacion actualizada' : 'Cotizacion guardada');
+    renderHome();
+  }
+  if (editingId) {
+    SB.from('quotes').update(payload).eq('id', editingId).then(function(r) { onDone(r.error, null); });
+  } else {
+    SB.from('quotes').insert(payload).select().single().then(function(r) { onDone(r.error, r.data); });
+  }
+}
+
+// -- DELETE ----------------------------------
+function confirmDeleteQuote() {
+  deletingId = editingId;
+  document.getElementById('confirm-bg').classList.add('open');
+}
+function closeConfirm() {
+  document.getElementById('confirm-bg').classList.remove('open');
+  deletingId = null;
+}
+function doDeleteQuote() {
+  if (!deletingId) { closeConfirm(); return; }
+  SB.from('quotes').delete().eq('id', deletingId).then(function(r) {
+    closeConfirm();
+    if (r.error) { showToast('Error al eliminar'); return; }
+    allQuotes = allQuotes.filter(function(q) { return q.id !== deletingId; });
+    closeQuoteModal();
+    showToast('Cotizacion eliminada');
+    renderHome();
+  });
+}
+
+// -- PAYMENTS ----------------------------------
+function openPayModal(qid) {
+  payingQuoteId = qid;
+  document.getElementById('pay-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('pay-amt').value = '';
+  document.getElementById('pay-note').value = '';
+  document.getElementById('pay-modal').classList.add('open');
+}
+function closePayModal() {
+  document.getElementById('pay-modal').classList.remove('open');
+  payingQuoteId = null;
+}
+function savePayment() {
+  var amt = parseFloat(document.getElementById('pay-amt').value) || 0;
+  if (amt <= 0) { showToast('Ingresa un monto valido'); return; }
+  var q = null;
+  for (var i = 0; i < allQuotes.length; i++) { if (allQuotes[i].id === payingQuoteId) { q = allQuotes[i]; break; } }
+  if (!q) return;
+  var pay = {
+    date: document.getElementById('pay-date').value,
+    amount: amt,
+    currency: document.getElementById('pay-cur').value,
+    method: document.getElementById('pay-method').value,
+    note: document.getElementById('pay-note').value
+  };
+  var newPays = (q.payments || []).concat([pay]);
+  SB.from('quotes').update({ payments: newPays }).eq('id', q.id).then(function(r) {
+    if (r.error) { showToast('Error'); return; }
+    q.payments = newPays;
+    closePayModal();
+    showToast('Pago registrado');
+    openDetail(q.id);
+  });
+}
 
 })();
 </script>
