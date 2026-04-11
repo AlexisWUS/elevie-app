@@ -787,18 +787,26 @@ const el=document.getElementById(‘etitle’); if(el)el.textContent=n;
 }
 
 /* ── AUTH ── */
-sb.auth.onAuthStateChange((ev,s)=>{
-if(s?.user){
-user=s.user;
+function showApp(){
 document.getElementById(‘auth-screen’).style.display=‘none’;
 document.getElementById(‘app’).style.display=‘flex’;
 loadName(); loadQs();
-} else {
-user=null;
+}
+function showAuth(){
 document.getElementById(‘auth-screen’).style.display=‘flex’;
 document.getElementById(‘app’).style.display=‘none’;
 }
+
+sb.auth.onAuthStateChange((ev,s)=>{
+if(s?.user){ user=s.user; showApp(); }
+else { user=null; showAuth(); }
 });
+
+// Check existing session on load
+sb.auth.getSession().then(({data:{session}})=>{
+if(session?.user){ user=session.user; showApp(); }
+});
+
 function swTab(t){
 document.querySelectorAll(’.tab-btn’).forEach((b,i)=>b.classList.toggle(‘active’,t===‘login’?i===0:i===1));
 document.getElementById(‘lf’).style.display=t===‘login’?‘block’:‘none’;
@@ -806,23 +814,64 @@ document.getElementById(‘rf’).style.display=t===‘reg’?‘block’:‘non
 showE(’’);
 }
 function showE(m){const e=document.getElementById(‘aerr’);e.textContent=m;e.style.display=m?‘block’:‘none’;}
+
 async function doLogin(){
-const em=document.getElementById(‘le’).value.trim(),pw=document.getElementById(‘lp’).value;
+const em=document.getElementById(‘le’).value.trim();
+const pw=document.getElementById(‘lp’).value;
 if(!em||!pw)return showE(‘Completa todos los campos.’);
-const b=document.getElementById(‘btnl’);b.disabled=true;b.textContent=‘Entrando…’;
-const{error}=await sb.auth.signInWithPassword({email:em,password:pw});
-b.disabled=false;b.textContent=‘Entrar’;
-if(error)showE(error.message.includes(‘Invalid’)?‘Correo o contraseña incorrectos.’:’Error: ‘+error.message);
+const b=document.getElementById(‘btnl’);
+b.disabled=true; b.textContent=‘Entrando…’;
+showE(’’);
+try {
+const{data,error}=await sb.auth.signInWithPassword({email:em,password:pw});
+if(error){
+b.disabled=false; b.textContent=‘Entrar’;
+if(error.message.includes(‘Invalid’)||error.message.includes(‘credentials’)){
+showE(‘Correo o contraseña incorrectos.’);
+} else if(error.message.includes(‘Email not confirmed’)){
+showE(‘Debes confirmar tu correo antes de entrar. Revisa tu bandeja de entrada.’);
+} else {
+showE(’Error: ’+error.message);
 }
+return;
+}
+if(data?.user){
+user=data.user;
+b.disabled=false; b.textContent=‘Entrar’;
+showApp();
+}
+} catch(e){
+b.disabled=false; b.textContent=‘Entrar’;
+showE(‘Error de conexión. Verifica tu internet e intenta de nuevo.’);
+}
+}
+
 async function doReg(){
-const n=document.getElementById(‘rn’).value.trim(),em=document.getElementById(‘re’).value.trim(),ph=document.getElementById(‘rph’).value.trim(),pw=document.getElementById(‘rp’).value;
+const n=document.getElementById(‘rn’).value.trim(),em=document.getElementById(‘re’).value.trim();
+const ph=document.getElementById(‘rph’).value.trim(),pw=document.getElementById(‘rp’).value;
 if(!n||!em||!pw)return showE(‘Nombre, correo y contraseña son requeridos.’);
 if(pw.length<6)return showE(‘Contraseña mínimo 6 caracteres.’);
 const b=document.getElementById(‘btnr’);b.disabled=true;b.textContent=‘Registrando…’;
+showE(’’);
+try{
 const{data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{full_name:n,phone:ph}}});
 b.disabled=false;b.textContent=‘Crear cuenta’;
 if(error)return showE(‘Error: ‘+error.message);
-if(data.user){await sb.from(‘profiles’).upsert({id:data.user.id,full_name:n,email:em,phone:ph});toast(’¡Cuenta creada! Ya puedes iniciar sesión.’);swTab(‘login’);}
+if(data?.user){
+try{ await sb.from(‘profiles’).upsert({id:data.user.id,full_name:n,email:em,phone:ph}); }catch(_){}
+// If email confirmation is disabled in Supabase, log in directly
+if(data.session){
+user=data.user; showApp();
+} else {
+showE(’’);
+swTab(‘login’);
+toast(’¡Cuenta creada! Ya puedes iniciar sesión.’);
+}
+}
+}catch(e){
+b.disabled=false;b.textContent=‘Crear cuenta’;
+showE(‘Error de conexión. Intenta de nuevo.’);
+}
 }
 async function doLogout(){await sb.auth.signOut();}
 async function loadName(){
