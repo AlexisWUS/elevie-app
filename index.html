@@ -8,1835 +8,1017 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root {
-    --teal: #1B3A4B;
-    --green: #3D6B4F;
-    --cream: #F5F0E8;
-    --gold: #B8905A;
-    --gold-light: #D4AF7A;
-    --cream-dark: #EDE7D8;
-    --teal-light: #2A5470;
-    --red: #C0392B;
-    --text: #1B3A4B;
-    --text-soft: #5a7080;
-    --white: #FFFFFF;
-    --shadow: 0 2px 16px rgba(27,58,75,0.10);
-    --radius: 12px;
-    --radius-sm: 8px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; }
+:root{
+  --teal:#1B3A4B;--green:#3D6B4F;--cream:#F5F0E8;--gold:#B8905A;
+  --gl:#D4AF7A;--cd:#EDE7D8;--tl:#2A5470;--red:#C0392B;
+  --text:#1B3A4B;--soft:#5a7080;--white:#fff;
+  --sh:0 2px 16px rgba(27,58,75,.10);--r:12px;--rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;-webkit-tap-highlight-color:transparent}
 
-/* ─── AUTH ─── */
-#auth-screen {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-background: var(–teal);
-background-image: radial-gradient(ellipse at 20% 50%, rgba(61,107,79,0.3) 0%, transparent 60%),
-radial-gradient(ellipse at 80% 20%, rgba(184,144,90,0.15) 0%, transparent 50%);
-padding: 24px;
-}
-.auth-card {
-background: var(–cream);
-border-radius: 20px;
-padding: 40px 32px;
-width: 100%;
-max-width: 380px;
-box-shadow: 0 24px 64px rgba(0,0,0,0.3);
-}
-.auth-logo {
-text-align: center;
-margin-bottom: 32px;
-}
-.auth-logo h1 {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 32px;
-font-weight: 300;
-color: var(–teal);
-letter-spacing: 0.08em;
-}
-.auth-logo p {
-font-size: 11px;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-color: var(–gold);
-margin-top: 4px;
-}
-.auth-divider {
-width: 40px;
-height: 1px;
-background: var(–gold);
-margin: 12px auto;
-opacity: 0.5;
-}
-.auth-tab-row {
-display: flex;
-gap: 0;
-background: var(–cream-dark);
-border-radius: var(–radius-sm);
-padding: 3px;
-margin-bottom: 24px;
-}
-.auth-tab {
-flex: 1;
-padding: 8px;
-border: none;
-background: transparent;
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-soft);
-cursor: pointer;
-transition: all 0.2s;
-}
-.auth-tab.active {
-background: var(–white);
-color: var(–teal);
-font-weight: 500;
-box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-.field { margin-bottom: 16px; }
-.field label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 6px; }
-.field input, .field select {
-width: 100%;
-padding: 12px 14px;
-border: 1.5px solid var(–cream-dark);
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 14px;
-color: var(–text);
-background: var(–white);
-outline: none;
-transition: border-color 0.2s;
-}
-.field input:focus, .field select:focus { border-color: var(–gold); }
-.btn-primary {
-width: 100%;
-padding: 13px;
-background: var(–teal);
-color: var(–cream);
-border: none;
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 14px;
-font-weight: 500;
-letter-spacing: 0.04em;
-cursor: pointer;
-transition: background 0.2s;
-margin-top: 4px;
-}
-.btn-primary:hover { background: var(–teal-light); }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-.auth-error {
-background: #fde8e8;
-color: var(–red);
-border-radius: var(–radius-sm);
-padding: 10px 14px;
-font-size: 13px;
-margin-bottom: 14px;
-display: none;
-}
+/* ── AUTH ── */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(–teal);background-image:radial-gradient(ellipse at 20% 50%,rgba(61,107,79,.3) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(184,144,90,.15) 0%,transparent 50%);padding:24px}
+.auth-card{background:var(–cream);border-radius:20px;padding:40px 32px;width:100%;max-width:380px;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+.auth-logo{text-align:center;margin-bottom:32px}
+.auth-logo h1{font-family:‘Cormorant Garamond’,serif;font-size:32px;font-weight:300;color:var(–teal);letter-spacing:.08em}
+.auth-logo p{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(–gold);margin-top:4px}
+.adiv{width:40px;height:1px;background:var(–gold);margin:12px auto;opacity:.5}
+.tab-row{display:flex;background:var(–cd);border-radius:var(–rs);padding:3px;margin-bottom:24px}
+.tab-btn{flex:1;padding:8px;border:none;background:transparent;border-radius:6px;font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–soft);cursor:pointer;transition:all .2s}
+.tab-btn.active{background:var(–white);color:var(–teal);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.aerr{background:#fde8e8;color:var(–red);border-radius:var(–rs);padding:10px 14px;font-size:13px;margin-bottom:14px;display:none}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(–soft);margin-bottom:5px}
+.fi{width:100%;padding:10px 13px;border:1.5px solid var(–cd);border-radius:var(–rs);font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–text);background:var(–white);outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(–gold)}
+.btn-p{width:100%;padding:13px;background:var(–teal);color:var(–cream);border:none;border-radius:var(–rs);font-family:‘DM Sans’,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .2s;margin-top:4px}
+.btn-p:hover{background:var(–tl)}.btn-p:disabled{opacity:.6;cursor:not-allowed}
 
-/* ─── APP SHELL ─── */
-#app { display: none; flex-direction: column; min-height: 100vh; }
+/* ── APP SHELL ── */
+#app{display:none;flex-direction:column;min-height:100vh}
+.header{background:var(–teal);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.hbrand{font-family:‘Cormorant Garamond’,serif;font-size:20px;font-weight:300;color:var(–cream);letter-spacing:.1em}
+.hbrand span{color:var(–gold)}
+.hright{display:flex;align-items:center;gap:10px}
+.husr{font-size:12px;color:rgba(245,240,232,.6);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-icon{background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(–cream);font-size:15px}
+.btn-icon:hover{background:rgba(255,255,255,.2)}
+.main{flex:1;max-width:480px;margin:0 auto;width:100%;padding-bottom:60px}
 
-/* ─── HEADER ─── */
-.header {
-background: var(–teal);
-padding: 0 20px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-height: 56px;
-position: sticky;
-top: 0;
-z-index: 100;
-box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-}
-.header-brand {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 22px;
-font-weight: 300;
-color: var(–cream);
-letter-spacing: 0.1em;
-}
-.header-brand span { color: var(–gold); }
-.header-right { display: flex; align-items: center; gap: 12px; }
-.header-user {
-font-size: 12px;
-color: rgba(245,240,232,0.6);
-letter-spacing: 0.04em;
-max-width: 120px;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-}
-.btn-icon {
-background: rgba(255,255,255,0.1);
-border: none;
-border-radius: 8px;
-width: 34px;
-height: 34px;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-color: var(–cream);
-transition: background 0.2s;
-font-size: 16px;
-}
-.btn-icon:hover { background: rgba(255,255,255,0.2); }
+/* ── HOME (list) ── */
+.home{padding:16px}
+.ptitle{font-family:‘Cormorant Garamond’,serif;font-size:24px;font-weight:400;color:var(–teal);margin-bottom:4px}
+.psub{font-size:12px;color:var(–soft);margin-bottom:16px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.scard{background:var(–white);border-radius:var(–r);padding:14px;box-shadow:var(–sh);border-left:3px solid transparent}
+.scard.gold{border-left-color:var(–gold)}.scard.green{border-left-color:var(–green)}.scard.teal{border-left-color:var(–teal)}.scard.amber{border-left-color:#E8A87C}
+.slbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(–soft);margin-bottom:5px}
+.sval{font-family:‘Cormorant Garamond’,serif;font-size:24px;font-weight:500;color:var(–teal);line-height:1}
+.sval.sm{font-size:17px}
+.lhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ltit{font-family:‘Cormorant Garamond’,serif;font-size:18px;font-weight:400;color:var(–teal)}
+.btn-new{background:var(–gold);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-new:hover{background:var(–gl)}
+.swrap{position:relative;margin-bottom:12px}
+.swrap input{width:100%;padding:9px 13px 9px 36px;border:1.5px solid var(–cd);border-radius:20px;font-family:‘DM Sans’,sans-serif;font-size:13px;background:var(–white);color:var(–text);outline:none;transition:border-color .2s}
+.swrap input:focus{border-color:var(–gold)}
+.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(–soft);font-size:13px;pointer-events:none}
+.frow{display:flex;gap:7px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.chip{padding:5px 13px;border-radius:20px;border:1.5px solid var(–cd);background:transparent;font-family:‘DM Sans’,sans-serif;font-size:11px;color:var(–soft);cursor:pointer;white-space:nowrap;transition:all .2s}
+.chip.active{background:var(–teal);border-color:var(–teal);color:var(–cream)}
+.qcard{background:var(–white);border-radius:var(–r);padding:14px;margin-bottom:9px;box-shadow:var(–sh);cursor:pointer;transition:transform .15s,box-shadow .15s;border-left:3px solid transparent}
+.qcard:hover{transform:translateY(-1px);box-shadow:0 5px 20px rgba(27,58,75,.14)}
+.qcard.cotizacion{border-left-color:var(–gold)}.qcard.confirmada{border-left-color:var(–green)}.qcard.cancelada{border-left-color:#ccc}.qcard.en-proceso{border-left-color:var(–tl)}
+.qtop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px}
+.qcli{font-weight:500;font-size:14px;color:var(–teal)}
+.qdest{font-size:11px;color:var(–soft);margin-top:1px}
+.badge{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:9px;white-space:nowrap}
+.badge-cotizacion{background:#FEF3E2;color:var(–gold)}.badge-confirmada{background:#E8F5EE;color:var(–green)}.badge-cancelada{background:#F2F2F2;color:#999}.badge-en-proceso{background:#E8F0F5;color:var(–tl)}
+.qbot{display:flex;align-items:center;justify-content:space-between}
+.qamt{font-family:‘Cormorant Garamond’,serif;font-size:19px;font-weight:500;color:var(–teal)}
+.qamt span{font-size:11px;font-family:‘DM Sans’,sans-serif;color:var(–soft)}
+.qdl{font-size:11px;color:var(–soft)}
+.empty{text-align:center;padding:40px 16px;color:var(–soft)}
+.empty-ico{font-size:36px;margin-bottom:10px}
+.empty-t{font-family:‘Cormorant Garamond’,serif;font-size:17px}
 
-/* ─── CONTENT ─── */
-.content { flex: 1; padding: 20px 16px 80px; max-width: 480px; margin: 0 auto; width: 100%; }
+/* ── QUOTE EDITOR (full page) ── */
+.qeditor{display:none;flex-direction:column;height:100%}
+.qe-header{background:var(–teal);padding:0 16px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.qe-back{background:none;border:none;color:rgba(245,240,232,.7);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1}
+.qe-title{font-family:‘Cormorant Garamond’,serif;font-size:18px;font-weight:300;color:var(–cream);letter-spacing:.06em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qe-save{background:var(–gold);color:#fff;border:none;border-radius:16px;padding:6px 16px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:background .2s;white-space:nowrap}
+.qe-save:hover{background:var(–gl)}.qe-save:disabled{opacity:.6;cursor:not-allowed}
 
-/* ─── DASHBOARD ─── */
-.section-title {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 26px;
-font-weight: 400;
-color: var(–teal);
-margin-bottom: 4px;
-}
-.section-sub {
-font-size: 12px;
-color: var(–text-soft);
-margin-bottom: 20px;
-letter-spacing: 0.03em;
-}
+/* ── SECTION TABS ── */
+.sectabs{background:var(–white);border-bottom:1px solid var(–cd);overflow-x:auto;display:flex;scrollbar-width:none;position:sticky;top:52px;z-index:90}
+.sectabs::-webkit-scrollbar{display:none}
+.stab{flex-shrink:0;padding:11px 14px;border:none;background:transparent;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–soft);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.stab.active{color:var(–teal);border-bottom-color:var(–gold);font-weight:500}
+.stab-body{display:none;padding:16px}
+.stab-body.active{display:block}
 
-/* Stats row */
-.stats-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
-margin-bottom: 20px;
-}
-.stat-card {
-background: var(–white);
-border-radius: var(–radius);
-padding: 16px;
-box-shadow: var(–shadow);
-border-left: 3px solid transparent;
-}
-.stat-card.gold { border-left-color: var(–gold); }
-.stat-card.green { border-left-color: var(–green); }
-.stat-card.teal { border-left-color: var(–teal); }
-.stat-card.red { border-left-color: #E8A87C; }
-.stat-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 6px; }
-.stat-value { font-family: ‘Cormorant Garamond’, serif; font-size: 26px; font-weight: 500; color: var(–teal); line-height: 1; }
-.stat-value.small { font-size: 18px; }
-.stat-currency { font-size: 11px; color: var(–text-soft); margin-top: 3px; }
+/* ── FORM ELEMENTS ── */
+.fsec{background:var(–white);border-radius:var(–r);padding:14px;margin-bottom:12px}
+.fsec-t{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(–gold);font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fsec-t::after{content:’’;flex:1;height:1px;background:var(–cd)}
+.flabel{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(–soft);margin-bottom:4px}
+.finput{width:100%;padding:9px 12px;border:1.5px solid var(–cd);border-radius:var(–rs);font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–text);background:var(–white);outline:none;transition:border-color .2s}
+.finput:focus{border-color:var(–gold)}
+textarea.finput{resize:vertical;min-height:58px;line-height:1.5}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.fgroup{margin-bottom:11px}
+.awrap{position:relative}
+.apfx{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(–soft);pointer-events:none}
+.awrap .finput{padding-left:24px}
+.pwrap{position:relative}
+.pwrap .finput{padding-right:22px;text-align:right}
+.psfx{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;color:var(–gold);pointer-events:none;font-weight:500}
 
-/* Quotes list */
-.list-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 12px;
-}
-.list-title {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 20px;
-font-weight: 400;
-color: var(–teal);
-}
-.btn-new {
-background: var(–gold);
-color: var(–white);
-border: none;
-border-radius: 20px;
-padding: 8px 16px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 12px;
-font-weight: 500;
-letter-spacing: 0.04em;
-cursor: pointer;
-transition: background 0.2s;
-display: flex;
-align-items: center;
-gap: 6px;
-}
-.btn-new:hover { background: var(–gold-light); }
+/* status pills */
+.sprow{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}
+.spill{padding:4px 11px;border-radius:20px;border:1.5px solid var(–cd);background:transparent;font-size:11px;color:var(–soft);cursor:pointer;font-family:‘DM Sans’,sans-serif;transition:all .2s}
+.spill.s-cotizacion{background:#FEF3E2;border-color:var(–gold);color:var(–gold)}
+.spill.s-confirmada{background:#E8F5EE;border-color:var(–green);color:var(–green)}
+.spill.s-cancelada{background:#F2F2F2;border-color:#bbb;color:#888}
+.spill.s-en-proceso{background:#E8F0F5;border-color:var(–tl);color:var(–tl)}
+.crow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.cbtn{padding:3px 11px;border:1.5px solid var(–cd);border-radius:16px;background:transparent;font-size:11px;color:var(–soft);cursor:pointer;font-family:‘DM Sans’,sans-serif;transition:all .2s}
+.cbtn.active{background:var(–teal);border-color:var(–teal);color:var(–cream)}
 
-/* Filters */
-.filter-row {
-display: flex;
-gap: 8px;
-margin-bottom: 14px;
-overflow-x: auto;
-padding-bottom: 4px;
-scrollbar-width: none;
-}
-.filter-row::-webkit-scrollbar { display: none; }
-.filter-chip {
-padding: 6px 14px;
-border-radius: 20px;
-border: 1.5px solid var(–cream-dark);
-background: transparent;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 12px;
-color: var(–text-soft);
-cursor: pointer;
-white-space: nowrap;
-transition: all 0.2s;
-}
-.filter-chip.active {
-background: var(–teal);
-border-color: var(–teal);
-color: var(–cream);
-}
+/* table rows */
+.tbl-row{background:var(–cream);border-radius:var(–rs);padding:12px;margin-bottom:8px;border:1px solid var(–cd);position:relative}
+.tbl-row-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.row-num{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(–gold);font-weight:500}
+.row-tot{font-size:12px;font-weight:500;color:var(–green)}
+.btn-add-row{width:100%;padding:8px;border:1.5px dashed var(–gold);border-radius:var(–rs);background:transparent;color:var(–gold);font-family:‘DM Sans’,sans-serif;font-size:12px;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-add-row:hover{background:rgba(184,144,90,.06)}
+.btn-del-row{background:none;border:none;color:#ccc;cursor:pointer;font-size:17px;padding:0 3px;line-height:1;transition:color .2s;flex-shrink:0}
+.btn-del-row:hover{color:var(–red)}
 
-/* Search */
-.search-bar {
-position: relative;
-margin-bottom: 14px;
-}
-.search-bar input {
-width: 100%;
-padding: 10px 14px 10px 38px;
-border: 1.5px solid var(–cream-dark);
-border-radius: 20px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-background: var(–white);
-color: var(–text);
-outline: none;
-transition: border-color 0.2s;
-}
-.search-bar input:focus { border-color: var(–gold); }
-.search-icon {
-position: absolute;
-left: 12px;
-top: 50%;
-transform: translateY(-50%);
-color: var(–text-soft);
-font-size: 14px;
-}
+/* calc box */
+.cbox{background:var(–cd);border-radius:var(–rs);padding:10px 12px;font-size:13px;color:var(–text);min-height:38px;display:flex;align-items:center}
+.clbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(–soft);margin-bottom:3px}
 
-/* Quote Card */
-.quote-card {
-background: var(–white);
-border-radius: var(–radius);
-padding: 16px;
-margin-bottom: 10px;
-box-shadow: var(–shadow);
-cursor: pointer;
-transition: transform 0.15s, box-shadow 0.15s;
-border-left: 3px solid transparent;
-}
-.quote-card:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(27,58,75,0.14); }
-.quote-card.cotizacion { border-left-color: var(–gold); }
-.quote-card.confirmada { border-left-color: var(–green); }
-.quote-card.cancelada { border-left-color: #ccc; }
-.quote-card.en-proceso { border-left-color: var(–teal-light); }
-.qc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
-.qc-client { font-weight: 500; font-size: 15px; color: var(–teal); }
-.qc-dest { font-size: 12px; color: var(–text-soft); margin-top: 1px; }
-.status-badge {
-font-size: 10px;
-font-weight: 500;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-padding: 3px 9px;
-border-radius: 10px;
-white-space: nowrap;
-}
-.badge-cotizacion { background: #FEF3E2; color: #B8905A; }
-.badge-confirmada { background: #E8F5EE; color: #3D6B4F; }
-.badge-cancelada { background: #F2F2F2; color: #999; }
-.badge-en-proceso { background: #E8F0F5; color: #2A5470; }
-.qc-meta { display: flex; align-items: center; justify-content: space-between; }
-.qc-amount { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–teal); }
-.qc-amount span { font-size: 12px; font-family: ‘DM Sans’, sans-serif; color: var(–text-soft); }
-.qc-date { font-size: 11px; color: var(–text-soft); }
+/* amenidades chips */
+.amenrow{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.achip{padding:3px 9px;background:var(–cream);border:1px solid var(–cd);border-radius:9px;font-size:10px;color:var(–soft);cursor:pointer;transition:all .2s;user-select:none}
+.achip.on{background:#E8F5EE;border-color:var(–green);color:var(–green)}
 
-.empty-state {
-text-align: center;
-padding: 48px 20px;
-color: var(–text-soft);
-}
-.empty-icon { font-size: 40px; margin-bottom: 12px; }
-.empty-text { font-family: ‘Cormorant Garamond’, serif; font-size: 18px; color: var(–text-soft); }
+/* RESUMEN tab special */
+.res-table{width:100%;border-collapse:collapse;font-size:12px}
+.res-table th{background:var(–teal);color:var(–cream);padding:8px 10px;text-align:left;font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.res-table td{padding:9px 10px;border-bottom:1px solid var(–cd);vertical-align:middle}
+.res-table tr:last-child td{border-bottom:none}
+.res-table .total-row td{background:var(–cream);font-weight:600;font-size:13px}
+.res-table .cat-icon{margin-right:5px}
+.pct-pill{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:500;background:#FEF3E2;color:var(–gold)}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+.dot-pend{background:#ccc}.dot-ok{background:var(–green)}.dot-warn{background:var(–gold)}
+.resumen-totals{background:var(–white);border-radius:var(–r);padding:14px;margin-bottom:12px}
+.rt-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(–cd);font-size:13px}
+.rt-row:last-child{border-bottom:none;font-weight:600;font-size:14px;color:var(–teal)}
+.rt-lbl{color:var(–soft)}
+.rt-val{font-family:‘Cormorant Garamond’,serif;font-size:18px;color:var(–teal);font-weight:500}
+.rt-val.big{font-size:22px;color:var(–gold)}
 
-/* ─── MODAL ─── */
-.modal-overlay {
-position: fixed;
-inset: 0;
-background: rgba(27,58,75,0.5);
-backdrop-filter: blur(4px);
-z-index: 200;
-display: none;
-align-items: flex-end;
-justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-background: var(–cream);
-border-radius: 20px 20px 0 0;
-width: 100%;
-max-width: 480px;
-max-height: 92vh;
-overflow-y: auto;
-padding: 0 0 40px;
-animation: slideUp 0.3s ease;
-}
-@keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.modal-handle {
-width: 36px;
-height: 4px;
-background: rgba(27,58,75,0.2);
-border-radius: 2px;
-margin: 12px auto 0;
-}
-.modal-header {
-padding: 16px 20px 12px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 1px solid var(–cream-dark);
-position: sticky;
-top: 0;
-background: var(–cream);
-z-index: 10;
-}
-.modal-title {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 22px;
-font-weight: 400;
-color: var(–teal);
-}
-.modal-body { padding: 20px; }
+/* pagos section */
+.pay-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 9px;border-radius:9px;font-weight:500}
+.ps-pend{background:#F2F2F2;color:#888}.ps-pag{background:#E8F5EE;color:var(–green)}.ps-parc{background:#FEF3E2;color:var(–gold)}
 
-/* Form sections */
-.form-section {
-background: var(–white);
-border-radius: var(–radius);
-padding: 16px;
-margin-bottom: 12px;
-}
-.form-section-title {
-font-size: 10px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–gold);
-font-weight: 500;
-margin-bottom: 14px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-.form-section-title::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: var(–cream-dark);
-}
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+/* TOAST */
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(20px);background:var(–teal);color:var(–cream);padding:9px 18px;border-radius:20px;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.2);opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* Amount input with currency */
-.amount-wrap { position: relative; }
-.amount-wrap .currency-prefix {
-position: absolute;
-left: 12px;
-top: 50%;
-transform: translateY(-50%);
-font-size: 13px;
-color: var(–text-soft);
-pointer-events: none;
-}
-.amount-wrap input { padding-left: 36px !important; }
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(–white);border-top:1px solid var(–cd);display:flex;padding:6px 0 10px;z-index:50;max-width:480px;margin:0 auto}
+.nitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px;cursor:pointer;border:none;background:none;transition:all .2s;color:var(–soft)}
+.nitem.active{color:var(–teal)}
+.nicon{font-size:17px}
+.nlbl{font-size:10px;letter-spacing:.03em;font-family:‘DM Sans’,sans-serif}
 
-/* Calculated fields */
-.calc-field {
-background: var(–cream);
-border: 1.5px solid var(–cream-dark);
-border-radius: var(–radius-sm);
-padding: 10px 14px;
-font-size: 14px;
-color: var(–text);
-}
-.calc-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(–text-soft); margin-bottom: 4px; }
+/* confirm */
+.cov{position:fixed;inset:0;background:rgba(27,58,75,.6);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.cov.open{display:flex}
+.cbox2{background:var(–cream);border-radius:16px;padding:24px;max-width:300px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.cbox2 h3{font-family:‘Cormorant Garamond’,serif;font-size:20px;color:var(–teal);margin-bottom:8px}
+.cbox2 p{font-size:13px;color:var(–soft);margin-bottom:18px;line-height:1.5}
+.cbtns{display:flex;gap:8px}
+.cbtns button{flex:1;padding:10px;border-radius:var(–rs);font-family:‘DM Sans’,sans-serif;font-size:13px;cursor:pointer}
+.cc{background:transparent;border:1.5px solid var(–cd);color:var(–soft)}
+.co{background:var(–red);border:none;color:#fff;font-weight:500}
 
-/* Commission row */
-.commission-row {
-background: linear-gradient(135deg, #E8F5EE 0%, #F0F7F3 100%);
-border: 1px solid rgba(61,107,79,0.2);
-border-radius: var(–radius);
-padding: 14px 16px;
-margin-bottom: 12px;
-}
-.commission-row .comm-title {
-font-size: 10px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–green);
-font-weight: 500;
-margin-bottom: 10px;
-}
-.commission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.comm-item label { font-size: 11px; color: var(–text-soft); display: block; margin-bottom: 3px; }
-.comm-value { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–green); }
-
-/* Deposit row */
-.deposit-row {
-background: linear-gradient(135deg, #FEF6EC 0%, #FDF3E6 100%);
-border: 1px solid rgba(184,144,90,0.2);
-border-radius: var(–radius);
-padding: 14px 16px;
-margin-bottom: 12px;
-}
-.deposit-row .dep-title {
-font-size: 10px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–gold);
-font-weight: 500;
-margin-bottom: 10px;
-}
-.deposit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.dep-item label { font-size: 11px; color: var(–text-soft); display: block; margin-bottom: 3px; }
-.dep-value { font-family: ‘Cormorant Garamond’, serif; font-size: 20px; font-weight: 500; color: var(–gold); }
-
-/* Action buttons */
-.modal-actions {
-display: flex;
-gap: 10px;
-padding: 0 20px;
-margin-top: 8px;
-}
-.btn-secondary {
-flex: 1;
-padding: 12px;
-background: transparent;
-border: 1.5px solid var(–cream-dark);
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-soft);
-cursor: pointer;
-transition: all 0.2s;
-}
-.btn-secondary:hover { border-color: var(–teal); color: var(–teal); }
-.btn-save {
-flex: 2;
-padding: 12px;
-background: var(–teal);
-border: none;
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-font-weight: 500;
-color: var(–cream);
-cursor: pointer;
-transition: background 0.2s;
-}
-.btn-save:hover { background: var(–teal-light); }
-.btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn-delete {
-padding: 12px 16px;
-background: transparent;
-border: 1.5px solid #f0d0d0;
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–red);
-cursor: pointer;
-transition: all 0.2s;
-}
-.btn-delete:hover { background: #fde8e8; }
-
-/* ─── DETAIL VIEW ─── */
-.detail-hero {
-background: var(–teal);
-background-image: linear-gradient(135deg, var(–teal) 0%, #254D62 100%);
-padding: 20px;
-margin: -20px -16px 20px;
-color: var(–cream);
-}
-.detail-back {
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 12px;
-color: rgba(245,240,232,0.6);
-margin-bottom: 12px;
-cursor: pointer;
-background: none;
-border: none;
-padding: 0;
-transition: color 0.2s;
-}
-.detail-back:hover { color: var(–cream); }
-.detail-client { font-family: ‘Cormorant Garamond’, serif; font-size: 28px; font-weight: 300; letter-spacing: 0.04em; }
-.detail-dest { font-size: 13px; color: rgba(245,240,232,0.7); margin-top: 2px; margin-bottom: 14px; }
-.detail-amount-row { display: flex; align-items: flex-end; justify-content: space-between; }
-.detail-total { font-family: ‘Cormorant Garamond’, serif; font-size: 36px; font-weight: 400; color: var(–gold-light); }
-.detail-total small { font-size: 16px; margin-left: 4px; color: rgba(184,144,90,0.8); }
-
-/* Costs breakdown */
-.costs-table { width: 100%; }
-.costs-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 10px 0;
-border-bottom: 1px solid var(–cream-dark);
-font-size: 13px;
-}
-.costs-row:last-child { border-bottom: none; }
-.costs-label { color: var(–text-soft); display: flex; align-items: center; gap: 8px; }
-.costs-icon { font-size: 14px; }
-.costs-value { font-weight: 500; color: var(–teal); }
-.costs-value.zero { color: #ccc; }
-
-/* Payments section */
-.payment-item {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 10px 0;
-border-bottom: 1px solid var(–cream-dark);
-font-size: 13px;
-}
-.payment-item:last-child { border-bottom: none; }
-.payment-date { font-size: 11px; color: var(–text-soft); margin-top: 2px; }
-.payment-amount { font-weight: 500; color: var(–green); }
-.btn-add-payment {
-width: 100%;
-padding: 10px;
-border: 1.5px dashed var(–gold);
-border-radius: var(–radius-sm);
-background: transparent;
-color: var(–gold);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-cursor: pointer;
-margin-top: 10px;
-transition: all 0.2s;
-}
-.btn-add-payment:hover { background: rgba(184,144,90,0.06); }
-
-/* Notes */
-.notes-text {
-font-size: 13px;
-color: var(–text-soft);
-line-height: 1.6;
-font-style: italic;
-}
-
-/* Toast */
-.toast {
-position: fixed;
-bottom: 80px;
-left: 50%;
-transform: translateX(-50%) translateY(20px);
-background: var(–teal);
-color: var(–cream);
-padding: 10px 20px;
-border-radius: 20px;
-font-size: 13px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-opacity: 0;
-transition: all 0.3s;
-pointer-events: none;
-white-space: nowrap;
-z-index: 9999;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Loading */
-.loading-wrap { display: flex; align-items: center; justify-content: center; padding: 48px 0; }
-.spinner {
-width: 32px;
-height: 32px;
-border: 2px solid var(–cream-dark);
-border-top-color: var(–gold);
-border-radius: 50%;
-animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ─── BOTTOM NAV ─── */
-.bottom-nav {
-position: fixed;
-bottom: 0;
-left: 0;
-right: 0;
-background: var(–white);
-border-top: 1px solid var(–cream-dark);
-display: flex;
-padding: 8px 0 12px;
-z-index: 50;
-max-width: 480px;
-margin: 0 auto;
-}
-.nav-item {
-flex: 1;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 3px;
-padding: 4px;
-cursor: pointer;
-border: none;
-background: none;
-transition: all 0.2s;
-color: var(–text-soft);
-}
-.nav-item.active { color: var(–teal); }
-.nav-icon { font-size: 18px; }
-.nav-label { font-size: 10px; letter-spacing: 0.04em; font-family: ‘DM Sans’, sans-serif; }
-
-/* scroll hint */
-.scroll-tag {
-font-size: 10px;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(–text-soft);
-margin-bottom: 8px;
-padding-left: 2px;
-}
-
-/* currency selector */
-.currency-sel {
-display: flex;
-gap: 6px;
-margin-bottom: 4px;
-}
-.cur-btn {
-padding: 4px 12px;
-border: 1.5px solid var(–cream-dark);
-border-radius: 16px;
-background: transparent;
-font-size: 12px;
-color: var(–text-soft);
-cursor: pointer;
-font-family: ‘DM Sans’, sans-serif;
-transition: all 0.2s;
-}
-.cur-btn.active {
-background: var(–teal);
-border-color: var(–teal);
-color: var(–cream);
-}
-
-/* status select pills */
-.status-select-row {
-display: flex;
-gap: 8px;
-flex-wrap: wrap;
-margin-top: 4px;
-}
-.status-pill {
-padding: 6px 14px;
-border-radius: 20px;
-border: 1.5px solid var(–cream-dark);
-background: transparent;
-font-size: 12px;
-color: var(–text-soft);
-cursor: pointer;
-font-family: ‘DM Sans’, sans-serif;
-transition: all 0.2s;
-}
-.status-pill.active-cotizacion { background: #FEF3E2; border-color: var(–gold); color: var(–gold); }
-.status-pill.active-confirmada { background: #E8F5EE; border-color: var(–green); color: var(–green); }
-.status-pill.active-cancelada { background: #F2F2F2; border-color: #bbb; color: #888; }
-.status-pill.active-en-proceso { background: #E8F0F5; border-color: var(–teal-light); color: var(–teal-light); }
-
-textarea.field-input {
-width: 100%;
-padding: 12px 14px;
-border: 1.5px solid var(–cream-dark);
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 14px;
-color: var(–text);
-background: var(–white);
-outline: none;
-resize: vertical;
-min-height: 72px;
-transition: border-color 0.2s;
-}
-textarea.field-input:focus { border-color: var(–gold); }
-
-.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.tag {
-padding: 4px 12px;
-background: var(–cream);
-border-radius: 12px;
-font-size: 11px;
-color: var(–text-soft);
-border: 1px solid var(–cream-dark);
-}
-
-.section-card {
-background: var(–white);
-border-radius: var(–radius);
-padding: 16px;
-margin-bottom: 10px;
-box-shadow: var(–shadow);
-}
-.sc-title {
-font-size: 10px;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–gold);
-font-weight: 500;
-margin-bottom: 12px;
-}
-
-.saldo-bar {
-background: var(–cream-dark);
-border-radius: 4px;
-height: 6px;
-margin-top: 8px;
-overflow: hidden;
-}
-.saldo-fill {
-height: 100%;
-background: var(–green);
-border-radius: 4px;
-transition: width 0.5s ease;
-}
-.saldo-labels { display: flex; justify-content: space-between; margin-top: 4px; }
-.saldo-lbl { font-size: 11px; color: var(–text-soft); }
-
-.payment-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 4px; transition: color 0.2s; }
-.payment-del:hover { color: var(–red); }
-
-/* confirm dialog */
-.confirm-overlay {
-position: fixed;
-inset: 0;
-background: rgba(27,58,75,0.6);
-z-index: 300;
-display: none;
-align-items: center;
-justify-content: center;
-padding: 20px;
-}
-.confirm-overlay.open { display: flex; }
-.confirm-box {
-background: var(–cream);
-border-radius: 16px;
-padding: 24px;
-max-width: 320px;
-width: 100%;
-text-align: center;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-.confirm-box h3 { font-family: ‘Cormorant Garamond’, serif; font-size: 22px; color: var(–teal); margin-bottom: 8px; }
-.confirm-box p { font-size: 13px; color: var(–text-soft); margin-bottom: 20px; line-height: 1.5; }
-.confirm-btns { display: flex; gap: 10px; }
-.confirm-btns button { flex: 1; padding: 10px; border-radius: var(–radius-sm); font-family: ‘DM Sans’, sans-serif; font-size: 13px; cursor: pointer; }
-.confirm-cancel { background: transparent; border: 1.5px solid var(–cream-dark); color: var(–text-soft); }
-.confirm-ok { background: var(–red); border: none; color: white; font-weight: 500; }
+/* section divider */
+.sdiv{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(–soft);font-weight:500;margin:14px 0 8px;padding-top:12px;border-top:1px solid var(–cd)}
 </style>
 
 </head>
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- ═══ AUTH ═══ -->
 
 <div id="auth-screen">
   <div class="auth-card">
-    <div class="auth-logo">
-      <h1>Elevie</h1>
-      <div class="auth-divider"></div>
-      <p>Travel · Cotizaciones</p>
+    <div class="auth-logo"><h1>Elevie</h1><div class="adiv"></div><p>Travel · Cotizaciones</p></div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="swTab('login')">Iniciar sesión</button>
+      <button class="tab-btn" onclick="swTab('reg')">Registrarme</button>
     </div>
-    <div class="auth-tab-row">
-      <button class="auth-tab active" onclick="switchTab('login')">Iniciar sesión</button>
-      <button class="auth-tab" onclick="switchTab('register')">Registrarme</button>
+    <div id="aerr" class="aerr"></div>
+    <div id="lf">
+      <div class="field"><label>Correo</label><input type="email" id="le" class="fi" placeholder="nombre@elevietravel.com"></div>
+      <div class="field"><label>Contraseña</label><input type="password" id="lp" class="fi" placeholder="••••••••"></div>
+      <button class="btn-p" id="btnl" onclick="doLogin()">Entrar</button>
     </div>
-    <div id="auth-error" class="auth-error"></div>
-
-```
-<!-- LOGIN -->
-<div id="login-form">
-  <div class="field">
-    <label>Correo electrónico</label>
-    <input type="email" id="login-email" placeholder="nombre@elevietravel.com">
-  </div>
-  <div class="field">
-    <label>Contraseña</label>
-    <input type="password" id="login-pass" placeholder="••••••••">
-  </div>
-  <button class="btn-primary" onclick="handleLogin()" id="btn-login">Entrar</button>
-</div>
-
-<!-- REGISTER -->
-<div id="register-form" style="display:none">
-  <div class="field">
-    <label>Tu nombre completo</label>
-    <input type="text" id="reg-name" placeholder="Nombre Apellido">
-  </div>
-  <div class="field">
-    <label>Correo electrónico</label>
-    <input type="email" id="reg-email" placeholder="nombre@elevietravel.com">
-  </div>
-  <div class="field">
-    <label>Teléfono</label>
-    <input type="tel" id="reg-phone" placeholder="+52 55 0000 0000">
-  </div>
-  <div class="field">
-    <label>Contraseña</label>
-    <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
-  </div>
-  <button class="btn-primary" onclick="handleRegister()" id="btn-register">Crear cuenta</button>
-</div>
-```
-
+    <div id="rf" style="display:none">
+      <div class="field"><label>Nombre completo</label><input type="text" id="rn" class="fi" placeholder="Nombre Apellido"></div>
+      <div class="field"><label>Correo</label><input type="email" id="re" class="fi" placeholder="nombre@elevietravel.com"></div>
+      <div class="field"><label>Teléfono</label><input type="tel" id="rph" class="fi" placeholder="+52 55 0000 0000"></div>
+      <div class="field"><label>Contraseña</label><input type="password" id="rp" class="fi" placeholder="Mínimo 6 caracteres"></div>
+      <button class="btn-p" id="btnr" onclick="doReg()">Crear cuenta</button>
+    </div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ═══ APP ═══ -->
 
 <div id="app">
   <header class="header">
-    <div class="header-brand">Elevie <span>·</span></div>
-    <div class="header-right">
-      <span class="header-user" id="header-user-name"></span>
-      <button class="btn-icon" onclick="handleLogout()" title="Cerrar sesión">⎋</button>
+    <div class="hbrand">Elevie <span>·</span></div>
+    <div class="hright">
+      <span class="husr" id="husr"></span>
+      <button class="btn-icon" onclick="doLogout()">⎋</button>
     </div>
   </header>
 
-  <div class="content" id="main-content">
-    <!-- Rendered by JS -->
+  <div class="main">
+    <!-- HOME -->
+    <div id="view-home" class="home"><!-- rendered by JS --></div>
+
+```
+<!-- QUOTE EDITOR -->
+<div id="view-editor" style="display:none">
+  <div style="background:var(--teal);padding:0 16px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:52px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.15)">
+    <button onclick="backHome()" style="background:none;border:none;color:rgba(245,240,232,.7);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1">←</button>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--cream);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="etitle">Nueva cotización</div>
+    <button id="esave" onclick="saveQ()" style="background:var(--gold);color:#fff;border:none;border-radius:16px;padding:6px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer">Guardar</button>
   </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">
-      <span class="nav-icon">◫</span>
-      <span class="nav-label">Inicio</span>
-    </button>
-    <button class="nav-item" id="nav-quotes" onclick="showPage('quotes')">
-      <span class="nav-icon">✦</span>
-      <span class="nav-label">Cotizaciones</span>
-    </button>
-    <button class="nav-item" id="nav-new" onclick="openNewQuote()">
-      <span class="nav-icon">＋</span>
-      <span class="nav-label">Nueva</span>
-    </button>
+  <!-- TAB STRIP -->
+  <div class="sectabs" id="sectabs">
+    <button class="stab active" data-tab="resumen" onclick="goTab('resumen')">📋 Resumen</button>
+    <button class="stab" data-tab="vuelos" onclick="goTab('vuelos')">✈ Vuelos</button>
+    <button class="stab" data-tab="hoteles" onclick="goTab('hoteles')">🏨 Hoteles</button>
+    <button class="stab" data-tab="transfers" onclick="goTab('transfers')">🚌 Transfers</button>
+    <button class="stab" data-tab="tours" onclick="goTab('tours')">🎭 Tours</button>
+    <button class="stab" data-tab="extras" onclick="goTab('extras')">🍽 Extras</button>
+    <button class="stab" data-tab="pagos" onclick="goTab('pagos')">💳 Pagos</button>
+  </div>
+
+  <!-- ① RESUMEN -->
+  <div id="tab-resumen" class="stab-body active" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Datos generales del viaje</div>
+      <div class="r2">
+        <div class="fgroup"><label class="flabel">Nombre del viaje / expediente</label><input class="finput" id="g-nombre" placeholder="Japón Diciembre 2025" oninput="refreshTitle()"></div>
+        <div class="fgroup"><label class="flabel">Agente responsable</label><input class="finput" id="g-agente" placeholder="Nombre del agente"></div>
+      </div>
+      <div class="r2">
+        <div class="fgroup"><label class="flabel">Destino principal</label><input class="finput" id="g-destino" placeholder="Japón" oninput="refreshTitle()"></div>
+        <div class="fgroup"><label class="flabel">Destinos secundarios</label><input class="finput" id="g-destinos2" placeholder="Tokio, Kioto, Osaka…"></div>
+      </div>
+      <div class="r2">
+        <div class="fgroup"><label class="flabel">Fecha de salida</label><input class="finput" type="date" id="g-salida"></div>
+        <div class="fgroup"><label class="flabel">Fecha de regreso</label><input class="finput" type="date" id="g-regreso" oninput="calcNoches()"></div>
+      </div>
+      <div class="r3">
+        <div class="fgroup"><label class="flabel">No. pasajeros</label><input class="finput" type="number" id="g-pax" placeholder="2" min="1" oninput="calcAll()"></div>
+        <div class="fgroup"><label class="flabel">No. noches</label><div class="cbox" id="g-noches" style="font-size:13px">—</div></div>
+        <div class="fgroup"><label class="flabel">Días</label><div class="cbox" id="g-dias" style="font-size:13px">—</div></div>
+      </div>
+      <div class="r2">
+        <div class="fgroup"><label class="flabel">Tipo de viaje</label>
+          <select class="finput" id="g-tipo">
+            <option value="">Seleccionar…</option>
+            <option>Luna de miel / Pareja</option><option>Familiar</option><option>Corporativo</option>
+            <option>Grupo</option><option>Individual</option><option>Aventura</option><option>Crucero</option>
+          </select>
+        </div>
+        <div class="fgroup"><label class="flabel">Estatus del viaje</label>
+          <div class="sprow" id="spills">
+            <button class="spill s-cotizacion" data-s="cotizacion" onclick="setSt(this)">Cotización</button>
+            <button class="spill" data-s="en-proceso" onclick="setSt(this)">En proceso</button>
+            <button class="spill" data-s="confirmada" onclick="setSt(this)">Confirmada</button>
+            <button class="spill" data-s="cancelada" onclick="setSt(this)">Cancelada</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fsec">
+      <div class="fsec-t">Moneda y tipo de cambio</div>
+      <div class="crow" id="crow">
+        <button class="cbtn active" data-c="USD" onclick="setCur(this)">USD</button>
+        <button class="cbtn" data-c="MXN" onclick="setCur(this)">MXN</button>
+        <button class="cbtn" data-c="EUR" onclick="setCur(this)">EUR</button>
+        <button class="cbtn" data-c="GBP" onclick="setCur(this)">GBP</button>
+        <button class="cbtn" data-c="OTRO" onclick="setCur(this)">Otro</button>
+      </div>
+      <div class="r2">
+        <div class="fgroup"><label class="flabel">Tipo de cambio → MXN</label><input class="finput" type="number" id="g-tc" placeholder="19.50" step="0.01" oninput="calcAll()"></div>
+        <div class="fgroup" id="otrocur-f" style="display:none"><label class="flabel">Nombre moneda</label><input class="finput" id="g-othercur" placeholder="CHF, JPY…"></div>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY TABLE -->
+    <div class="fsec">
+      <div class="fsec-t">Resumen ejecutivo de costos</div>
+      <div style="overflow-x:auto">
+        <table class="res-table" id="res-table">
+          <thead><tr>
+            <th>Categoría</th><th>Costo neto</th><th>Markup %</th><th>Markup</th><th>Precio venta</th><th>Estado</th>
+          </tr></thead>
+          <tbody id="res-tbody"><!-- filled by calcAll --></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PER-PAX + TOTALS -->
+    <div class="resumen-totals" id="res-totals"><!-- filled by calcAll --></div>
+
+    <!-- DEPOSIT BANNER -->
+    <div style="background:linear-gradient(135deg,#FEF6EC,#FDF3E6);border:1px solid rgba(184,144,90,.2);border-radius:var(--r);padding:14px 16px;margin-bottom:12px" id="dep-banner">
+      <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:10px">Estructura de cobro al cliente</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div style="font-size:11px;color:var(--soft);margin-bottom:3px">Total al cliente</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold)" id="d-total">—</div></div>
+        <div><div style="font-size:11px;color:var(--soft);margin-bottom:3px">Depósito 30%</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold)" id="d-dep">—</div></div>
+        <div><div style="font-size:11px;color:var(--soft);margin-bottom:3px">Saldo 70%</div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--soft)" id="d-sal">—</div></div>
+        <div><div style="font-size:11px;color:var(--soft);margin-bottom:3px">Precio x pasajero</div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--teal)" id="d-pax">—</div></div>
+      </div>
+    </div>
+
+    <div class="fsec">
+      <div class="fsec-t">Notas y condiciones especiales</div>
+      <textarea class="finput" id="g-notas" rows="3" placeholder="Política de cancelación, vigencia de la cotización, condiciones especiales…"></textarea>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button id="btn-del-q" style="display:none;padding:10px 14px;background:transparent;border:1.5px solid #f0d0d0;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--red);cursor:pointer" onclick="confDel()">🗑 Eliminar</button>
+    </div>
+  </div>
+
+  <!-- ② VUELOS -->
+  <div id="tab-vuelos" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Vuelos internacionales</div>
+      <div id="rows-vuelos-int"></div>
+      <button class="btn-add-row" onclick="addRow('vuelos-int')">+ Agregar vuelo internacional</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r3">
+          <div><div class="clbl">Total pasajeros</div><div class="cbox" id="st-vi-pax">—</div></div>
+          <div><div class="clbl">Subtotal</div><div class="cbox" id="st-vi-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput pct-wrap" type="number" id="mk-vuelos-int" placeholder="10" value="10" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fsec">
+      <div class="fsec-t">Vuelos domésticos / internos</div>
+      <div id="rows-vuelos-dom"></div>
+      <button class="btn-add-row" onclick="addRow('vuelos-dom')">+ Agregar vuelo doméstico</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r3">
+          <div><div class="clbl">Total pasajeros</div><div class="cbox" id="st-vd-pax">—</div></div>
+          <div><div class="clbl">Subtotal</div><div class="cbox" id="st-vd-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput" type="number" id="mk-vuelos-dom" placeholder="10" value="10" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ HOTELES -->
+  <div id="tab-hoteles" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Hoteles y alojamiento</div>
+      <div id="rows-hoteles"></div>
+      <button class="btn-add-row" onclick="addRow('hoteles')">+ Agregar hotel</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r3">
+          <div><div class="clbl">Noches</div><div class="cbox" id="st-h-noches">—</div></div>
+          <div><div class="clbl">Subtotal</div><div class="cbox" id="st-h-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput" type="number" id="mk-hoteles" placeholder="12" value="12" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ TRANSFERS -->
+  <div id="tab-transfers" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Transfers y traslados</div>
+      <div id="rows-transfers"></div>
+      <button class="btn-add-row" onclick="addRow('transfers')">+ Agregar transfer</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r2">
+          <div><div class="clbl">Subtotal</div><div class="cbox" id="st-tr-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput" type="number" id="mk-transfers" placeholder="15" value="15" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ TOURS -->
+  <div id="tab-tours" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Tours, excursiones y operadores locales</div>
+      <div id="rows-tours"></div>
+      <button class="btn-add-row" onclick="addRow('tours')">+ Agregar tour / actividad</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r2">
+          <div><div class="clbl">Subtotal</div><div class="cbox" id="st-to-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput" type="number" id="mk-tours" placeholder="15" value="15" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ EXTRAS -->
+  <div id="tab-extras" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Alimentación incluida</div>
+      <div id="rows-extras-food"></div>
+      <button class="btn-add-row" onclick="addRow('extras-food')">+ Agregar</button>
+    </div>
+    <div class="fsec">
+      <div class="fsec-t">Seguro de viaje</div>
+      <div id="rows-extras-seguro"></div>
+      <button class="btn-add-row" onclick="addRow('extras-seguro')">+ Agregar seguro</button>
+    </div>
+    <div class="fsec">
+      <div class="fsec-t">Otros servicios y misceláneos</div>
+      <div id="rows-extras-otros"></div>
+      <button class="btn-add-row" onclick="addRow('extras-otros')">+ Agregar servicio</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r2">
+          <div><div class="clbl">Subtotal extras</div><div class="cbox" id="st-ex-tot">—</div></div>
+          <div><div class="clbl">% Markup</div><div class="pct-wrap"><input class="finput" type="number" id="mk-extras" placeholder="10" value="10" min="0" max="100" step="0.1" oninput="calcAll()"><span class="psfx">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ PAGOS -->
+  <div id="tab-pagos" class="stab-body" style="padding:16px">
+    <div class="fsec">
+      <div class="fsec-t">Pagos a proveedores</div>
+      <div id="rows-pagos"></div>
+      <button class="btn-add-row" onclick="addRow('pagos')">+ Agregar proveedor</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div class="r2">
+          <div><div class="clbl">Total pagado</div><div class="cbox" id="st-pg-pag">—</div></div>
+          <div><div class="clbl">Total pendiente</div><div class="cbox" id="st-pg-pend">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fsec">
+      <div class="fsec-t">Comisiones Elevie Travel</div>
+      <div style="overflow-x:auto">
+        <table class="res-table" id="comm-table">
+          <thead><tr><th>Categoría</th><th>Precio venta</th><th>Costo neto</th><th>Comisión</th><th>%</th></tr></thead>
+          <tbody id="comm-tbody"><!-- filled by calcAll --></tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--cd)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><div class="clbl">Comisión total</div><div class="cbox" id="st-cm-tot" style="color:var(--green);font-weight:600">—</div></div>
+          <div><div class="clbl">50% del agente MXN</div><div class="cbox" id="st-cm-agent" style="color:var(--green)">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- view-editor -->
+```
+
+  </div><!-- main -->
+
+  <nav class="bnav">
+    <button class="nitem active" id="n-home" onclick="backHome()"><span class="nicon">◫</span><span class="nlbl">Inicio</span></button>
+    <button class="nitem" id="n-new" onclick="openNew()"><span class="nicon">＋</span><span class="nlbl">Nueva</span></button>
   </nav>
-</div>
+</div><!-- app -->
 
-<!-- QUOTE MODAL (new/edit) -->
+<!-- CONFIRM -->
 
-<div class="modal-overlay" id="quote-modal">
-  <div class="modal" id="quote-modal-inner">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <h2 class="modal-title" id="modal-title">Nueva cotización</h2>
-      <button class="btn-icon" style="color:var(--text-soft);background:var(--cream-dark)" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <!-- Cliente -->
-      <div class="form-section">
-        <div class="form-section-title">Cliente</div>
-        <div class="field">
-          <label>Nombre del cliente *</label>
-          <input type="text" id="f-client" placeholder="Nombre Apellido">
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Destino *</label>
-            <input type="text" id="f-dest" placeholder="París, Tokio...">
-          </div>
-          <div class="field">
-            <label>Fecha de viaje</label>
-            <input type="date" id="f-date">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>No. de viajeros</label>
-            <input type="number" id="f-travelers" placeholder="2" min="1">
-          </div>
-          <div class="field">
-            <label>Estatus</label>
-            <div class="status-select-row" id="status-pills">
-              <button class="status-pill active-cotizacion" data-status="cotizacion" onclick="selectStatus(this)">Cotización</button>
-              <button class="status-pill" data-status="en-proceso" onclick="selectStatus(this)">En proceso</button>
-              <button class="status-pill" data-status="confirmada" onclick="selectStatus(this)">Confirmada</button>
-              <button class="status-pill" data-status="cancelada" onclick="selectStatus(this)">Cancelada</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-```
-  <!-- Moneda -->
-  <div class="form-section">
-    <div class="form-section-title">Moneda principal</div>
-    <div class="currency-sel" id="currency-sel">
-      <button class="cur-btn active" data-cur="USD" onclick="selectCurrency(this)">USD</button>
-      <button class="cur-btn" data-cur="MXN" onclick="selectCurrency(this)">MXN</button>
-      <button class="cur-btn" data-cur="EUR" onclick="selectCurrency(this)">EUR</button>
-      <button class="cur-btn" data-cur="GBP" onclick="selectCurrency(this)">GBP</button>
-      <button class="cur-btn" data-cur="OTRO" onclick="selectCurrency(this)">Otro</button>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Tipo de cambio a MXN</label>
-        <input type="number" id="f-tc" placeholder="19.50" step="0.01" oninput="calcAll()">
-      </div>
-      <div class="field" id="other-cur-field" style="display:none">
-        <label>Nombre moneda</label>
-        <input type="text" id="f-other-cur" placeholder="CHF, JPY...">
-      </div>
-    </div>
-  </div>
-
-  <!-- Costos -->
-  <div class="form-section">
-    <div class="form-section-title">Costos del viaje</div>
-    <div class="field-row">
-      <div class="field">
-        <label>DMC / Operador</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-dmc">$</span>
-          <input type="number" id="f-dmc" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-      <div class="field">
-        <label>Vuelos</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-vuelos">$</span>
-          <input type="number" id="f-vuelos" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Hoteles</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-hoteles">$</span>
-          <input type="number" id="f-hoteles" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-      <div class="field">
-        <label>Tours</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-tours">$</span>
-          <input type="number" id="f-tours" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Transfers</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-transfers">$</span>
-          <input type="number" id="f-transfers" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-      <div class="field">
-        <label>Otros</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-otros">$</span>
-          <input type="number" id="f-otros" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Concierge Fee</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-concierge">$</span>
-          <input type="number" id="f-concierge" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-      <div class="field">
-        <label>Planning Fee</label>
-        <div class="amount-wrap">
-          <span class="currency-prefix" id="pfx-planning">$</span>
-          <input type="number" id="f-planning" placeholder="0" oninput="calcAll()">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Comisión -->
-  <div class="form-section">
-    <div class="form-section-title">Comisión de Elevie</div>
-    <div class="field-row">
-      <div class="field">
-        <label>% Comisión</label>
-        <input type="number" id="f-comm-pct" placeholder="12" min="0" max="100" step="0.1" oninput="calcAll()" value="12">
-      </div>
-      <div class="field">
-        <label>Comisión calculada</label>
-        <div class="calc-field" id="calc-comm">—</div>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Comisión en MXN</label>
-        <div class="calc-field" id="calc-comm-mxn">—</div>
-      </div>
-      <div class="field">
-        <label>50% del agente MXN</label>
-        <div class="calc-field" id="calc-comm-agent">—</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Total + Depósito -->
-  <div class="deposit-row">
-    <div class="dep-title">Resumen financiero</div>
-    <div class="deposit-grid">
-      <div class="dep-item">
-        <label>Total del viaje</label>
-        <div class="dep-value" id="calc-total">—</div>
-      </div>
-      <div class="dep-item">
-        <label>Depósito 30%</label>
-        <div class="dep-value" id="calc-deposit">—</div>
-      </div>
-      <div class="dep-item">
-        <label>Saldo restante</label>
-        <div class="dep-value" id="calc-saldo">—</div>
-      </div>
-      <div class="dep-item">
-        <label>Total en MXN</label>
-        <div class="dep-value" id="calc-total-mxn" style="font-size:15px">—</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Notas -->
-  <div class="form-section">
-    <div class="form-section-title">Notas</div>
-    <div class="field">
-      <label>Observaciones / comentarios</label>
-      <textarea class="field-input" id="f-notes" placeholder="Preferencias del cliente, proveedores, detalles importantes..."></textarea>
-    </div>
-  </div>
-</div>
-
-<div class="modal-actions">
-  <button class="btn-delete" id="btn-delete-quote" style="display:none" onclick="confirmDeleteQuote()">🗑</button>
-  <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-  <button class="btn-save" onclick="saveQuote()" id="btn-save">Guardar</button>
-</div>
-```
-
-  </div>
-</div>
-
-<!-- PAYMENT MODAL -->
-
-<div class="modal-overlay" id="payment-modal">
-  <div class="modal" style="max-height:60vh">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <h2 class="modal-title">Registrar pago</h2>
-      <button class="btn-icon" style="color:var(--text-soft);background:var(--cream-dark)" onclick="closePaymentModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-section">
-        <div class="field-row">
-          <div class="field">
-            <label>Fecha</label>
-            <input type="date" id="pay-date">
-          </div>
-          <div class="field">
-            <label>Monto recibido</label>
-            <input type="number" id="pay-amount" placeholder="0" step="0.01">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Moneda</label>
-            <select id="pay-currency">
-              <option value="USD">USD</option>
-              <option value="MXN">MXN</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Método de pago</label>
-            <select id="pay-method">
-              <option value="Transferencia">Transferencia</option>
-              <option value="Tarjeta">Tarjeta</option>
-              <option value="OpenPay">OpenPay</option>
-              <option value="Efectivo">Efectivo</option>
-              <option value="Wire Transfer">Wire Transfer</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>Nota (opcional)</label>
-          <input type="text" id="pay-note" placeholder="Anticipo, saldo, etc.">
-        </div>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-secondary" onclick="closePaymentModal()">Cancelar</button>
-      <button class="btn-save" onclick="savePayment()">Registrar</button>
-    </div>
-  </div>
-</div>
-
-<!-- CONFIRM DELETE -->
-
-<div class="confirm-overlay" id="confirm-overlay">
-  <div class="confirm-box">
+<div class="cov" id="cov">
+  <div class="cbox2">
     <h3>Eliminar cotización</h3>
-    <p>Esta acción no se puede deshacer. ¿Estás segura de que deseas eliminar esta cotización?</p>
-    <div class="confirm-btns">
-      <button class="confirm-cancel" onclick="closeConfirm()">Cancelar</button>
-      <button class="confirm-ok" onclick="executeDelete()">Eliminar</button>
-    </div>
+    <p>Esta acción no se puede deshacer. ¿Estás segura?</p>
+    <div class="cbtns"><button class="cc" onclick="closeCov()">Cancelar</button><button class="co" onclick="execDel()">Eliminar</button></div>
   </div>
 </div>
-
-<!-- TOAST -->
-
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = 'https://ibdvwntcahiodeujkozb.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZHZ3bnRjYWhpb2RldWprb3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzA2ODcsImV4cCI6MjA5MDI0NjY4N30.WRf0oAdoOZ-53P-zQx_mKswdw0e0yPqfL8KRbjq5GLk';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-let currentUser = null;
-let currentPage = 'dashboard';
-let allQuotes = [];
-let currentFilter = 'todas';
-let searchTerm = '';
-let editingQuoteId = null;
-let selectedStatus = 'cotizacion';
-let selectedCurrency = 'USD';
-let viewingQuote = null;
-let pendingDeleteId = null;
-let currentPaymentQuoteId = null;
-
-// ─── AUTH ───
-sb.auth.onAuthStateChange((event, session) => {
-  if (session?.user) {
-    currentUser = session.user;
-    document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    loadUserName();
-    loadQuotes();
-    showPage('dashboard');
-  } else {
-    currentUser = null;
-    document.getElementById('auth-screen').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
-});
-
-function switchTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)));
-  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
-  hideAuthError();
-}
-
-function showAuthError(msg) {
-  const el = document.getElementById('auth-error');
-  el.textContent = msg;
-  el.style.display = 'block';
-}
-function hideAuthError() {
-  document.getElementById('auth-error').style.display = 'none';
-}
-
-async function handleLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  if (!email || !pass) return showAuthError('Por favor completa todos los campos.');
-  const btn = document.getElementById('btn-login');
-  btn.disabled = true; btn.textContent = 'Entrando...';
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-  btn.disabled = false; btn.textContent = 'Entrar';
-  if (error) showAuthError('Error: ' + (error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : error.message));
-}
-
-async function handleRegister() {
-  const name = document.getElementById('reg-name').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const phone = document.getElementById('reg-phone').value.trim();
-  const pass = document.getElementById('reg-pass').value;
-  if (!name || !email || !pass) return showAuthError('Nombre, correo y contraseña son obligatorios.');
-  if (pass.length < 6) return showAuthError('La contraseña debe tener mínimo 6 caracteres.');
-  const btn = document.getElementById('btn-register');
-  btn.disabled = true; btn.textContent = 'Registrando...';
-  const { data, error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
-  btn.disabled = false; btn.textContent = 'Crear cuenta';
-  if (error) return showAuthError('Error: ' + error.message);
-  if (data.user) {
-    // upsert profile
-    await sb.from('profiles').upsert({ id: data.user.id, full_name: name, email, phone });
-    showToast('¡Cuenta creada! Bienvenida a Elevie.');
-    switchTab('login');
-  }
-}
-
-async function handleLogout() {
-  await sb.auth.signOut();
-}
-
-async function loadUserName() {
-  if (!currentUser) return;
-  const { data } = await sb.from('profiles').select('full_name').eq('id', currentUser.id).single();
-  const name = data?.full_name || currentUser.email;
-  document.getElementById('header-user-name').textContent = name.split(' ')[0];
-}
-
-// ─── DATA ───
-async function loadQuotes() {
-  const { data, error } = await sb.from('quotes')
-    .select('*')
-    .eq('agent_id', currentUser.id)
-    .order('created_at', { ascending: false });
-  if (!error) {
-    allQuotes = (data || []).map(q => ({
-      ...q,
-      payments: q.payments || []
-    }));
-    renderCurrentPage();
-  }
-}
-
-// ─── PAGES ───
-function showPage(page) {
-  currentPage = page;
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const navMap = { dashboard: 'nav-dashboard', quotes: 'nav-quotes' };
-  if (navMap[page]) document.getElementById(navMap[page])?.classList.add('active');
-  renderCurrentPage();
-}
-
-function renderCurrentPage() {
-  const c = document.getElementById('main-content');
-  if (currentPage === 'dashboard') renderDashboard(c);
-  else if (currentPage === 'quotes') renderQuotesList(c);
-  else if (currentPage === 'detail') renderDetail(c);
-}
-
-function renderDashboard(c) {
-  const total = allQuotes.length;
-  const confirmadas = allQuotes.filter(q => q.status === 'confirmada').length;
-  const totalUSD = allQuotes.filter(q => q.status !== 'cancelada' && q.currency === 'USD').reduce((s,q) => s + (q.total||0), 0);
-  const totalMXN = allQuotes.filter(q => q.status !== 'cancelada' && q.currency === 'MXN').reduce((s,q) => s + (q.total||0), 0);
-  const totalComm = allQuotes.filter(q => q.status === 'confirmada').reduce((s,q) => s + (q.comm_mxn||0), 0);
-
-  c.innerHTML = `
-    <div class="section-title">Buen día ✦</div>
-    <div class="section-sub">Tu resumen de cotizaciones</div>
-    <div class="stats-grid">
-      <div class="stat-card gold">
-        <div class="stat-label">Total cotizaciones</div>
-        <div class="stat-value">${total}</div>
-      </div>
-      <div class="stat-card green">
-        <div class="stat-label">Confirmadas</div>
-        <div class="stat-value">${confirmadas}</div>
-      </div>
-      <div class="stat-card teal">
-        <div class="stat-label">Valor en USD</div>
-        <div class="stat-value small">${fmtCur(totalUSD, 'USD')}</div>
-        <div class="stat-currency">cotizaciones activas</div>
-      </div>
-      <div class="stat-card red">
-        <div class="stat-label">Comisión total</div>
-        <div class="stat-value small">${fmtMXN(totalComm)}</div>
-        <div class="stat-currency">MXN confirmadas</div>
-      </div>
-    </div>
-
-    <div class="list-header">
-      <div class="list-title">Recientes</div>
-      <button class="btn-new" onclick="showPage('quotes')">Ver todas →</button>
-    </div>
-    ${allQuotes.slice(0,5).map(quoteCardHTML).join('') || '<div class="empty-state"><div class="empty-icon">✦</div><div class="empty-text">Sin cotizaciones aún</div></div>'}
-
-    <div style="margin-top:20px">
-      <button class="btn-new" style="width:100%;justify-content:center;padding:14px;border-radius:${RADIUS};font-size:14px" onclick="openNewQuote()">
-        + Nueva cotización
-      </button>
-    </div>
-  `;
-  c.querySelectorAll('.quote-card').forEach(card => {
-    card.addEventListener('click', () => openDetail(card.dataset.id));
-  });
-}
-
-const RADIUS = '12px';
-
-function renderQuotesList(c) {
-  const filtered = allQuotes.filter(q => {
-    const matchFilter = currentFilter === 'todas' || q.status === currentFilter;
-    const matchSearch = !searchTerm || q.client_name?.toLowerCase().includes(searchTerm) || q.destination?.toLowerCase().includes(searchTerm);
-    return matchFilter && matchSearch;
-  });
-
-  c.innerHTML = `
-    <div class="list-header">
-      <div class="section-title">Cotizaciones</div>
-      <button class="btn-new" onclick="openNewQuote()">+ Nueva</button>
-    </div>
-    <div class="search-bar">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Buscar cliente o destino..." value="${searchTerm}" oninput="onSearch(this.value)">
-    </div>
-    <div class="filter-row">
-      <button class="filter-chip ${currentFilter==='todas'?'active':''}" onclick="setFilter('todas')">Todas (${allQuotes.length})</button>
-      <button class="filter-chip ${currentFilter==='cotizacion'?'active':''}" onclick="setFilter('cotizacion')">Cotización</button>
-      <button class="filter-chip ${currentFilter==='en-proceso'?'active':''}" onclick="setFilter('en-proceso')">En proceso</button>
-      <button class="filter-chip ${currentFilter==='confirmada'?'active':''}" onclick="setFilter('confirmada')">Confirmada</button>
-      <button class="filter-chip ${currentFilter==='cancelada'?'active':''}" onclick="setFilter('cancelada')">Cancelada</button>
-    </div>
-    ${filtered.length ? filtered.map(quoteCardHTML).join('') : `<div class="empty-state"><div class="empty-icon">✦</div><div class="empty-text">Sin resultados</div></div>`}
-  `;
-  c.querySelectorAll('.quote-card').forEach(card => {
-    card.addEventListener('click', () => openDetail(card.dataset.id));
-  });
-}
-
-function quoteCardHTML(q) {
-  const paidTotal = (q.payments || []).reduce((s,p) => s + (p.amount || 0), 0);
-  return `
-    <div class="quote-card ${q.status}" data-id="${q.id}">
-      <div class="qc-top">
-        <div>
-          <div class="qc-client">${q.client_name || '—'}</div>
-          <div class="qc-dest">✈ ${q.destination || '—'} ${q.travel_date ? '· ' + fmtDate(q.travel_date) : ''}</div>
-        </div>
-        <span class="status-badge badge-${q.status}">${statusLabel(q.status)}</span>
-      </div>
-      <div class="qc-meta">
-        <div class="qc-amount">${fmtCur(q.total||0, q.currency||'USD')} <span>${q.currency||'USD'}</span></div>
-        <div class="qc-date">${q.travelers ? q.travelers + ' viaj.' : ''} ${paidTotal > 0 ? '· $'+fmt(paidTotal)+' recibido' : ''}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderDetail(c) {
-  const q = viewingQuote;
-  if (!q) return showPage('quotes');
-
-  const paid = (q.payments||[]).reduce((s,p) => s+(p.amount||0),0);
-  const saldo = Math.max(0,(q.total||0) - paid);
-  const pct = q.total > 0 ? Math.min(100, Math.round(paid/q.total*100)) : 0;
-  const costs = [
-    { label:'DMC / Operador', icon:'🏢', val: q.cost_dmc },
-    { label:'Vuelos', icon:'✈', val: q.cost_vuelos },
-    { label:'Hoteles', icon:'🏨', val: q.cost_hoteles },
-    { label:'Tours', icon:'🗺', val: q.cost_tours },
-    { label:'Transfers', icon:'🚗', val: q.cost_transfers },
-    { label:'Otros', icon:'📋', val: q.cost_otros },
-    { label:'Concierge Fee', icon:'💎', val: q.cost_concierge },
-    { label:'Planning Fee', icon:'✏', val: q.cost_planning },
-  ].filter(x => x.val > 0);
-
-  c.innerHTML = `
-    <div class="detail-hero">
-      <button class="detail-back" onclick="showPage('quotes')">← Regresar</button>
-      <div class="detail-client">${q.client_name || '—'}</div>
-      <div class="detail-dest">✈ ${q.destination || '—'} ${q.travel_date ? '· ' + fmtDate(q.travel_date) : ''} ${q.travelers ? '· '+q.travelers+' viajeros' : ''}</div>
-      <div class="detail-amount-row">
-        <div class="detail-total">${fmtCur(q.total||0, q.currency||'USD')}<small>${q.currency||'USD'}</small></div>
-        <span class="status-badge badge-${q.status}">${statusLabel(q.status)}</span>
-      </div>
-    </div>
-
-    <!-- Desglose de costos -->
-    ${costs.length ? `
-    <div class="section-card">
-      <div class="sc-title">Desglose de costos</div>
-      <div class="costs-table">
-        ${costs.map(x => `
-          <div class="costs-row">
-            <span class="costs-label"><span class="costs-icon">${x.icon}</span>${x.label}</span>
-            <span class="costs-value">${fmtCur(x.val, q.currency||'USD')}</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>` : ''}
-
-    <!-- Comisión -->
-    <div class="commission-row">
-      <div class="comm-title">Comisión Elevie · ${q.comm_pct||12}%</div>
-      <div class="commission-grid">
-        <div class="comm-item"><label>Comisión ${q.currency}</label><div class="comm-value">${fmtCur(q.commission||0, q.currency||'USD')}</div></div>
-        <div class="comm-item"><label>En MXN</label><div class="comm-value">${fmtMXN(q.comm_mxn||0)}</div></div>
-        <div class="comm-item"><label>50% del agente</label><div class="comm-value">${fmtMXN(q.comm_agent||0)}</div></div>
-        <div class="comm-item"><label>Tipo de cambio</label><div class="comm-value" style="font-size:16px">${q.tipo_cambio ? '$'+q.tipo_cambio : '—'}</div></div>
-      </div>
-    </div>
-
-    <!-- Depósitos y saldo -->
-    <div class="deposit-row">
-      <div class="dep-title">Pagos y saldo</div>
-      <div class="deposit-grid">
-        <div class="dep-item"><label>Total del viaje</label><div class="dep-value">${fmtCur(q.total||0, q.currency||'USD')}</div></div>
-        <div class="dep-item"><label>Depósito 30%</label><div class="dep-value">${fmtCur((q.total||0)*0.3, q.currency||'USD')}</div></div>
-        <div class="dep-item"><label>Total recibido</label><div class="dep-value" style="color:var(--green)">${fmtCur(paid, q.currency||'USD')}</div></div>
-        <div class="dep-item"><label>Saldo pendiente</label><div class="dep-value" style="color:var(--red);font-size:16px">${fmtCur(saldo, q.currency||'USD')}</div></div>
-      </div>
-      <div class="saldo-bar"><div class="saldo-fill" style="width:${pct}%"></div></div>
-      <div class="saldo-labels"><span class="saldo-lbl">Pagado ${pct}%</span><span class="saldo-lbl">Pendiente ${100-pct}%</span></div>
-    </div>
-
-    <!-- Historial de pagos -->
-    <div class="section-card">
-      <div class="sc-title">Historial de pagos</div>
-      ${(q.payments||[]).length === 0 ? '<p style="font-size:13px;color:var(--text-soft);text-align:center;padding:8px 0">Sin pagos registrados</p>' :
-        (q.payments||[]).map((p,i) => `
-          <div class="payment-item">
-            <div>
-              <div style="font-weight:500;font-size:13px">${p.note || p.method || 'Pago'}</div>
-              <div class="payment-date">${p.date ? fmtDate(p.date) : ''} · ${p.method||''} · ${p.currency||''}</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span class="payment-amount">+${fmtCur(p.amount||0, p.currency||q.currency||'USD')}</span>
-              <button class="payment-del" onclick="deletePayment('${q.id}',${i},event)">×</button>
-            </div>
-          </div>
-        `).join('')
-      }
-      <button class="btn-add-payment" onclick="openPaymentModal('${q.id}')">+ Registrar pago</button>
-    </div>
-
-    ${q.notes ? `
-    <div class="section-card">
-      <div class="sc-title">Notas</div>
-      <div class="notes-text">${q.notes}</div>
-    </div>` : ''}
-
-    <!-- Acciones -->
-    <div style="display:flex;gap:10px;margin-top:4px">
-      <button class="btn-secondary" onclick="openEditQuote('${q.id}')" style="flex:1">✏ Editar</button>
-      <button class="btn-save" onclick="openEditQuote('${q.id}')" style="flex:1;background:var(--green)">Actualizar estatus</button>
-    </div>
-  `;
-}
-
-// ─── MODAL ───
-function openNewQuote() {
-  editingQuoteId = null;
-  selectedStatus = 'cotizacion';
-  selectedCurrency = 'USD';
-  document.getElementById('modal-title').textContent = 'Nueva cotización';
-  document.getElementById('btn-delete-quote').style.display = 'none';
-  clearForm();
-  document.getElementById('quote-modal').classList.add('open');
-}
-
-function openEditQuote(id) {
-  const q = allQuotes.find(x => x.id === id);
-  if (!q) return;
-  editingQuoteId = id;
-  selectedStatus = q.status || 'cotizacion';
-  selectedCurrency = q.currency || 'USD';
-  document.getElementById('modal-title').textContent = 'Editar cotización';
-  document.getElementById('btn-delete-quote').style.display = 'flex';
-
-  document.getElementById('f-client').value = q.client_name || '';
-  document.getElementById('f-dest').value = q.destination || '';
-  document.getElementById('f-date').value = q.travel_date || '';
-  document.getElementById('f-travelers').value = q.travelers || '';
-  document.getElementById('f-tc').value = q.tipo_cambio || '';
-  document.getElementById('f-dmc').value = q.cost_dmc || '';
-  document.getElementById('f-vuelos').value = q.cost_vuelos || '';
-  document.getElementById('f-hoteles').value = q.cost_hoteles || '';
-  document.getElementById('f-tours').value = q.cost_tours || '';
-  document.getElementById('f-transfers').value = q.cost_transfers || '';
-  document.getElementById('f-otros').value = q.cost_otros || '';
-  document.getElementById('f-concierge').value = q.cost_concierge || '';
-  document.getElementById('f-planning').value = q.cost_planning || '';
-  document.getElementById('f-comm-pct').value = q.comm_pct || 12;
-  document.getElementById('f-notes').value = q.notes || '';
-
-  refreshStatusPills();
-  refreshCurrencyBtns();
-  calcAll();
-  document.getElementById('quote-modal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('quote-modal').classList.remove('open');
-}
-
-function clearForm() {
-  ['f-client','f-dest','f-date','f-travelers','f-tc','f-dmc','f-vuelos','f-hoteles',
-   'f-tours','f-transfers','f-otros','f-concierge','f-planning','f-notes'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('f-comm-pct').value = '12';
-  refreshStatusPills();
-  refreshCurrencyBtns();
-  calcAll();
-}
-
-function selectStatus(btn) {
-  selectedStatus = btn.dataset.status;
-  refreshStatusPills();
-}
-function refreshStatusPills() {
-  document.querySelectorAll('#status-pills .status-pill').forEach(p => {
-    p.className = 'status-pill' + (p.dataset.status === selectedStatus ? ' active-'+p.dataset.status : '');
-  });
-}
-
-function selectCurrency(btn) {
-  selectedCurrency = btn.dataset.cur;
-  refreshCurrencyBtns();
-  calcAll();
-  document.getElementById('other-cur-field').style.display = selectedCurrency === 'OTRO' ? 'block' : 'none';
-}
-function refreshCurrencyBtns() {
-  document.querySelectorAll('#currency-sel .cur-btn').forEach(b => b.classList.toggle('active', b.dataset.cur === selectedCurrency));
-  const sym = currencySymbol(selectedCurrency);
-  ['dmc','vuelos','hoteles','tours','transfers','otros','concierge','planning'].forEach(k => {
-    const el = document.getElementById('pfx-'+k);
-    if(el) el.textContent = sym;
-  });
-}
-
-function currencySymbol(cur) {
-  return {USD:'$',MXN:'$',EUR:'€',GBP:'£'}[cur] || '$';
-}
-
-function calcAll() {
-  const vals = ['f-dmc','f-vuelos','f-hoteles','f-tours','f-transfers','f-otros','f-concierge','f-planning']
-    .map(id => parseFloat(document.getElementById(id).value)||0);
-  const total = vals.reduce((s,v)=>s+v,0);
-  const pct = parseFloat(document.getElementById('f-comm-pct').value)||0;
-  const comm = total * pct / 100;
-  const tc = parseFloat(document.getElementById('f-tc').value)||0;
-  const commMXN = tc > 0 ? comm * tc : 0;
-  const commAgent = commMXN / 2;
-  const deposit = total * 0.3;
-  const saldo = total * 0.7;
-  const totalMXN = tc > 0 ? total * tc : 0;
-  const cur = selectedCurrency;
-
-  document.getElementById('calc-total').textContent = fmtCur(total, cur);
-  document.getElementById('calc-deposit').textContent = fmtCur(deposit, cur);
-  document.getElementById('calc-saldo').textContent = fmtCur(saldo, cur);
-  document.getElementById('calc-total-mxn').textContent = tc > 0 ? fmtMXN(totalMXN) : '—';
-  document.getElementById('calc-comm').textContent = fmtCur(comm, cur);
-  document.getElementById('calc-comm-mxn').textContent = tc > 0 ? fmtMXN(commMXN) : '—';
-  document.getElementById('calc-comm-agent').textContent = tc > 0 ? fmtMXN(commAgent) : '—';
-}
-
-async function saveQuote() {
-  const client = document.getElementById('f-client').value.trim();
-  const dest = document.getElementById('f-dest').value.trim();
-  if (!client || !dest) return showToast('Nombre del cliente y destino son requeridos');
-
-  const vals = ['f-dmc','f-vuelos','f-hoteles','f-tours','f-transfers','f-otros','f-concierge','f-planning']
-    .map(id => parseFloat(document.getElementById(id).value)||0);
-  const total = vals.reduce((s,v)=>s+v,0);
-  const pct = parseFloat(document.getElementById('f-comm-pct').value)||12;
-  const comm = total * pct / 100;
-  const tc = parseFloat(document.getElementById('f-tc').value)||0;
-
-  const payload = {
-    agent_id: currentUser.id,
-    client_name: client,
-    destination: dest,
-    travel_date: document.getElementById('f-date').value || null,
-    travelers: parseInt(document.getElementById('f-travelers').value)||null,
-    status: selectedStatus,
-    currency: selectedCurrency === 'OTRO' ? (document.getElementById('f-other-cur').value||'OTRO') : selectedCurrency,
-    tipo_cambio: tc || null,
-    cost_dmc: vals[0]||null,
-    cost_vuelos: vals[1]||null,
-    cost_hoteles: vals[2]||null,
-    cost_tours: vals[3]||null,
-    cost_transfers: vals[4]||null,
-    cost_otros: vals[5]||null,
-    cost_concierge: vals[6]||null,
-    cost_planning: vals[7]||null,
-    total,
-    comm_pct: pct,
-    commission: comm,
-    comm_mxn: tc > 0 ? comm * tc : null,
-    comm_agent: tc > 0 ? (comm * tc) / 2 : null,
-    deposit: total * 0.3,
-    saldo: total * 0.7,
-    notes: document.getElementById('f-notes').value || null,
-  };
-
-  const btn = document.getElementById('btn-save');
-  btn.disabled = true; btn.textContent = 'Guardando...';
-
-  let error;
-  if (editingQuoteId) {
-    const existing = allQuotes.find(q => q.id === editingQuoteId);
-    ({ error } = await sb.from('quotes').update(payload).eq('id', editingQuoteId));
-    if (!error) {
-      const idx = allQuotes.findIndex(q => q.id === editingQuoteId);
-      allQuotes[idx] = { ...existing, ...payload, id: editingQuoteId };
-      if (viewingQuote?.id === editingQuoteId) viewingQuote = allQuotes[idx];
-    }
-  } else {
-    const { data, error: e } = await sb.from('quotes').insert(payload).select().single();
-    error = e;
-    if (!error && data) allQuotes.unshift({ ...data, payments: [] });
-  }
-
-  btn.disabled = false; btn.textContent = 'Guardar';
-  if (error) return showToast('Error al guardar: ' + error.message);
-  closeModal();
-  showToast(editingQuoteId ? 'Cotización actualizada ✓' : 'Cotización guardada ✓');
-  if (currentPage === 'detail') renderCurrentPage();
-  else renderCurrentPage();
-}
-
-function confirmDeleteQuote() {
-  pendingDeleteId = editingQuoteId;
-  document.getElementById('confirm-overlay').classList.add('open');
-}
-function closeConfirm() {
-  document.getElementById('confirm-overlay').classList.remove('open');
-  pendingDeleteId = null;
-}
-async function executeDelete() {
-  if (!pendingDeleteId) return closeConfirm();
-  const { error } = await sb.from('quotes').delete().eq('id', pendingDeleteId);
-  closeConfirm();
-  if (error) return showToast('Error al eliminar');
-  allQuotes = allQuotes.filter(q => q.id !== pendingDeleteId);
-  closeModal();
-  showToast('Cotización eliminada');
-  showPage('quotes');
-}
-
-// ─── DETAIL ───
-function openDetail(id) {
-  viewingQuote = allQuotes.find(q => q.id === id);
-  if (!viewingQuote) return;
-  currentPage = 'detail';
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  renderCurrentPage();
-}
-
-// ─── PAYMENTS ───
-function openPaymentModal(quoteId) {
-  currentPaymentQuoteId = quoteId;
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('pay-date').value = today;
-  document.getElementById('pay-amount').value = '';
-  document.getElementById('pay-note').value = '';
-  document.getElementById('payment-modal').classList.add('open');
-}
-function closePaymentModal() {
-  document.getElementById('payment-modal').classList.remove('open');
-  currentPaymentQuoteId = null;
-}
-
-async function savePayment() {
-  const amount = parseFloat(document.getElementById('pay-amount').value)||0;
-  if (amount <= 0) return showToast('Ingresa un monto válido');
-  const q = allQuotes.find(x => x.id === currentPaymentQuoteId);
-  if (!q) return;
-
-  const payment = {
-    date: document.getElementById('pay-date').value,
-    amount,
-    currency: document.getElementById('pay-currency').value,
-    method: document.getElementById('pay-method').value,
-    note: document.getElementById('pay-note').value,
-  };
-
-  const payments = [...(q.payments||[]), payment];
-  const { error } = await sb.from('quotes').update({ payments }).eq('id', q.id);
-  if (error) return showToast('Error al guardar pago');
-  q.payments = payments;
-  if (viewingQuote?.id === q.id) viewingQuote = q;
-  closePaymentModal();
-  showToast('Pago registrado ✓');
-  if (currentPage === 'detail') renderCurrentPage();
-}
-
-async function deletePayment(quoteId, idx, e) {
-  e.stopPropagation();
-  const q = allQuotes.find(x => x.id === quoteId);
-  if (!q) return;
-  const payments = (q.payments||[]).filter((_,i)=>i!==idx);
-  const { error } = await sb.from('quotes').update({ payments }).eq('id', q.id);
-  if (error) return showToast('Error al eliminar pago');
-  q.payments = payments;
-  if (viewingQuote?.id === q.id) viewingQuote = q;
-  if (currentPage === 'detail') renderCurrentPage();
-  showToast('Pago eliminado');
-}
-
-// ─── FILTERS ───
-function setFilter(f) {
-  currentFilter = f;
-  renderQuotesList(document.getElementById('main-content'));
-}
-function onSearch(val) {
-  searchTerm = val.toLowerCase();
-  renderQuotesList(document.getElementById('main-content'));
-}
-
-// ─── HELPERS ───
-function fmt(n) { return new Intl.NumberFormat('es-MX', {minimumFractionDigits:0,maximumFractionDigits:0}).format(n||0); }
-function fmtCur(n, cur) { return (currencySymbol(cur)) + fmt(n); }
-function fmtMXN(n) { return '$' + fmt(n) + ' MXN'; }
-function fmtDate(d) { if(!d) return ''; try { return new Date(d+'T12:00:00').toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}); } catch(e){ return d; } }
-function statusLabel(s) { return {cotizacion:'Cotización','en-proceso':'En proceso',confirmada:'Confirmada',cancelada:'Cancelada'}[s]||s; }
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2800);
-}
-
-// ─── SUPABASE TABLE SETUP ───
-// Run this once via Supabase SQL editor to create the quotes table:
-/*
-CREATE TABLE IF NOT EXISTS quotes (
-  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  agent_id uuid REFERENCES auth.users(id),
-  client_name text,
-  destination text,
-  travel_date date,
-  travelers integer,
-  status text DEFAULT 'cotizacion',
-  currency text DEFAULT 'USD',
-  tipo_cambio numeric,
-  cost_dmc numeric,
-  cost_vuelos numeric,
-  cost_hoteles numeric,
-  cost_tours numeric,
-  cost_transfers numeric,
-  cost_otros numeric,
-  cost_concierge numeric,
-  cost_planning numeric,
-  total numeric DEFAULT 0,
-  comm_pct numeric DEFAULT 12,
-  commission numeric,
-  comm_mxn numeric,
-  comm_agent numeric,
-  deposit numeric,
-  saldo numeric,
-  notes text,
-  payments jsonb DEFAULT '[]',
-  created_at timestamptz DEFAULT now()
+/* ── SUPABASE ── */
+const sb = supabase.createClient(
+  'https://ibdvwntcahiodeujkozb.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliZHZ3bnRjYWhpb2RldWprb3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzA2ODcsImV4cCI6MjA5MDI0NjY4N30.WRf0oAdoOZ-53P-zQx_mKswdw0e0yPqfL8KRbjq5GLk'
 );
 
-ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Agents see own quotes" ON quotes FOR ALL USING (agent_id = auth.uid());
-*/
+/* ── STATE ── */
+let user=null, Qs=[], editId=null, delId=null;
+let sSt='cotizacion', sCur='USD';
+let filt='todas', srch='';
+/* row data per section */
+let RD = {}; // { 'vuelos-int': [{...}], 'hoteles': [{...}], ... }
+const SECTIONS = ['vuelos-int','vuelos-dom','hoteles','transfers','tours','extras-food','extras-seguro','extras-otros','pagos'];
+
+function resetRD(){
+  RD={};
+  SECTIONS.forEach(s => RD[s]=[]);
+}
+
+/* ── ROW TEMPLATES ── */
+function rowTemplate(sec){
+  if(sec==='vuelos-int'||sec==='vuelos-dom') return {ruta:'',fecha:'',aerolinea:'',vuelo:'',clase:'',costo:0,pax:1,impuestos:0,proveedor:'',notas:''};
+  if(sec==='hoteles') return {hotel:'',ciudad:'',checkin:'',checkout:'',noches:0,tipo:'',tarifa:0,habitaciones:1,pax:1,impuestos:0,proveedor:'',amenidades:[],notas:''};
+  if(sec==='transfers') return {tipo:'',origen:'',destino:'',fecha:'',hora:'',pax:1,vehiculo:'',costo:0,cantidad:1,proveedor:'',notas:''};
+  if(sec==='tours') return {tour:'',destino:'',fecha:'',duracion:'',pax:1,modalidad:'',costoPax:0,propina:0,operador:'',notas:''};
+  if(sec==='extras-food'||sec==='extras-seguro'||sec==='extras-otros') return {descripcion:'',destino:'',costoUnit:0,cantidad:1,pax:1,proveedor:'',notas:''};
+  if(sec==='pagos') return {proveedor:'',vencimiento:'',monto:0,anticipo:0.3,fechaPago:'',estado:'PENDIENTE',referencia:''};
+  return {};
+}
+
+/* ── ROW FIELD HTML ── */
+function rowHTML(sec, idx){
+  const it = RD[sec][idx]||{};
+  const pf = `"${sec}",${idx}`;
+  let f='';
+  const cur = sCur==='OTRO'?'$':csym(sCur);
+
+  if(sec==='vuelos-int'||sec==='vuelos-dom'){
+    f=`<div class="r2">
+      <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Ruta (tramo)</label><input class="finput" type="text" placeholder="MEX → NRT" value="${x(it.ruta)}" oninput="sf(${pf},'ruta',this.value)"></div>
+    </div>
+    <div class="r3">
+      <div class="fgroup"><label class="flabel">Aerolínea</label><input class="finput" type="text" placeholder="AeroMéxico…" value="${x(it.aerolinea)}" oninput="sf(${pf},'aerolinea',this.value)"></div>
+      <div class="fgroup"><label class="flabel"># Vuelo</label><input class="finput" type="text" placeholder="AM 57" value="${x(it.vuelo)}" oninput="sf(${pf},'vuelo',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Clase</label><select class="finput" onchange="sf(${pf},'clase',this.value)">
+        ${['Economy','Premium Economy','Business','First','AM Plus'].map(c=>`<option${it.clase===c?' selected':''}>${c}</option>`).join('')}
+      </select></div>
+    </div>
+    <div class="r3">
+      <div class="fgroup"><label class="flabel">Costo x pax</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costo)}" oninput="sf(${pf},'costo',this.value);calcAll()"></div></div>
+      <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div>
+      <div class="fgroup"><label class="flabel">Impuestos</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.impuestos)}" oninput="sf(${pf},'impuestos',this.value);calcAll()"></div></div>
+    </div>
+    <div class="r2">
+      <div class="fgroup"><label class="flabel">Proveedor / PNR</label><input class="finput" type="text" placeholder="GDS, PNR…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Notas</label><input class="finput" type="text" placeholder="Service fee, condiciones…" value="${x(it.notas)}" oninput="sf(${pf},'notas',this.value)"></div>
+    </div>`;
+  }
+  else if(sec==='hoteles'){
+    f=`<div class="fgroup"><label class="flabel">Hotel / Propiedad</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo, Le Bristol…" value="${x(it.hotel)}" oninput="sf(${pf},'hotel',this.value)"></div>
+    <div class="r2">
+      <div class="fgroup"><label class="flabel">Ciudad / Destino</label><input class="finput" type="text" placeholder="Tokio, París…" value="${x(it.ciudad)}" oninput="sf(${pf},'ciudad',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Tipo de habitación</label><input class="finput" type="text" placeholder="Deluxe King, Junior Suite…" value="${x(it.tipo)}" oninput="sf(${pf},'tipo',this.value)"></div>
+    </div>
+    <div class="r3">
+      <div class="fgroup"><label class="flabel">Check-in</label><input class="finput" type="date" value="${x(it.checkin)}" oninput="sf(${pf},'checkin',this.value);autoNoches(${pf})"></div>
+      <div class="fgroup"><label class="flabel">Check-out</label><input class="finput" type="date" value="${x(it.checkout)}" oninput="sf(${pf},'checkout',this.value);autoNoches(${pf})"></div>
+      <div class="fgroup"><label class="flabel"># Noches</label><input class="finput" type="number" placeholder="2" min="1" id="h-noches-${idx}" value="${x(it.noches)||''}" oninput="sf(${pf},'noches',this.value);calcAll()"></div>
+    </div>
+    <div class="r3">
+      <div class="fgroup"><label class="flabel">Tarifa x noche</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.tarifa)}" oninput="sf(${pf},'tarifa',this.value);calcAll()"></div></div>
+      <div class="fgroup"><label class="flabel"># Habitaciones</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.habitaciones)||1}" oninput="sf(${pf},'habitaciones',this.value);calcAll()"></div>
+      <div class="fgroup"><label class="flabel">Impuestos / Tasas</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.impuestos)}" oninput="sf(${pf},'impuestos',this.value);calcAll()"></div></div>
+    </div>
+    <div class="fgroup"><label class="flabel">Proveedor / Confirmación</label><input class="finput" type="text" placeholder="Código de confirmación, proveedor…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
+    <div class="fgroup"><label class="flabel">Amenidades Virtuoso / especiales</label>
+      <div class="amenrow">
+        ${['Desayuno diario','Crédito F&B ($100)','WiFi Premium','Early check-in','Late check-out','Upgrade habitación','Crédito Spa','Bienvenida especial','Traslado incluido'].map(a=>`<span class="achip${(it.amenidades||[]).includes(a)?' on':''}" onclick="togAmen(${pf},'${a}',this)">${a}</span>`).join('')}
+      </div>
+    </div>
+    <div class="fgroup"><label class="flabel">Notas / condiciones</label><textarea class="finput" rows="2" placeholder="City tax, políticas de cancelación, notas especiales…" oninput="sf(${pf},'notas',this.value)">${x(it.notas)}</textarea></div>`;
+
+}
+else if(sec===‘transfers’){
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tipo de transfer</label><select class="finput" onchange="sf(${pf},'tipo',this.value)"> ${['Llegada (Aeropuerto → Hotel)','Salida (Hotel → Aeropuerto)','Transfer entre ciudades','Traslado privado turístico','Bus compartido / excursión','Transfer nocturno','Transfer VIP','Transfer con guía','Otro'].map(o=>`<option${it.tipo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Origen</label><input class="finput" type="text" placeholder="Aeropuerto Narita…" value="${x(it.origen)}" oninput="sf(${pf},'origen',this.value)"></div> <div class="fgroup"><label class="flabel">Destino</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Tipo vehículo</label><select class="finput" onchange="sf(${pf},'vehiculo',this.value)"> ${['Sedán privado','SUV privada','Van / Minivan','Bus privado','Tren / Shinkansen','Helicóptero','Otro'].map(o=>`<option${it.vehiculo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costo)}" oninput="sf(${pf},'costo',this.value);calcAll()"></div></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Cantidad</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Rolzo, DMC local…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> </div>`;
+}
+else if(sec===‘tours’){
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tour / Actividad / Experiencia</label><input class="finput" type="text" placeholder="Tour privado Kioto, Show de Sumo…" value="${x(it.tour)}" oninput="sf(${pf},'tour',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / Ciudad</label><input class="finput" type="text" placeholder="Kioto…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> <div class="fgroup"><label class="flabel">Duración</label><input class="finput" type="text" placeholder="4 hrs, Full day…" value="${x(it.duracion)}" oninput="sf(${pf},'duracion',this.value)"></div> <div class="fgroup"><label class="flabel">Modalidad</label><select class="finput" onchange="sf(${pf},'modalidad',this.value)"> ${['Privado','Compartido','Semi-privado','Grupo'].map(o=>`<option${it.modalidad===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Costo x pax</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoPax)}" oninput="sf(${pf},'costoPax',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Propina guía</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.propina)}" oninput="sf(${pf},'propina',this.value);calcAll()"></div></div> </div> <div class="fgroup"><label class="flabel">Operador local</label><input class="finput" type="text" placeholder="Nombre del operador local…" value="${x(it.operador)}" oninput="sf(${pf},'operador',this.value)"></div>`;
+}
+else if(sec===‘extras-food’||sec===‘extras-seguro’||sec===‘extras-otros’){
+const dph = sec===‘extras-otros’ ? ‘Visa, propinas, city tax, entradas…’ : sec===‘extras-seguro’ ? ‘Seguro de viaje, cobertura médica…’ : ‘Desayunos, cenas, experiencias gastronómicas…’;
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Descripción</label><input class="finput" type="text" placeholder="${dph}" value="${x(it.descripcion)}" oninput="sf(${pf},'descripcion',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / fecha</label><input class="finput" type="text" placeholder="Tokio, 10 Dic…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoUnit)}" oninput="sf(${pf},'costoUnit',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Cantidad / días</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> </div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Proveedor, compañía…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>`;
+}
+else if(sec===‘pagos’){
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Proveedor / Concepto</label><input class="finput" type="text" placeholder="Afro Asia Travel, Aeromexico…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> <div class="fgroup"><label class="flabel">Monto total</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.monto)}" oninput="sf(${pf},'monto',this.value);calcAll()"></div></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Anticipo %</label><div class="pct-wrap"><input class="finput" type="number" placeholder="30" value="${x(it.anticipo*100)||30}" min="0" max="100" oninput="sf(${pf},'anticipo',this.value/100);calcAll()"><span class="psfx">%</span></div></div> <div class="fgroup"><label class="flabel">Fecha límite</label><input class="finput" type="date" value="${x(it.vencimiento)}" oninput="sf(${pf},'vencimiento',this.value)"></div> <div class="fgroup"><label class="flabel">Estado</label><select class="finput" onchange="sf(${pf},'estado',this.value);calcAll()"> ${['PENDIENTE','PAGADO','PARCIAL'].map(o=>`<option${it.estado===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="fgroup"><label class="flabel">Referencia / confirmación</label><input class="finput" type="text" placeholder="Número de referencia, wire, etc." value="${x(it.referencia)}" oninput="sf(${pf},'referencia',this.value)"></div>`;
+}
+
+const tot = rowTotal(sec, it);
+return `<div class="tbl-row" id="row-${sec}-${idx}"> <div class="tbl-row-hdr"> <span class="row-num">${rowLabel(sec)} #${idx+1}</span> <div style="display:flex;align-items:center;gap:7px"> ${tot>0?`<span class="row-tot" id="rtot-${sec}-${idx}">${csym(sCur)}${fmt(tot)}</span>`:`<span class="row-tot" id="rtot-${sec}-${idx}" style="display:none"></span>`}
+<button class="btn-del-row" onclick="delRow('${sec}',${idx})">×</button>
+</div>
+</div>
+${f}
+
+  </div>`;
+}
+
+function rowLabel(s){
+return{
+‘vuelos-int’:‘Vuelo intl’,‘vuelos-dom’:‘Vuelo doméstico’,‘hoteles’:‘Hotel’,
+‘transfers’:‘Transfer’,‘tours’:‘Tour’,‘extras-food’:‘Alimentos’,‘extras-seguro’:‘Seguro’,
+‘extras-otros’:‘Servicio’,‘pagos’:‘Proveedor’
+}[s]||s;
+}
+
+/* ── ROW TOTALS ── */
+function rowTotal(sec,it){
+if(!it) return 0;
+if(sec===‘vuelos-int’||sec===‘vuelos-dom’) return ((parseFloat(it.costo)||0)*(parseFloat(it.pax)||1))+(parseFloat(it.impuestos)||0);
+if(sec===‘hoteles’) return ((parseFloat(it.tarifa)||0)*(parseFloat(it.noches)||1)*(parseFloat(it.habitaciones)||1))+(parseFloat(it.impuestos)||0);
+if(sec===‘transfers’) return (parseFloat(it.costo)||0)*(parseFloat(it.cantidad)||1);
+if(sec===‘tours’) return ((parseFloat(it.costoPax)||0)*(parseFloat(it.pax)||1))+(parseFloat(it.propina)||0);
+if(sec===‘extras-food’||sec===‘extras-seguro’||sec===‘extras-otros’) return (parseFloat(it.costoUnit)||0)*(parseFloat(it.cantidad)||1)*(parseFloat(it.pax)||1);
+if(sec===‘pagos’) return (parseFloat(it.monto)||0);
+return 0;
+}
+function secTotal(sec){ return (RD[sec]||[]).reduce((s,it)=>s+rowTotal(sec,it),0); }
+
+/* ── SECTION SUBTOTALS ── */
+function calcSectionTotals(){
+const S=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+const paxVI=(RD[‘vuelos-int’]||[]).reduce((s,it)=>s+(parseFloat(it.pax)||1),0);
+const paxVD=(RD[‘vuelos-dom’]||[]).reduce((s,it)=>s+(parseFloat(it.pax)||1),0);
+S(‘st-vi-pax’, paxVI||’—’);  S(‘st-vi-tot’, paxVI?`${csym(sCur)}${fmt(secTotal('vuelos-int'))}`:’—’);
+S(‘st-vd-pax’, paxVD||’—’);  S(‘st-vd-tot’, paxVD?`${csym(sCur)}${fmt(secTotal('vuelos-dom'))}`:’—’);
+const hNoches=(RD[‘hoteles’]||[]).reduce((s,it)=>s+(parseFloat(it.noches)||0),0);
+S(‘st-h-noches’, hNoches||’—’); S(‘st-h-tot’, `${csym(sCur)}${fmt(secTotal('hoteles'))}`);
+S(‘st-tr-tot’, `${csym(sCur)}${fmt(secTotal('transfers'))}`);
+S(‘st-to-tot’, `${csym(sCur)}${fmt(secTotal('tours'))}`);
+const extTot=secTotal(‘extras-food’)+secTotal(‘extras-seguro’)+secTotal(‘extras-otros’);
+S(‘st-ex-tot’, `${csym(sCur)}${fmt(extTot)}`);
+// pagos
+const paid=(RD[‘pagos’]||[]).filter(it=>it.estado===‘PAGADO’).reduce((s,it)=>s+(parseFloat(it.monto)||0),0);
+const pend=(RD[‘pagos’]||[]).filter(it=>it.estado!==‘PAGADO’).reduce((s,it)=>s+(parseFloat(it.monto)||0),0);
+S(‘st-pg-pag’,`${csym(sCur)}${fmt(paid)}`); S(‘st-pg-pend’,`${csym(sCur)}${fmt(pend)}`);
+}
+
+/* ── MAIN CALC ── */
+const CATS=[
+{key:‘vuelos-int’,  label:‘🛫 Vuelos Internacionales’, mk:‘mk-vuelos-int’, default:0.10},
+{key:‘vuelos-dom’,  label:‘🛩 Vuelos Domésticos’,      mk:‘mk-vuelos-dom’, default:0.10},
+{key:‘hoteles’,     label:‘🏨 Hoteles’,                mk:‘mk-hoteles’,    default:0.12},
+{key:‘transfers’,   label:‘🚌 Transfers’,              mk:‘mk-transfers’,  default:0.15},
+{key:‘tours’,       label:‘🎭 Tours y Operadores’,     mk:‘mk-tours’,      default:0.15},
+{key:‘extras’,      label:‘🍽 Extras y Servicios’,     mk:‘mk-extras’,     default:0.10},
+];
+
+function calcAll(){
+calcSectionTotals();
+const tc = parseFloat(document.getElementById(‘g-tc’)?.value)||0;
+const pax= parseInt(document.getElementById(‘g-pax’)?.value)||1;
+
+let totalNeto=0, totalMark=0, totalVenta=0;
+const rows=[];
+
+CATS.forEach(cat=>{
+let neto;
+if(cat.key===‘extras’) neto=secTotal(‘extras-food’)+secTotal(‘extras-seguro’)+secTotal(‘extras-otros’);
+else neto=secTotal(cat.key);
+const mkEl=document.getElementById(cat.mk);
+const mkPct=mkEl?parseFloat(mkEl.value)||0:cat.default*100;
+const markup=neto*mkPct/100;
+const venta=neto+markup;
+totalNeto+=neto; totalMark+=markup; totalVenta+=venta;
+rows.push({…cat, neto, mkPct, markup, venta});
+});
+
+// update row totals in UI
+SECTIONS.forEach(sec=>{
+(RD[sec]||[]).forEach((it,i)=>{
+const tv=rowTotal(sec,it);
+const el=document.getElementById(`rtot-${sec}-${i}`);
+if(el){if(tv>0){el.textContent=`${csym(sCur)}${fmt(tv)}`;el.style.display=’’;}else el.style.display=‘none’;}
+});
+});
+
+// RESUMEN TABLE
+const tbody=document.getElementById(‘res-tbody’);
+if(tbody){
+tbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'<span style="color:#ccc">—</span>'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'—'}</td> <td>${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'—'}</td> <td style="font-weight:500">${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'—'}</td> <td><span class="status-dot ${r.neto>0?'dot-ok':'dot-pend'}"></span>${r.neto>0?'OK':'Pendiente'}</td> </tr>`).join(’’)+`<tr class="total-row"> <td><strong>TOTAL</strong></td> <td><strong>${csym(sCur)}${fmt(totalNeto)}</strong></td> <td>—</td> <td><strong>${csym(sCur)}${fmt(totalMark)}</strong></td> <td><strong>${csym(sCur)}${fmt(totalVenta)}</strong></td> <td></td> </tr>`;
+}
+
+// RESUMEN TOTALS block
+const rTot=document.getElementById(‘res-totals’);
+if(rTot){
+const totMXN=tc>0?totalVenta*tc:null;
+const pxPax=pax>0?totalVenta/pax:0;
+rTot.innerHTML=` <div class="rt-row"><span class="rt-lbl">Costo neto total</span><span class="rt-val">${csym(sCur)}${fmt(totalNeto)}</span></div> <div class="rt-row"><span class="rt-lbl">Total markup / margen</span><span class="rt-val">${csym(sCur)}${fmt(totalMark)}</span></div> ${totMXN?`<div class="rt-row"><span class="rt-lbl">Total en MXN (TC ${tc})</span><span class="rt-val">$${fmt(totMXN)} MXN</span></div>`:''} <div class="rt-row" style="border-top:2px solid var(--cd);margin-top:4px;padding-top:8px"><span class="rt-lbl">Total precio venta</span><span class="rt-val big">${csym(sCur)}${fmt(totalVenta)}</span></div> `;
+}
+
+// deposit banner
+const dep=totalVenta*.3, sal=totalVenta*.7, ppax=pax>0?totalVenta/pax:0;
+const S2=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+S2(‘d-total’,`${csym(sCur)}${fmt(totalVenta)}`);
+S2(‘d-dep’,`${csym(sCur)}${fmt(dep)}`);
+S2(‘d-sal’,`${csym(sCur)}${fmt(sal)}`);
+S2(‘d-pax’,`${csym(sCur)}${fmt(ppax)}`);
+
+// COMISIONES table (pagos tab)
+const commTbody=document.getElementById(‘comm-tbody’);
+if(commTbody){
+commTbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'—'}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'—'}</td> <td style="color:var(--green);font-weight:500">${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'—'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'—'}</td> </tr>`).join(’’);
+const commMXN=tc>0?totalMark*tc:null;
+S2(‘st-cm-tot’,`${csym(sCur)}${fmt(totalMark)}${commMXN?` / $${fmt(commMXN)} MXN`:''}`);
+S2(‘st-cm-agent’,commMXN?`$${fmt(commMXN/2)} MXN`:’—’);
+}
+}
+
+/* ── ROW MANAGEMENT ── */
+function addRow(sec){
+RD[sec].push(rowTemplate(sec));
+const cont=document.getElementById(`rows-${sec}`);
+if(cont){ const tmp=document.createElement(‘div’); tmp.innerHTML=rowHTML(sec,RD[sec].length-1); cont.appendChild(tmp.firstChild); }
+calcAll();
+}
+function delRow(sec,idx){
+RD[sec].splice(idx,1);
+rebuildSection(sec);
+calcAll();
+}
+function rebuildSection(sec){
+const cont=document.getElementById(`rows-${sec}`);
+if(!cont) return;
+cont.innerHTML=RD[sec].map((_,i)=>rowHTML(sec,i)).join(’’);
+}
+function rebuildAllSections(){ SECTIONS.forEach(s=>rebuildSection(s)); }
+function sf(sec,idx,field,val){
+if(!RD[sec]) RD[sec]=[];
+if(!RD[sec][idx]) RD[sec][idx]={};
+RD[sec][idx][field]=val;
+}
+function togAmen(sec,idx,val,el){
+if(!RD[sec][idx].amenidades) RD[sec][idx].amenidades=[];
+const a=RD[sec][idx].amenidades,i=a.indexOf(val);
+if(i>=0){a.splice(i,1);el.classList.remove(‘on’);}else{a.push(val);el.classList.add(‘on’);}
+}
+function autoNoches(sec,idx){
+const it=RD[sec][idx];
+if(it.checkin&&it.checkout){
+const diff=Math.round((new Date(it.checkout)-new Date(it.checkin))/(1000*60*60*24));
+if(diff>0){ it.noches=diff; const el=document.getElementById(`h-noches-${idx}`);if(el)el.value=diff; calcAll(); }
+}
+}
+
+/* ── TABS ── */
+function goTab(tab){
+document.querySelectorAll(’.stab’).forEach(b=>b.classList.toggle(‘active’,b.dataset.tab===tab));
+document.querySelectorAll(’.stab-body’).forEach(b=>b.classList.toggle(‘active’,b.id===`tab-${tab}`));
+}
+
+/* ── STATUS / CURRENCY ── */
+function setSt(b){sSt=b.dataset.s;document.querySelectorAll(’#spills .spill’).forEach(p=>{p.className=‘spill’+(p.dataset.s===sSt?’ s-’+p.dataset.s:’’);});}
+function setCur(b){
+sCur=b.dataset.c;
+document.querySelectorAll(’#crow .cbtn’).forEach(btn=>btn.classList.toggle(‘active’,btn.dataset.c===sCur));
+document.getElementById(‘otrocur-f’).style.display=sCur===‘OTRO’?‘flex’:‘none’;
+rebuildAllSections(); calcAll();
+}
+
+/* ── NOCHES AUTO ── */
+function calcNoches(){
+const s=document.getElementById(‘g-salida’)?.value, r=document.getElementById(‘g-regreso’)?.value;
+if(s&&r){
+const d=Math.round((new Date(r)-new Date(s))/(1000*60*60*24));
+if(d>=0){ const ne=document.getElementById(‘g-noches’),di=document.getElementById(‘g-dias’); if(ne)ne.textContent=d; if(di)di.textContent=d+1; }
+}
+}
+function refreshTitle(){
+const n=document.getElementById(‘g-nombre’)?.value||document.getElementById(‘g-destino’)?.value||‘Nueva cotización’;
+const el=document.getElementById(‘etitle’); if(el)el.textContent=n;
+}
+
+/* ── AUTH ── */
+sb.auth.onAuthStateChange((ev,s)=>{
+if(s?.user){
+user=s.user;
+document.getElementById(‘auth-screen’).style.display=‘none’;
+document.getElementById(‘app’).style.display=‘flex’;
+loadName(); loadQs();
+} else {
+user=null;
+document.getElementById(‘auth-screen’).style.display=‘flex’;
+document.getElementById(‘app’).style.display=‘none’;
+}
+});
+function swTab(t){
+document.querySelectorAll(’.tab-btn’).forEach((b,i)=>b.classList.toggle(‘active’,t===‘login’?i===0:i===1));
+document.getElementById(‘lf’).style.display=t===‘login’?‘block’:‘none’;
+document.getElementById(‘rf’).style.display=t===‘reg’?‘block’:‘none’;
+showE(’’);
+}
+function showE(m){const e=document.getElementById(‘aerr’);e.textContent=m;e.style.display=m?‘block’:‘none’;}
+async function doLogin(){
+const em=document.getElementById(‘le’).value.trim(),pw=document.getElementById(‘lp’).value;
+if(!em||!pw)return showE(‘Completa todos los campos.’);
+const b=document.getElementById(‘btnl’);b.disabled=true;b.textContent=‘Entrando…’;
+const{error}=await sb.auth.signInWithPassword({email:em,password:pw});
+b.disabled=false;b.textContent=‘Entrar’;
+if(error)showE(error.message.includes(‘Invalid’)?‘Correo o contraseña incorrectos.’:’Error: ‘+error.message);
+}
+async function doReg(){
+const n=document.getElementById(‘rn’).value.trim(),em=document.getElementById(‘re’).value.trim(),ph=document.getElementById(‘rph’).value.trim(),pw=document.getElementById(‘rp’).value;
+if(!n||!em||!pw)return showE(‘Nombre, correo y contraseña son requeridos.’);
+if(pw.length<6)return showE(‘Contraseña mínimo 6 caracteres.’);
+const b=document.getElementById(‘btnr’);b.disabled=true;b.textContent=‘Registrando…’;
+const{data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{full_name:n,phone:ph}}});
+b.disabled=false;b.textContent=‘Crear cuenta’;
+if(error)return showE(‘Error: ‘+error.message);
+if(data.user){await sb.from(‘profiles’).upsert({id:data.user.id,full_name:n,email:em,phone:ph});toast(’¡Cuenta creada! Ya puedes iniciar sesión.’);swTab(‘login’);}
+}
+async function doLogout(){await sb.auth.signOut();}
+async function loadName(){
+const{data}=await sb.from(‘profiles’).select(‘full_name’).eq(‘id’,user.id).single();
+document.getElementById(‘husr’).textContent=(data?.full_name||user.email).split(’ ’)[0];
+}
+
+/* ── DATA ── */
+async function loadQs(){
+const{data,error}=await sb.from(‘quotes’).select(’*’).eq(‘agent_id’,user.id).order(‘created_at’,{ascending:false});
+if(!error){Qs=(data||[]);renderHome();}
+}
+
+/* ── HOME ── */
+function renderHome(){
+document.getElementById(‘view-home’).style.display=‘block’;
+document.getElementById(‘view-editor’).style.display=‘none’;
+document.getElementById(‘n-home’).classList.add(‘active’);
+
+const tot=Qs.length,conf=Qs.filter(q=>q.status===‘confirmada’).length;
+const usd=Qs.filter(q=>q.status!==‘cancelada’&&q.currency===‘USD’).reduce((s,q)=>s+(q.total||0),0);
+const cm=Qs.filter(q=>q.status===‘confirmada’).reduce((s,q)=>s+(q.comm_mxn||0),0);
+const fil=Qs.filter(q=>{
+const mf=filt===‘todas’||q.status===filt;
+const ms=!srch||(q.client_name||’’).toLowerCase().includes(srch)||(q.destination||’’).toLowerCase().includes(srch);
+return mf&&ms;
+});
+
+document.getElementById(‘view-home’).innerHTML=` <div class="ptitle">Buen día ✦</div><div class="psub">Tu resumen de cotizaciones</div> <div class="sgrid"> <div class="scard gold"><div class="slbl">Cotizaciones</div><div class="sval">${tot}</div></div> <div class="scard green"><div class="slbl">Confirmadas</div><div class="sval">${conf}</div></div> <div class="scard teal"><div class="slbl">Valor activo USD</div><div class="sval sm">$${fmt(usd)}</div></div> <div class="scard amber"><div class="slbl">Comisión MXN</div><div class="sval sm">$${fmt(cm)}</div></div> </div> <div class="lhdr"> <div class="ltit">Cotizaciones</div> <button class="btn-new" onclick="openNew()">+ Nueva</button> </div> <div class="swrap"><span class="sico">🔍</span><input type="text" placeholder="Buscar cliente o destino…" value="${srch}" oninput="onSrch(this.value)"></div> <div class="frow"> ${['todas','cotizacion','en-proceso','confirmada','cancelada'].map(f=>`<button class="chip${filt===f?' active':''}" onclick="setFilt('${f}')">${f===‘todas’?`Todas (${tot})`:slbl(f)}</button>`).join('')} </div> ${fil.length?fil.map(qcard).join(''):'<div class="empty"><div class="empty-ico">✦</div><div class="empty-t">Sin cotizaciones aún</div></div>'} `;
+fil.forEach(q=>{
+const el=document.querySelector(`.qcard[data-id="${q.id}"]`);
+if(el) el.onclick=()=>openEdit(q.id);
+});
+}
+function backHome(){ renderHome(); }
+
+/* ── QUOTE CARD ── */
+function qcard(q){
+return `<div class="qcard ${q.status}" data-id="${q.id}">
+<div class="qtop">
+<div><div class="qcli">${q.client_name||‘Sin nombre’}</div><div class="qdest">✈ ${q.destination||’—’}${q.travel_date?’ · ‘+fd(q.travel_date):’’}</div></div>
+<span class="badge badge-${q.status}">${slbl(q.status)}</span>
+</div>
+<div class="qbot">
+<div class="qamt">${csym(q.currency||‘USD’)}${fmt(q.total||0)} <span>${q.currency||‘USD’}</span></div>
+<div class="qdl">${q.travelers?q.travelers+’ pax’:’’}</div>
+</div>
+
+  </div>`;
+}
+
+/* ── EDITOR ── */
+function openNew(){
+editId=null; sSt=‘cotizacion’; sCur=‘USD’;
+resetRD();
+clearGeneralFields();
+document.getElementById(‘btn-del-q’).style.display=‘none’;
+document.getElementById(‘etitle’).textContent=‘Nueva cotización’;
+rebuildAllSections();
+goTab(‘resumen’);
+document.getElementById(‘view-home’).style.display=‘none’;
+document.getElementById(‘view-editor’).style.display=‘block’;
+calcAll();
+}
+function openEdit(id){
+const q=Qs.find(x=>x.id===id); if(!q) return;
+editId=id; sSt=q.status||‘cotizacion’; sCur=q.currency||‘USD’;
+document.getElementById(‘btn-del-q’).style.display=‘flex’;
+document.getElementById(‘etitle’).textContent=q.client_name||q.destination||‘Cotización’;
+
+document.getElementById(‘g-nombre’).value=q.nombre||’’;
+document.getElementById(‘g-agente’).value=q.agente||’’;
+document.getElementById(‘g-destino’).value=q.destination||’’;
+document.getElementById(‘g-destinos2’).value=q.destinos2||’’;
+document.getElementById(‘g-salida’).value=q.travel_date||’’;
+document.getElementById(‘g-regreso’).value=q.fecha_regreso||’’;
+document.getElementById(‘g-pax’).value=q.travelers||’’;
+document.getElementById(‘g-tipo’).value=q.tipo_viaje||’’;
+document.getElementById(‘g-tc’).value=q.tipo_cambio||’’;
+document.getElementById(‘g-notas’).value=q.notes||’’;
+calcNoches();
+
+RD=q.item_data?JSON.parse(JSON.stringify(q.item_data)):{};
+SECTIONS.forEach(s=>{if(!RD[s])RD[s]=[];});
+
+document.querySelectorAll(’#spills .spill’).forEach(p=>{p.className=‘spill’+(p.dataset.s===sSt?’ s-’+p.dataset.s:’’);});
+document.querySelectorAll(’#crow .cbtn’).forEach(b=>b.classList.toggle(‘active’,b.dataset.c===sCur));
+document.getElementById(‘otrocur-f’).style.display=sCur===‘OTRO’?‘flex’:‘none’;
+rebuildAllSections();
+goTab(‘resumen’);
+document.getElementById(‘view-home’).style.display=‘none’;
+document.getElementById(‘view-editor’).style.display=‘block’;
+calcAll();
+}
+function clearGeneralFields(){
+[‘g-nombre’,‘g-agente’,‘g-destino’,‘g-destinos2’,‘g-salida’,‘g-regreso’,‘g-pax’,‘g-tc’,‘g-notas’].forEach(id=>{const e=document.getElementById(id);if(e)e.value=’’;});
+document.getElementById(‘g-tipo’).value=’’;
+document.getElementById(‘g-noches’).textContent=’—’;
+document.getElementById(‘g-dias’).textContent=’—’;
+document.querySelectorAll(’#spills .spill’).forEach(p=>{p.className=‘spill’+(p.dataset.s===‘cotizacion’?’ s-cotizacion’:’’);});
+document.querySelectorAll(’#crow .cbtn’).forEach(b=>b.classList.toggle(‘active’,b.dataset.c===‘USD’));
+}
+
+/* ── SAVE ── */
+async function saveQ(){
+const dest=document.getElementById(‘g-destino’).value.trim()||document.getElementById(‘g-nombre’).value.trim();
+if(!dest)return toast(‘Agrega al menos el destino o nombre del viaje’);
+const tc=parseFloat(document.getElementById(‘g-tc’).value)||0;
+const pax=parseInt(document.getElementById(‘g-pax’).value)||1;
+
+// recalc totals
+let totalNeto=0,totalMark=0,totalVenta=0;
+CATS.forEach(cat=>{
+const neto=cat.key===‘extras’?secTotal(‘extras-food’)+secTotal(‘extras-seguro’)+secTotal(‘extras-otros’):secTotal(cat.key);
+const mkEl=document.getElementById(cat.mk);
+const mkPct=mkEl?parseFloat(mkEl.value)||0:cat.default*100;
+totalNeto+=neto; totalMark+=neto*mkPct/100; totalVenta+=neto*(1+mkPct/100);
+});
+
+const payload={
+agent_id:user.id,
+client_name:document.getElementById(‘g-nombre’).value||dest,
+destination:dest,
+nombre:document.getElementById(‘g-nombre’).value||’’,
+agente:document.getElementById(‘g-agente’).value||’’,
+destinos2:document.getElementById(‘g-destinos2’).value||’’,
+travel_date:document.getElementById(‘g-salida’).value||null,
+fecha_regreso:document.getElementById(‘g-regreso’).value||null,
+travelers:pax,
+tipo_viaje:document.getElementById(‘g-tipo’).value||’’,
+status:sSt,currency:sCur===‘OTRO’?(document.getElementById(‘g-othercur’)?.value||‘OTRO’):sCur,
+tipo_cambio:tc||null,
+total:totalVenta,cost_neto:totalNeto,commission:totalMark,
+comm_mxn:tc>0?totalMark*tc:null,
+comm_agent:tc>0?(totalMark*tc)/2:null,
+deposit:totalVenta*.3,saldo:totalVenta*.7,
+item_data:JSON.parse(JSON.stringify(RD)),
+notes:document.getElementById(‘g-notas’).value||null,
+};
+
+const b=document.getElementById(‘esave’);b.disabled=true;b.textContent=‘Guardando…’;
+let error;
+if(editId){
+const ex=Qs.find(q=>q.id===editId);
+({error}=await sb.from(‘quotes’).update(payload).eq(‘id’,editId));
+if(!error){const i=Qs.findIndex(q=>q.id===editId);Qs[i]={…ex,…payload,id:editId};}
+}else{
+const{data,error:e}=await sb.from(‘quotes’).insert(payload).select().single();
+error=e;if(!error&&data)Qs.unshift(data);
+}
+b.disabled=false;b.textContent=‘Guardar’;
+if(error)return toast(’Error: ’+error.message);
+toast(editId?‘Cotización actualizada ✓’:‘Cotización guardada ✓’);
+renderHome();
+}
+
+/* ── DELETE ── */
+function confDel(){delId=editId;document.getElementById(‘cov’).classList.add(‘open’);}
+function closeCov(){document.getElementById(‘cov’).classList.remove(‘open’);delId=null;}
+async function execDel(){
+if(!delId)return closeCov();
+const{error}=await sb.from(‘quotes’).delete().eq(‘id’,delId);
+closeCov();if(error)return toast(‘Error al eliminar’);
+Qs=Qs.filter(q=>q.id!==delId);toast(‘Cotización eliminada’);renderHome();
+}
+
+/* ── HELPERS ── */
+function setFilt(f){filt=f;renderHome();}
+function onSrch(v){srch=v.toLowerCase();renderHome();}
+function fmt(n){return new Intl.NumberFormat(‘es-MX’,{minimumFractionDigits:0,maximumFractionDigits:0}).format(n||0);}
+function csym(c){return{USD:’$’,MXN:’$’,EUR:‘€’,GBP:‘£’}[c]||’$’;}
+function slbl(s){return{cotizacion:‘Cotización’,‘en-proceso’:‘En proceso’,confirmada:‘Confirmada’,cancelada:‘Cancelada’}[s]||s;}
+function fd(d){if(!d)return’’;try{return new Date(d+‘T12:00:00’).toLocaleDateString(‘es-MX’,{day:‘numeric’,month:‘short’,year:‘numeric’})}catch{return d}}
+function x(v){if(v===undefined||v===null||v===’’)return’’;return String(v).replace(/”/g,’"’).replace(/</g,’<’).replace(/>/g,’>’);}
+function toast(m){const t=document.getElementById(‘toast’);t.textContent=m;t.classList.add(‘show’);setTimeout(()=>t.classList.remove(‘show’),2800);}
 </script>
+
+<!--
+  SUPABASE SQL — ejecutar una sola vez:
+
+  CREATE TABLE IF NOT EXISTS quotes (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    agent_id uuid REFERENCES auth.users(id),
+    client_name text, destination text, nombre text, agente text,
+    destinos2 text, travel_date date, fecha_regreso date,
+    travelers integer, tipo_viaje text,
+    status text DEFAULT 'cotizacion', currency text DEFAULT 'USD',
+    tipo_cambio numeric, total numeric DEFAULT 0,
+    cost_neto numeric, commission numeric, comm_mxn numeric,
+    comm_agent numeric, deposit numeric, saldo numeric,
+    item_data jsonb DEFAULT '{}',
+    notes text, created_at timestamptz DEFAULT now()
+  );
+  ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "own" ON quotes FOR ALL USING (agent_id = auth.uid());
+-->
 
 </body>
 </html>
