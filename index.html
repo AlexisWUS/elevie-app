@@ -543,10 +543,10 @@ function rowHTML(sec, idx){
   if(sec==='vuelos-int'||sec==='vuelos-dom'){
     f=`<div class="r2">
       <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div>
-      <div class="fgroup"><label class="flabel">Ruta (tramo)</label><input class="finput" type="text" placeholder="MEX → NRT" value="${x(it.ruta)}" oninput="sf(${pf},'ruta',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Ruta (tramo)</label><input class="finput" type="text" placeholder="MEX -> NRT" value="${x(it.ruta)}" oninput="sf(${pf},'ruta',this.value)"></div>
     </div>
     <div class="r3">
-      <div class="fgroup"><label class="flabel">Aerolínea</label><input class="finput" type="text" placeholder="AeroMéxico…" value="${x(it.aerolinea)}" oninput="sf(${pf},'aerolinea',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Aerolínea</label><input class="finput" type="text" placeholder="AeroMéxico..." value="${x(it.aerolinea)}" oninput="sf(${pf},'aerolinea',this.value)"></div>
       <div class="fgroup"><label class="flabel"># Vuelo</label><input class="finput" type="text" placeholder="AM 57" value="${x(it.vuelo)}" oninput="sf(${pf},'vuelo',this.value)"></div>
       <div class="fgroup"><label class="flabel">Clase</label><select class="finput" onchange="sf(${pf},'clase',this.value)">
         ${['Economy','Premium Economy','Business','First','AM Plus'].map(c=>`<option${it.clase===c?' selected':''}>${c}</option>`).join('')}
@@ -558,15 +558,15 @@ function rowHTML(sec, idx){
       <div class="fgroup"><label class="flabel">Impuestos</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.impuestos)}" oninput="sf(${pf},'impuestos',this.value);calcAll()"></div></div>
     </div>
     <div class="r2">
-      <div class="fgroup"><label class="flabel">Proveedor / PNR</label><input class="finput" type="text" placeholder="GDS, PNR…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
-      <div class="fgroup"><label class="flabel">Notas</label><input class="finput" type="text" placeholder="Service fee, condiciones…" value="${x(it.notas)}" oninput="sf(${pf},'notas',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Proveedor / PNR</label><input class="finput" type="text" placeholder="GDS, PNR..." value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Notas</label><input class="finput" type="text" placeholder="Service fee, condiciones..." value="${x(it.notas)}" oninput="sf(${pf},'notas',this.value)"></div>
     </div>`;
   }
   else if(sec==='hoteles'){
-    f=`<div class="fgroup"><label class="flabel">Hotel / Propiedad</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo, Le Bristol…" value="${x(it.hotel)}" oninput="sf(${pf},'hotel',this.value)"></div>
+    f=`<div class="fgroup"><label class="flabel">Hotel / Propiedad</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo, Le Bristol..." value="${x(it.hotel)}" oninput="sf(${pf},'hotel',this.value)"></div>
     <div class="r2">
-      <div class="fgroup"><label class="flabel">Ciudad / Destino</label><input class="finput" type="text" placeholder="Tokio, París…" value="${x(it.ciudad)}" oninput="sf(${pf},'ciudad',this.value)"></div>
-      <div class="fgroup"><label class="flabel">Tipo de habitación</label><input class="finput" type="text" placeholder="Deluxe King, Junior Suite…" value="${x(it.tipo)}" oninput="sf(${pf},'tipo',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Ciudad / Destino</label><input class="finput" type="text" placeholder="Tokio, París..." value="${x(it.ciudad)}" oninput="sf(${pf},'ciudad',this.value)"></div>
+      <div class="fgroup"><label class="flabel">Tipo de habitación</label><input class="finput" type="text" placeholder="Deluxe King, Junior Suite..." value="${x(it.tipo)}" oninput="sf(${pf},'tipo',this.value)"></div>
     </div>
     <div class="r3">
       <div class="fgroup"><label class="flabel">Check-in</label><input class="finput" type="date" value="${x(it.checkin)}" oninput="sf(${pf},'checkin',this.value);autoNoches(${pf})"></div>
@@ -578,32 +578,32 @@ function rowHTML(sec, idx){
       <div class="fgroup"><label class="flabel"># Habitaciones</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.habitaciones)||1}" oninput="sf(${pf},'habitaciones',this.value);calcAll()"></div>
       <div class="fgroup"><label class="flabel">Impuestos / Tasas</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.impuestos)}" oninput="sf(${pf},'impuestos',this.value);calcAll()"></div></div>
     </div>
-    <div class="fgroup"><label class="flabel">Proveedor / Confirmación</label><input class="finput" type="text" placeholder="Código de confirmación, proveedor…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
+    <div class="fgroup"><label class="flabel">Proveedor / Confirmación</label><input class="finput" type="text" placeholder="Código de confirmación, proveedor..." value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>
     <div class="fgroup"><label class="flabel">Amenidades Virtuoso / especiales</label>
       <div class="amenrow">
         ${['Desayuno diario','Crédito F&B ($100)','WiFi Premium','Early check-in','Late check-out','Upgrade habitación','Crédito Spa','Bienvenida especial','Traslado incluido'].map(a=>`<span class="achip${(it.amenidades||[]).includes(a)?' on':''}" onclick="togAmen(${pf},'${a}',this)">${a}</span>`).join('')}
       </div>
     </div>
-    <div class="fgroup"><label class="flabel">Notas / condiciones</label><textarea class="finput" rows="2" placeholder="City tax, políticas de cancelación, notas especiales…" oninput="sf(${pf},'notas',this.value)">${x(it.notas)}</textarea></div>`;
+    <div class="fgroup"><label class="flabel">Notas / condiciones</label><textarea class="finput" rows="2" placeholder="City tax, políticas de cancelación, notas especiales..." oninput="sf(${pf},'notas',this.value)">${x(it.notas)}</textarea></div>`;
 
 }
 else if(sec===‘transfers’){
-f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tipo de transfer</label><select class="finput" onchange="sf(${pf},'tipo',this.value)"> ${['Llegada (Aeropuerto → Hotel)','Salida (Hotel → Aeropuerto)','Transfer entre ciudades','Traslado privado turístico','Bus compartido / excursión','Transfer nocturno','Transfer VIP','Transfer con guía','Otro'].map(o=>`<option${it.tipo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Origen</label><input class="finput" type="text" placeholder="Aeropuerto Narita…" value="${x(it.origen)}" oninput="sf(${pf},'origen',this.value)"></div> <div class="fgroup"><label class="flabel">Destino</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Tipo vehículo</label><select class="finput" onchange="sf(${pf},'vehiculo',this.value)"> ${['Sedán privado','SUV privada','Van / Minivan','Bus privado','Tren / Shinkansen','Helicóptero','Otro'].map(o=>`<option${it.vehiculo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costo)}" oninput="sf(${pf},'costo',this.value);calcAll()"></div></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Cantidad</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Rolzo, DMC local…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> </div>`;
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tipo de transfer</label><select class="finput" onchange="sf(${pf},'tipo',this.value)"> ${['Llegada (Aeropuerto -> Hotel)','Salida (Hotel -> Aeropuerto)','Transfer entre ciudades','Traslado privado turístico','Bus compartido / excursión','Transfer nocturno','Transfer VIP','Transfer con guía','Otro'].map(o=>`<option${it.tipo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Origen</label><input class="finput" type="text" placeholder="Aeropuerto Narita..." value="${x(it.origen)}" oninput="sf(${pf},'origen',this.value)"></div> <div class="fgroup"><label class="flabel">Destino</label><input class="finput" type="text" placeholder="Palace Hotel Tokyo..." value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Tipo vehículo</label><select class="finput" onchange="sf(${pf},'vehiculo',this.value)"> ${['Sedán privado','SUV privada','Van / Minivan','Bus privado','Tren / Shinkansen','Helicóptero','Otro'].map(o=>`<option${it.vehiculo===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costo)}" oninput="sf(${pf},'costo',this.value);calcAll()"></div></div> </div> <div class="r2"> <div class="fgroup"><label class="flabel">Cantidad</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Rolzo, DMC local..." value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> </div>`;
 }
 else if(sec===‘tours’){
-f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tour / Actividad / Experiencia</label><input class="finput" type="text" placeholder="Tour privado Kioto, Show de Sumo…" value="${x(it.tour)}" oninput="sf(${pf},'tour',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / Ciudad</label><input class="finput" type="text" placeholder="Kioto…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> <div class="fgroup"><label class="flabel">Duración</label><input class="finput" type="text" placeholder="4 hrs, Full day…" value="${x(it.duracion)}" oninput="sf(${pf},'duracion',this.value)"></div> <div class="fgroup"><label class="flabel">Modalidad</label><select class="finput" onchange="sf(${pf},'modalidad',this.value)"> ${['Privado','Compartido','Semi-privado','Grupo'].map(o=>`<option${it.modalidad===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Costo x pax</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoPax)}" oninput="sf(${pf},'costoPax',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Propina guía</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.propina)}" oninput="sf(${pf},'propina',this.value);calcAll()"></div></div> </div> <div class="fgroup"><label class="flabel">Operador local</label><input class="finput" type="text" placeholder="Nombre del operador local…" value="${x(it.operador)}" oninput="sf(${pf},'operador',this.value)"></div>`;
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Tour / Actividad / Experiencia</label><input class="finput" type="text" placeholder="Tour privado Kioto, Show de Sumo..." value="${x(it.tour)}" oninput="sf(${pf},'tour',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / Ciudad</label><input class="finput" type="text" placeholder="Kioto..." value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Fecha</label><input class="finput" type="date" value="${x(it.fecha)}" oninput="sf(${pf},'fecha',this.value)"></div> <div class="fgroup"><label class="flabel">Duración</label><input class="finput" type="text" placeholder="4 hrs, Full day..." value="${x(it.duracion)}" oninput="sf(${pf},'duracion',this.value)"></div> <div class="fgroup"><label class="flabel">Modalidad</label><select class="finput" onchange="sf(${pf},'modalidad',this.value)"> ${['Privado','Compartido','Semi-privado','Grupo'].map(o=>`<option${it.modalidad===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="2" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel">Costo x pax</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoPax)}" oninput="sf(${pf},'costoPax',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Propina guía</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.propina)}" oninput="sf(${pf},'propina',this.value);calcAll()"></div></div> </div> <div class="fgroup"><label class="flabel">Operador local</label><input class="finput" type="text" placeholder="Nombre del operador local..." value="${x(it.operador)}" oninput="sf(${pf},'operador',this.value)"></div>`;
 }
 else if(sec===‘extras-food’||sec===‘extras-seguro’||sec===‘extras-otros’){
 const dph = sec===‘extras-otros’ ? ‘Visa, propinas, city tax, entradas…’ : sec===‘extras-seguro’ ? ‘Seguro de viaje, cobertura médica…’ : ‘Desayunos, cenas, experiencias gastronómicas…’;
-f=`<div class="r2"> <div class="fgroup"><label class="flabel">Descripción</label><input class="finput" type="text" placeholder="${dph}" value="${x(it.descripcion)}" oninput="sf(${pf},'descripcion',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / fecha</label><input class="finput" type="text" placeholder="Tokio, 10 Dic…" value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoUnit)}" oninput="sf(${pf},'costoUnit',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Cantidad / días</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> </div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Proveedor, compañía…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>`;
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Descripción</label><input class="finput" type="text" placeholder="${dph}" value="${x(it.descripcion)}" oninput="sf(${pf},'descripcion',this.value)"></div> <div class="fgroup"><label class="flabel">Destino / fecha</label><input class="finput" type="text" placeholder="Tokio, 10 Dic..." value="${x(it.destino)}" oninput="sf(${pf},'destino',this.value)"></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Costo unitario</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.costoUnit)}" oninput="sf(${pf},'costoUnit',this.value);calcAll()"></div></div> <div class="fgroup"><label class="flabel">Cantidad / días</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.cantidad)||1}" oninput="sf(${pf},'cantidad',this.value);calcAll()"></div> <div class="fgroup"><label class="flabel"># Pasajeros</label><input class="finput" type="number" placeholder="1" min="1" value="${x(it.pax)||1}" oninput="sf(${pf},'pax',this.value);calcAll()"></div> </div> <div class="fgroup"><label class="flabel">Proveedor</label><input class="finput" type="text" placeholder="Proveedor, compañía..." value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div>`;
 }
 else if(sec===‘pagos’){
-f=`<div class="r2"> <div class="fgroup"><label class="flabel">Proveedor / Concepto</label><input class="finput" type="text" placeholder="Afro Asia Travel, Aeromexico…" value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> <div class="fgroup"><label class="flabel">Monto total</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.monto)}" oninput="sf(${pf},'monto',this.value);calcAll()"></div></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Anticipo %</label><div class="pct-wrap"><input class="finput" type="number" placeholder="30" value="${x(it.anticipo*100)||30}" min="0" max="100" oninput="sf(${pf},'anticipo',this.value/100);calcAll()"><span class="psfx">%</span></div></div> <div class="fgroup"><label class="flabel">Fecha límite</label><input class="finput" type="date" value="${x(it.vencimiento)}" oninput="sf(${pf},'vencimiento',this.value)"></div> <div class="fgroup"><label class="flabel">Estado</label><select class="finput" onchange="sf(${pf},'estado',this.value);calcAll()"> ${['PENDIENTE','PAGADO','PARCIAL'].map(o=>`<option${it.estado===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="fgroup"><label class="flabel">Referencia / confirmación</label><input class="finput" type="text" placeholder="Número de referencia, wire, etc." value="${x(it.referencia)}" oninput="sf(${pf},'referencia',this.value)"></div>`;
+f=`<div class="r2"> <div class="fgroup"><label class="flabel">Proveedor / Concepto</label><input class="finput" type="text" placeholder="Afro Asia Travel, Aeromexico..." value="${x(it.proveedor)}" oninput="sf(${pf},'proveedor',this.value)"></div> <div class="fgroup"><label class="flabel">Monto total</label><div class="awrap"><span class="apfx">${cur}</span><input class="finput" type="number" placeholder="0" value="${x(it.monto)}" oninput="sf(${pf},'monto',this.value);calcAll()"></div></div> </div> <div class="r3"> <div class="fgroup"><label class="flabel">Anticipo %</label><div class="pct-wrap"><input class="finput" type="number" placeholder="30" value="${x(it.anticipo*100)||30}" min="0" max="100" oninput="sf(${pf},'anticipo',this.value/100);calcAll()"><span class="psfx">%</span></div></div> <div class="fgroup"><label class="flabel">Fecha límite</label><input class="finput" type="date" value="${x(it.vencimiento)}" oninput="sf(${pf},'vencimiento',this.value)"></div> <div class="fgroup"><label class="flabel">Estado</label><select class="finput" onchange="sf(${pf},'estado',this.value);calcAll()"> ${['PENDIENTE','PAGADO','PARCIAL'].map(o=>`<option${it.estado===o?’ selected’:’’}>${o}</option>`).join('')} </select></div> </div> <div class="fgroup"><label class="flabel">Referencia / confirmación</label><input class="finput" type="text" placeholder="Número de referencia, wire, etc." value="${x(it.referencia)}" oninput="sf(${pf},'referencia',this.value)"></div>`;
 }
 
 const tot = rowTotal(sec, it);
 return `<div class="tbl-row" id="row-${sec}-${idx}"> <div class="tbl-row-hdr"> <span class="row-num">${rowLabel(sec)} #${idx+1}</span> <div style="display:flex;align-items:center;gap:7px"> ${tot>0?`<span class="row-tot" id="rtot-${sec}-${idx}">${csym(sCur)}${fmt(tot)}</span>`:`<span class="row-tot" id="rtot-${sec}-${idx}" style="display:none"></span>`}
-<button class="btn-del-row" onclick="delRow('${sec}',${idx})">×</button>
+<button class="btn-del-row" onclick="delRow('${sec}',${idx})">x</button>
 </div>
 </div>
 ${f}
@@ -637,10 +637,10 @@ function calcSectionTotals(){
 const S=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
 const paxVI=(RD[‘vuelos-int’]||[]).reduce((s,it)=>s+(parseFloat(it.pax)||1),0);
 const paxVD=(RD[‘vuelos-dom’]||[]).reduce((s,it)=>s+(parseFloat(it.pax)||1),0);
-S(‘st-vi-pax’, paxVI||’—’);  S(‘st-vi-tot’, paxVI?`${csym(sCur)}${fmt(secTotal('vuelos-int'))}`:’—’);
-S(‘st-vd-pax’, paxVD||’—’);  S(‘st-vd-tot’, paxVD?`${csym(sCur)}${fmt(secTotal('vuelos-dom'))}`:’—’);
+S(‘st-vi-pax’, paxVI||’–’);  S(‘st-vi-tot’, paxVI?`${csym(sCur)}${fmt(secTotal('vuelos-int'))}`:’–’);
+S(‘st-vd-pax’, paxVD||’–’);  S(‘st-vd-tot’, paxVD?`${csym(sCur)}${fmt(secTotal('vuelos-dom'))}`:’–’);
 const hNoches=(RD[‘hoteles’]||[]).reduce((s,it)=>s+(parseFloat(it.noches)||0),0);
-S(‘st-h-noches’, hNoches||’—’); S(‘st-h-tot’, `${csym(sCur)}${fmt(secTotal('hoteles'))}`);
+S(‘st-h-noches’, hNoches||’–’); S(‘st-h-tot’, `${csym(sCur)}${fmt(secTotal('hoteles'))}`);
 S(‘st-tr-tot’, `${csym(sCur)}${fmt(secTotal('transfers'))}`);
 S(‘st-to-tot’, `${csym(sCur)}${fmt(secTotal('tours'))}`);
 const extTot=secTotal(‘extras-food’)+secTotal(‘extras-seguro’)+secTotal(‘extras-otros’);
@@ -653,12 +653,12 @@ S(‘st-pg-pag’,`${csym(sCur)}${fmt(paid)}`); S(‘st-pg-pend’,`${csym(sCur)
 
 /* ── MAIN CALC ── */
 const CATS=[
-{key:‘vuelos-int’,  label:‘🛫 Vuelos Internacionales’, mk:‘mk-vuelos-int’, default:0.10},
-{key:‘vuelos-dom’,  label:‘🛩 Vuelos Domésticos’,      mk:‘mk-vuelos-dom’, default:0.10},
-{key:‘hoteles’,     label:‘🏨 Hoteles’,                mk:‘mk-hoteles’,    default:0.12},
-{key:‘transfers’,   label:‘🚌 Transfers’,              mk:‘mk-transfers’,  default:0.15},
-{key:‘tours’,       label:‘🎭 Tours y Operadores’,     mk:‘mk-tours’,      default:0.15},
-{key:‘extras’,      label:‘🍽 Extras y Servicios’,     mk:‘mk-extras’,     default:0.10},
+{key:‘vuelos-int’,  label:‘Vuelos Internacionales’, mk:‘mk-vuelos-int’, default:0.10},
+{key:‘vuelos-dom’,  label:’ Vuelos Domésticos’,      mk:‘mk-vuelos-dom’, default:0.10},
+{key:‘hoteles’,     label:’ Hoteles’,                mk:‘mk-hoteles’,    default:0.12},
+{key:‘transfers’,   label:’ Transfers’,              mk:‘mk-transfers’,  default:0.15},
+{key:‘tours’,       label:’ Tours y Operadores’,     mk:‘mk-tours’,      default:0.15},
+{key:‘extras’,      label:’ Extras y Servicios’,     mk:‘mk-extras’,     default:0.10},
 ];
 
 function calcAll(){
@@ -693,7 +693,7 @@ if(el){if(tv>0){el.textContent=`${csym(sCur)}${fmt(tv)}`;el.style.display=’’
 // RESUMEN TABLE
 const tbody=document.getElementById(‘res-tbody’);
 if(tbody){
-tbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'<span style="color:#ccc">—</span>'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'—'}</td> <td>${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'—'}</td> <td style="font-weight:500">${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'—'}</td> <td><span class="status-dot ${r.neto>0?'dot-ok':'dot-pend'}"></span>${r.neto>0?'OK':'Pendiente'}</td> </tr>`).join(’’)+`<tr class="total-row"> <td><strong>TOTAL</strong></td> <td><strong>${csym(sCur)}${fmt(totalNeto)}</strong></td> <td>—</td> <td><strong>${csym(sCur)}${fmt(totalMark)}</strong></td> <td><strong>${csym(sCur)}${fmt(totalVenta)}</strong></td> <td></td> </tr>`;
+tbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'<span style="color:#ccc">--</span>'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'--'}</td> <td>${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'--'}</td> <td style="font-weight:500">${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'--'}</td> <td><span class="status-dot ${r.neto>0?'dot-ok':'dot-pend'}"></span>${r.neto>0?'OK':'Pendiente'}</td> </tr>`).join(’’)+`<tr class="total-row"> <td><strong>TOTAL</strong></td> <td><strong>${csym(sCur)}${fmt(totalNeto)}</strong></td> <td>--</td> <td><strong>${csym(sCur)}${fmt(totalMark)}</strong></td> <td><strong>${csym(sCur)}${fmt(totalVenta)}</strong></td> <td></td> </tr>`;
 }
 
 // RESUMEN TOTALS block
@@ -715,10 +715,10 @@ S2(‘d-pax’,`${csym(sCur)}${fmt(ppax)}`);
 // COMISIONES table (pagos tab)
 const commTbody=document.getElementById(‘comm-tbody’);
 if(commTbody){
-commTbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'—'}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'—'}</td> <td style="color:var(--green);font-weight:500">${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'—'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'—'}</td> </tr>`).join(’’);
+commTbody.innerHTML=rows.map(r=>`<tr> <td>${r.label}</td> <td>${r.venta>0?`${csym(sCur)}${fmt(r.venta)}`:'--'}</td> <td>${r.neto>0?`${csym(sCur)}${fmt(r.neto)}`:'--'}</td> <td style="color:var(--green);font-weight:500">${r.markup>0?`${csym(sCur)}${fmt(r.markup)}`:'--'}</td> <td>${r.neto>0?`<span class="pct-pill">${r.mkPct.toFixed(0)}%</span>`:'--'}</td> </tr>`).join(’’);
 const commMXN=tc>0?totalMark*tc:null;
 S2(‘st-cm-tot’,`${csym(sCur)}${fmt(totalMark)}${commMXN?` / $${fmt(commMXN)} MXN`:''}`);
-S2(‘st-cm-agent’,commMXN?`$${fmt(commMXN/2)} MXN`:’—’);
+S2(‘st-cm-agent’,commMXN?`$${fmt(commMXN/2)} MXN`:’–’);
 }
 }
 
@@ -900,7 +900,7 @@ const ms=!srch||(q.client_name||’’).toLowerCase().includes(srch)||(q.destina
 return mf&&ms;
 });
 
-document.getElementById(‘view-home’).innerHTML=` <div class="ptitle">Buen día ✦</div><div class="psub">Tu resumen de cotizaciones</div> <div class="sgrid"> <div class="scard gold"><div class="slbl">Cotizaciones</div><div class="sval">${tot}</div></div> <div class="scard green"><div class="slbl">Confirmadas</div><div class="sval">${conf}</div></div> <div class="scard teal"><div class="slbl">Valor activo USD</div><div class="sval sm">$${fmt(usd)}</div></div> <div class="scard amber"><div class="slbl">Comisión MXN</div><div class="sval sm">$${fmt(cm)}</div></div> </div> <div class="lhdr"> <div class="ltit">Cotizaciones</div> <button class="btn-new" onclick="openNew()">+ Nueva</button> </div> <div class="swrap"><span class="sico">🔍</span><input type="text" placeholder="Buscar cliente o destino…" value="${srch}" oninput="onSrch(this.value)"></div> <div class="frow"> ${['todas','cotizacion','en-proceso','confirmada','cancelada'].map(f=>`<button class="chip${filt===f?' active':''}" onclick="setFilt('${f}')">${f===‘todas’?`Todas (${tot})`:slbl(f)}</button>`).join('')} </div> ${fil.length?fil.map(qcard).join(''):'<div class="empty"><div class="empty-ico">✦</div><div class="empty-t">Sin cotizaciones aún</div></div>'} `;
+document.getElementById(‘view-home’).innerHTML=` <div class="ptitle">Buen día *</div><div class="psub">Tu resumen de cotizaciones</div> <div class="sgrid"> <div class="scard gold"><div class="slbl">Cotizaciones</div><div class="sval">${tot}</div></div> <div class="scard green"><div class="slbl">Confirmadas</div><div class="sval">${conf}</div></div> <div class="scard teal"><div class="slbl">Valor activo USD</div><div class="sval sm">$${fmt(usd)}</div></div> <div class="scard amber"><div class="slbl">Comisión MXN</div><div class="sval sm">$${fmt(cm)}</div></div> </div> <div class="lhdr"> <div class="ltit">Cotizaciones</div> <button class="btn-new" onclick="openNew()">+ Nueva</button> </div> <div class="swrap"><span class="sico"></span><input type="text" placeholder="Buscar cliente o destino..." value="${srch}" oninput="onSrch(this.value)"></div> <div class="frow"> ${['todas','cotizacion','en-proceso','confirmada','cancelada'].map(f=>`<button class="chip${filt===f?' active':''}" onclick="setFilt('${f}')">${f===‘todas’?`Todas (${tot})`:slbl(f)}</button>`).join('')} </div> ${fil.length?fil.map(qcard).join(''):'<div class="empty"><div class="empty-ico">*</div><div class="empty-t">Sin cotizaciones aún</div></div>'} `;
 fil.forEach(q=>{
 const el=document.querySelector(`.qcard[data-id="${q.id}"]`);
 if(el) el.onclick=()=>openEdit(q.id);
@@ -912,7 +912,7 @@ function backHome(){ renderHome(); }
 function qcard(q){
 return `<div class="qcard ${q.status}" data-id="${q.id}">
 <div class="qtop">
-<div><div class="qcli">${q.client_name||‘Sin nombre’}</div><div class="qdest">✈ ${q.destination||’—’}${q.travel_date?’ · ‘+fd(q.travel_date):’’}</div></div>
+<div><div class="qcli">${q.client_name||‘Sin nombre’}</div><div class="qdest"> ${q.destination||’–’}${q.travel_date?’ · ‘+fd(q.travel_date):’’}</div></div>
 <span class="badge badge-${q.status}">${slbl(q.status)}</span>
 </div>
 <div class="qbot">
@@ -969,8 +969,8 @@ calcAll();
 function clearGeneralFields(){
 [‘g-nombre’,‘g-agente’,‘g-destino’,‘g-destinos2’,‘g-salida’,‘g-regreso’,‘g-pax’,‘g-tc’,‘g-notas’].forEach(id=>{const e=document.getElementById(id);if(e)e.value=’’;});
 document.getElementById(‘g-tipo’).value=’’;
-document.getElementById(‘g-noches’).textContent=’—’;
-document.getElementById(‘g-dias’).textContent=’—’;
+document.getElementById(‘g-noches’).textContent=’–’;
+document.getElementById(‘g-dias’).textContent=’–’;
 document.querySelectorAll(’#spills .spill’).forEach(p=>{p.className=‘spill’+(p.dataset.s===‘cotizacion’?’ s-cotizacion’:’’);});
 document.querySelectorAll(’#crow .cbtn’).forEach(b=>b.classList.toggle(‘active’,b.dataset.c===‘USD’));
 }
@@ -1024,7 +1024,7 @@ error=e;if(!error&&data)Qs.unshift(data);
 }
 b.disabled=false;b.textContent=‘Guardar’;
 if(error)return toast(’Error: ’+error.message);
-toast(editId?‘Cotización actualizada ✓’:‘Cotización guardada ✓’);
+toast(editId?‘Cotización actualizada OK’:‘Cotización guardada OK’);
 renderHome();
 }
 
@@ -1042,7 +1042,7 @@ Qs=Qs.filter(q=>q.id!==delId);toast(‘Cotización eliminada’);renderHome();
 function setFilt(f){filt=f;renderHome();}
 function onSrch(v){srch=v.toLowerCase();renderHome();}
 function fmt(n){return new Intl.NumberFormat(‘es-MX’,{minimumFractionDigits:0,maximumFractionDigits:0}).format(n||0);}
-function csym(c){return{USD:’$’,MXN:’$’,EUR:‘€’,GBP:‘£’}[c]||’$’;}
+function csym(c){return{USD:’$’,MXN:’$’,EUR:‘EUR’,GBP:‘GBP’}[c]||’$’;}
 function slbl(s){return{cotizacion:‘Cotización’,‘en-proceso’:‘En proceso’,confirmada:‘Confirmada’,cancelada:‘Cancelada’}[s]||s;}
 function fd(d){if(!d)return’’;try{return new Date(d+‘T12:00:00’).toLocaleDateString(‘es-MX’,{day:‘numeric’,month:‘short’,year:‘numeric’})}catch{return d}}
 function x(v){if(v===undefined||v===null||v===’’)return’’;return String(v).replace(/”/g,’"’).replace(/</g,’<’).replace(/>/g,’>’);}
@@ -1050,7 +1050,7 @@ function toast(m){const t=document.getElementById(‘toast’);t.textContent=m;t
 </script>
 
 <!--
-  SUPABASE SQL — ejecutar una sola vez:
+  SUPABASE SQL -- ejecutar una sola vez:
 
   CREATE TABLE IF NOT EXISTS quotes (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
