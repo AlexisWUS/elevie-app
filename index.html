@@ -717,7 +717,7 @@ function renderHome() {
   for (var fi = 0; fi < filters.length; fi++) {
     var f = filters[fi];
     var lbl = f === 'todas' ? ('Todas (' + tot + ')') : statusLabel(f);
-    h += '<button type="button" class="chip' + (filterStatus === f ? ' on' : '') + '" onclick="setFilter('' + f + '')">' + lbl + '</button>';
+    h += '<button type="button" class="chip' + (filterStatus === f ? ' on' : '') + '" data-fval="' + f + '" onclick="setFilter(this.getAttribute(&quot;data-fval&quot;))">' + lbl + '</button>';
   }
   h += '</div>';
   if (filtered.length === 0) {
@@ -800,14 +800,14 @@ function openDetail(id) {
       h += '</div></div>';
     }
   }
-  h += '<button type="button" class="btn-add-pay" data-qid="' + q.id + '" onclick="openPayModal(this.getAttribute('data-qid'))">+ Registrar pago</button>';
+  h += '<button type="button" class="btn-add-pay" data-qid="' + q.id + '" onclick="openPayModal(this.getAttribute(&quot;data-qid&quot;))">+ Registrar pago</button>';
   h += '</div>';
   if (q.notes) {
     h += '<div class="sec-card"><div class="sec-card-t">Notas</div>';
     h += '<p style="font-size:13px;color:#5a7080;line-height:1.6;font-style:italic">' + safeStr(q.notes) + '</p></div>';
   }
   h += '<div style="display:flex;gap:8px;margin-top:4px">';
-  h += '<button type="button" class="btn-cancel" style="flex:1" onclick="openEditQuote('' + q.id + '')">Editar</button>';
+  h += '<button type="button" class="btn-cancel" style="flex:1" data-qid="' + q.id + '" onclick="openEditQuote(this.getAttribute(&quot;data-qid&quot;))">Editar</button>';
   h += '</div>';
   view.innerHTML = h;
 }
@@ -1039,7 +1039,7 @@ function buildRowHTML(sec, idx) {
   h += '<div class="t-row-hdr"><span class="t-row-num">' + SMETA[sec].label + ' #' + (idx + 1) + '</span>';
   h += '<div style="display:flex;align-items:center;gap:7px">';
   if (t > 0) h += '<span class="t-row-tot">' + cur + fmtNum(t) + '</span>';
-  h += '<button type="button" class="btn-del-row" onclick="delRow('' + sec + '',' + idx + ')">x</button>';
+  h += '<button type="button" class="btn-del-row" data-sec="' + sec + '" data-idx="' + idx + '" onclick="delRow(this.getAttribute(&quot;data-sec&quot;),this.getAttribute(&quot;data-idx&quot;)*1)">x</button>';
   h += '</div></div>';
 
   if (sec === 'vi' || sec === 'vd') {
@@ -1078,7 +1078,7 @@ function buildRowHTML(sec, idx) {
     for (var ai = 0; ai < amens.length; ai++) {
       var a = amens[ai];
       var isOn = (it.amenidades || []).indexOf(a) >= 0;
-      h += '<span class="amen-chip' + (isOn ? ' on' : '') + '" onclick="toggleAmen('h',' + idx + ','' + a + '',this)">' + a + '</span>';
+      h += '<span class="amen-chip' + (isOn ? ' on' : '') + '" data-amen="' + a + '" data-idx="' + idx + '" onclick="toggleAmen(&quot;h&quot;,this.getAttribute(&quot;data-idx&quot;)*1,this.getAttribute(&quot;data-amen&quot;),this)">' + a + '</span>';
     }
     h += '</div></div>';
     h += '<div class="f-group"><label class="f-label">Notas / city tax</label><input type="text" class="f-input" placeholder="City tax, condiciones..." value="' + safeStr(it.notas) + '" oninput="' + sf + ''notas',this.value)"></div>';
